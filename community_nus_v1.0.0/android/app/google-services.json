@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "544625113131",
+    "project_id": "communitynus",
+    "storage_bucket": "communitynus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544625113131:android:b180f81c72475be143d26e",
+        "android_client_info": {
+          "package_name": "com.example.community_nus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544625113131-pq0e45shli3ocoa365qhu5mp6ncf18bv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.community_nus",
+            "certificate_hash": "a1865b91aceb1f7e18884fcb8d986d6c1d995c53"
+          }
+        },
+        {
+          "client_id": "544625113131-b0altf3595nd36qhni1p1p7urjqbomlk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-q1aOq3b2dThxD3AcLN2abN7xwUZqTyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544625113131-b0altf3595nd36qhni1p1p7urjqbomlk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
