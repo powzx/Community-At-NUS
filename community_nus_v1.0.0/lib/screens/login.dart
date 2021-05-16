@@ -160,16 +160,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {
-                auth.signInWithEmailAndPassword(
-                    email: _email, password: _password);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+              onPressed: () async {
+                bool ok = true;
+                try {
+                  await auth.signInWithEmailAndPassword(
+                      email: _email, password: _password);
+                } on FirebaseAuthException catch (e) {
+                    ok = false;
+                }
+                if (ok) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return MainScreen();
+                      },
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
                     builder: (BuildContext context) {
-                      return MainScreen();
-                    },
-                  ),
-                );
+                      return AlertDialog(
+                        title: Text("Error"),
+                        content: Text("Please check your credentials."),
+                        actions: [
+                          TextButton(
+                            child: Text("Ok"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      );
+                    }
+                  );
+                }
               },
               color: Theme.of(context).accentColor,
             ),
