@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:community_nus/screens/startAppLoadingScreen.dart';
 import 'package:community_nus/settings/const.dart';
+import 'package:community_nus/settings/app_provider.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,13 +10,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
-
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: ListView(
           children: <Widget>[
             Row(
@@ -30,7 +29,6 @@ class _ProfileState extends State<Profile> {
                     height: 100.0,
                   ),
                 ),
-
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,9 +45,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: 5.0),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -62,22 +58,22 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context){
+                                  builder: (BuildContext context) {
                                     return startAppLoadingScreen();
                                   },
                                 ),
                               );
                             },
-                            child: Text("Logout",
+                            child: Text(
+                              "Logout",
                               style: TextStyle(
                                 fontSize: 13.0,
                                 fontWeight: FontWeight.w400,
@@ -88,17 +84,14 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-
                     ],
                   ),
                   flex: 3,
                 ),
               ],
             ),
-
             Divider(),
             Container(height: 15.0),
-
             Padding(
               padding: EdgeInsets.all(5.0),
               child: Text(
@@ -109,7 +102,6 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
-
             ListTile(
               title: Text(
                 "Full Name",
@@ -118,22 +110,18 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-
               subtitle: Text(
                 "Chang Jian Xiang",
               ),
-
               trailing: IconButton(
                 icon: Icon(
                   Icons.edit,
                   size: 20.0,
                 ),
-                onPressed: (){
-                },
+                onPressed: () {},
                 tooltip: "Edit",
               ),
             ),
-
             ListTile(
               title: Text(
                 "Email",
@@ -142,12 +130,10 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-
               subtitle: Text(
                 "E0540308@u.nus.edu",
               ),
             ),
-
             ListTile(
               title: Text(
                 "Phone",
@@ -156,12 +142,10 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-
               subtitle: Text(
                 "+65 85088226",
               ),
             ),
-
             ListTile(
               title: Text(
                 "Faculty",
@@ -170,12 +154,10 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-
               subtitle: Text(
                 "School Of Computing",
               ),
             ),
-
             ListTile(
               title: Text(
                 "Course",
@@ -184,11 +166,37 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-
               subtitle: Text(
                 "Information Systems",
               ),
             ),
+            MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? SizedBox()
+                : ListTile(
+                    title: Text(
+                      "Dark Theme",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    trailing: Switch(
+                      value: Provider.of<AppProvider>(context).theme ==
+                              Constants.lightTheme
+                          ? false
+                          : true,
+                      onChanged: (v) async {
+                        if (v) {
+                          Provider.of<AppProvider>(context, listen: false)
+                              .setTheme(Constants.darkTheme, "dark");
+                        } else {
+                          Provider.of<AppProvider>(context, listen: false)
+                              .setTheme(Constants.lightTheme, "light");
+                        }
+                      },
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ),
           ],
         ),
       ),

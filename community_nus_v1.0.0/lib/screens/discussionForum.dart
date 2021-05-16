@@ -15,7 +15,7 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+      padding: EdgeInsets.fromLTRB(5, 0, 5.0, 5),
       child: ListView(
         children: <Widget>[
           SizedBox(height: 5.0),
@@ -73,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen>
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(5.0),
             child: Text(
               "Top Threads",
               style: TextStyle(
@@ -84,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen>
           ),
 
           //The list below
-          ListView.builder(
+          ListView.separated(
             shrinkWrap: true,
             primary: false,
             physics: NeverScrollableScrollPhysics(),
@@ -92,13 +92,6 @@ class _SearchScreenState extends State<SearchScreen>
             itemBuilder: (BuildContext context, int index) {
               Map thread = disussionForum[index];
               return ListTile(
-                title: Text(
-                  "${thread['title']}",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
                 leading: Wrap(
                     // spacing: 12,
                     direction: Axis.vertical,
@@ -110,12 +103,12 @@ class _SearchScreenState extends State<SearchScreen>
                           child: InkWell(
                             splashColor: Colors.green, // inkwell color
                             child: SizedBox(
-                              width: 40,
-                              height: 40,
+                              width: 30,
+                              height: 30,
                               child: Icon(
                                 Icons.arrow_upward,
                                 color: Colors.green,
-                                size: 25,
+                                size: 23,
                               ),
                             ),
                             onTap: () {},
@@ -128,12 +121,12 @@ class _SearchScreenState extends State<SearchScreen>
                           child: InkWell(
                             splashColor: Colors.red, // inkwell color
                             child: SizedBox(
-                              width: 40,
-                              height: 40,
+                              width: 30,
+                              height: 30,
                               child: Icon(
                                 Icons.arrow_downward,
                                 color: Colors.red,
-                                size: 25,
+                                size: 23,
                               ),
                             ),
                             onTap: () {},
@@ -141,10 +134,12 @@ class _SearchScreenState extends State<SearchScreen>
                         ),
                       ),
                     ]),
-                trailing: Icon(
-                  Icons.chat_bubble,
-                  color: Colors.black,
-                  size: 20,
+                title: Text(
+                  "${thread['title']}",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 subtitle: Row(
                   children: <Widget>[
@@ -162,6 +157,8 @@ class _SearchScreenState extends State<SearchScreen>
                 onTap: () {},
               );
             },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
           ),
           SizedBox(height: 30),
         ],
