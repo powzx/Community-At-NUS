@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:community_nus/screens/startAppLoadingScreen.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/app_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Profile extends StatefulWidget {
   @override

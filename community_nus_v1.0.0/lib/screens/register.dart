@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_nus/screens/baseScreenForAllPages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:community_nus/settings/user_data.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -334,9 +335,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {
-                auth.createUserWithEmailAndPassword(
+              onPressed: () async {
+                UserCredential userCredential = await auth.createUserWithEmailAndPassword(
                     email: _email, password: _password);
+                await DatabaseService(uid: userCredential.user.uid).updateUserData(_name, _email, _phone, _faculty, _course);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
