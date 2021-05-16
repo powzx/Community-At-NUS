@@ -22,11 +22,13 @@ class _ProfileState extends State<Profile> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Image.asset(
-                    "images/jx.png",
-                    fit: BoxFit.cover,
-                    width: 100.0,
-                    height: 100.0,
+                  child: ClipOval(
+                    child: Image.asset(
+                      "images/jx.png",
+                      fit: BoxFit.cover,
+                      width: 80.0,
+                      height: 80.0,
+                    ),
                   ),
                 ),
                 Expanded(
