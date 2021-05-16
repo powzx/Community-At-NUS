@@ -21,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         shrinkWrap: true,
         children: <Widget>[
 
-          SizedBox(height: 10.0),
+          SizedBox(height:60.0),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(

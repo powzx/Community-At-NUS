@@ -3,38 +3,28 @@ import 'package:community_nus/screens/login.dart';
 import 'package:community_nus/screens/register.dart';
 import 'package:flutter/services.dart';
 
-
 class JoinApp extends StatefulWidget {
   @override
   _JoinAppState createState() => _JoinAppState();
 }
 
-
-
-class _JoinAppState extends State<JoinApp> with SingleTickerProviderStateMixin{
-
+class _JoinAppState extends State<JoinApp> with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, initialIndex: 1, length: 2);
+    _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.keyboard_backspace,
-          ),
-          onPressed: ()=>Navigator.pop(context),
-        ),
-        bottom: TabBar(
+       
+        title: TabBar(
           controller: _tabController,
           indicatorColor: Theme.of(context).accentColor,
           labelColor: Theme.of(context).accentColor,
@@ -57,7 +47,7 @@ class _JoinAppState extends State<JoinApp> with SingleTickerProviderStateMixin{
           ],
         ),
       ),
-
+      
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
@@ -65,8 +55,6 @@ class _JoinAppState extends State<JoinApp> with SingleTickerProviderStateMixin{
           RegisterScreen(),
         ],
       ),
-
-
     );
   }
 }

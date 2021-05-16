@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:community_nus/screens/startAppWalkthrough.dart';
 import 'package:community_nus/settings/const.dart';
+import 'package:community_nus/screens/join.dart';
 
 class startAppLoadingScreen extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _startAppLoadingScreenState extends State<startAppLoadingScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return Walkthrough();
+          return JoinApp();
         },
       ),
     );
@@ -48,11 +48,11 @@ class _startAppLoadingScreenState extends State<startAppLoadingScreen> {
                 width: 230.0,
                 height: 250.0,
               ),
-              SizedBox(width: 40.0),
+              SizedBox(width: 20.0),
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(
-                  top: 15.0,
+                  top: 30.0,
                 ),
                 child: Text(
                   "${Constants.appName}",

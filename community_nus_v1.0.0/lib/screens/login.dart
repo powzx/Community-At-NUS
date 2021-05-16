@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_nus/screens/baseScreenForAllPages.dart';
+import 'package:community_nus/screens/login.dart';
+import 'package:community_nus/screens/register.dart';
+import 'package:flutter/services.dart';
 
 
 
@@ -23,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
         shrinkWrap: true,
         children: <Widget>[
 
-          SizedBox(height: 10.0),
+          SizedBox(height: 60.0),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
