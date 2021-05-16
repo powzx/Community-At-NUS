@@ -4,8 +4,7 @@ import 'package:community_nus/screens/baseScreenForAllPages.dart';
 import 'package:community_nus/screens/login.dart';
 import 'package:community_nus/screens/register.dart';
 import 'package:flutter/services.dart';
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,20 +12,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  final TextEditingController _usernameControl = new TextEditingController();
-  final TextEditingController _passwordControl = new TextEditingController();
-
+  String _email;
+  String _password;
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20.0,0,20,0),
+      padding: EdgeInsets.fromLTRB(20.0, 0, 20, 0),
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-
-          SizedBox(height: 60.0),
+          SizedBox(height: 100.0),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
@@ -41,9 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-
           SizedBox(height: 30.0),
-
           Card(
             elevation: 3.0,
             child: Container(
@@ -62,13 +57,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   contentPadding: EdgeInsets.all(10.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  hintText: "Username",
+                  hintText: "Email",
                   hintStyle: TextStyle(
                     fontSize: 15.0,
                     color: Colors.black,
@@ -79,13 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 maxLines: 1,
-                controller: _usernameControl,
+                onChanged: (value) {
+                  setState(() {
+                    _email = value.trim();
+                  });
+                },
               ),
             ),
           ),
-
           SizedBox(height: 10.0),
-
           Card(
             elevation: 3.0,
             child: Container(
@@ -104,10 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   contentPadding: EdgeInsets.all(10.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   hintText: "Password",
@@ -122,13 +127,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 obscureText: true,
                 maxLines: 1,
-                controller: _passwordControl,
+                onChanged: (value) {
+                  setState(() {
+                    _password = value.trim();
+                  });
+                },
               ),
             ),
           ),
-
           SizedBox(height: 10.0),
-
           Container(
             alignment: Alignment.centerRight,
             child: FlatButton(
@@ -140,12 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Theme.of(context).accentColor,
                 ),
               ),
-              onPressed: (){},
+              onPressed: () {},
             ),
           ),
-
           SizedBox(height: 30.0),
-
           Container(
             height: 50.0,
             child: RaisedButton(
@@ -155,10 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: (){
+              onPressed: () {
+                auth.signInWithEmailAndPassword(
+                    email: _email, password: _password);
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context){
+                    builder: (BuildContext context) {
                       return MainScreen();
                     },
                   ),
@@ -167,53 +174,12 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Theme.of(context).accentColor,
             ),
           ),
-
           SizedBox(height: 10.0),
-          Divider(color: Theme.of(context).accentColor,),
-          SizedBox(height: 10.0),
-
-
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width/2,
-              child: Row(
-                children: <Widget>[
-                  RawMaterialButton(
-                    onPressed: (){},
-                    fillColor: Colors.blue[800],
-                    shape: CircleBorder(),
-                    elevation: 4.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Icon(
-                        FontAwesomeIcons.facebookF,
-                        color: Colors.white,
-//              size: 24.0,
-                      ),
-                    ),
-                  ),
-
-                  RawMaterialButton(
-                    onPressed: (){},
-                    fillColor: Colors.white,
-                    shape: CircleBorder(),
-                    elevation: 4.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Icon(
-                        FontAwesomeIcons.google,
-                        color: Colors.blue[800],
-//              size: 24.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          Divider(
+            color: Theme.of(context).accentColor,
           ),
-
+          SizedBox(height: 10.0),
           SizedBox(height: 20.0),
-
         ],
       ),
     );

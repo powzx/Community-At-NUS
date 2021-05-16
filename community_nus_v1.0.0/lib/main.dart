@@ -4,8 +4,11 @@ import 'package:community_nus/settings/app_provider.dart';
 import 'package:community_nus/screens/startAppLoadingScreen.dart';
 import 'package:community_nus/settings/const.dart';
 import 'settings/const.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, AppProvider appProvider, Widget child) {
         return MaterialApp(
           key: appProvider.key,
-          debugShowCheckedModeBanner: false, 
+          debugShowCheckedModeBanner: false,
           navigatorKey: appProvider.navigatorKey,
           title: Constants.appName,
           theme: appProvider.theme,

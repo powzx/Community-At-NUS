@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/screens/join.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class startAppLoadingScreen extends StatefulWidget {
   @override

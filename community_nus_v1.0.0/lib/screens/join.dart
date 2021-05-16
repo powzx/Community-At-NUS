@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:community_nus/screens/login.dart';
 import 'package:community_nus/screens/register.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class JoinApp extends StatefulWidget {
   @override
