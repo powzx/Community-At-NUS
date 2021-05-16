@@ -11,7 +11,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  String _name;
   String _email;
+  String _phone;
+  String _faculty;
+  String _course;
   String _password;
   final auth = FirebaseAuth.instance;
 
@@ -22,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          SizedBox(height: 100.0),
+          SizedBox(height: 40.0),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
@@ -66,6 +70,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
+                  hintText: "Name",
+                  prefixIcon: Icon(
+                    Icons.account_circle_outlined,
+                    color: Colors.black,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    _name = value.trim();
+                  });
+                },              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            elevation: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                   hintText: "Email",
                   prefixIcon: Icon(
                     Icons.mail_outline,
@@ -80,6 +131,147 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onChanged: (value) {
                   setState(() {
                     _email = value.trim();
+                  });
+                },              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            elevation: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  hintText: "Phone Number",
+                  prefixIcon: Icon(
+                    Icons.local_phone_outlined,
+                    color: Colors.black,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    _phone = value.trim();
+                  });
+                },              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            elevation: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  hintText: "Faculty",
+                  prefixIcon: Icon(
+                    Icons.school_outlined,
+                    color: Colors.black,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    _faculty = value.trim();
+                  });
+                },              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            elevation: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  hintText: "Course",
+                  prefixIcon: Icon(
+                    Icons.book_outlined,
+                    color: Colors.black,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    _course = value.trim();
                   });
                 },              ),
             ),
