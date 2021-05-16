@@ -187,7 +187,7 @@ class _SearchScreenState extends State<SearchScreen>
                               child: Icon(
                                 Icons.chat_bubble,
                                 color: Colors.grey,
-                                size: 20.0,
+                                size: 30.0,
                               ),
                             )
                           ]),
