@@ -35,6 +35,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^0.20.1
   cloud_firestore: ^0.16.0+1
+  firebase_storage: ^7.0.0
+  image_picker: ^0.6.7+22
+  permission_handler: ^5.1.0+2
+  path_provider: ^1.6.28
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +71,7 @@ flutter:
     - images/tiktok.png
     - images/facebook.png
     - images/instagram.png
+    - images/default.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

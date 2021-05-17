@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:community_nus/screens/startAppLoadingScreen.dart';
@@ -5,6 +6,7 @@ import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/app_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   final DocumentSnapshot document;
@@ -32,7 +34,7 @@ class _ProfileState extends State<Profile> {
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   child: ClipOval(
                     child: Image.asset(
-                      "images/jx.png",
+                      "images/default.png",
                       fit: BoxFit.cover,
                       width: 80.0,
                       height: 80.0,
@@ -128,7 +130,59 @@ class _ProfileState extends State<Profile> {
                   Icons.edit,
                   size: 20.0,
                 ),
-                onPressed: () {},
+                onPressed: () async { // edit button only edits profile picture for now -- will be modified
+                  File _image;
+
+                  Future _imgFromCamera() async { // camera is not working -- will be fixed
+                    PickedFile image = await ImagePicker().getImage(
+                        source: ImageSource.camera, imageQuality: 50
+                    );
+                    setState(() {
+                      _image = File(image.path);
+                    });
+                  }
+
+                  Future _imgFromGallery() async {
+                    PickedFile image = await  ImagePicker().getImage(
+                        source: ImageSource.gallery, imageQuality: 50
+                    );
+
+                    setState(() {
+                      _image = File(image.path);
+                    });
+                  }
+
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext bc) {
+                        return SafeArea(
+                          child: Container(
+                            child: new Wrap(
+                              children: <Widget>[
+                                new ListTile(
+                                    leading: new Icon(Icons.photo_library),
+                                    title: new Text('Gallery'),
+                                    onTap: () async {
+                                      await _imgFromGallery();
+                                      Navigator.of(context).pop();
+                                      await UploadImage(img: _image).upload();
+                                    }),
+                                new ListTile(
+                                  leading: new Icon(Icons.photo_camera),
+                                  title: new Text('Camera'),
+                                  onTap: () async {
+                                    await _imgFromCamera();
+                                    Navigator.of(context).pop();
+                                    await UploadImage(img: _image).upload();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                  );
+                },
                 tooltip: "Edit",
               ),
             ),
