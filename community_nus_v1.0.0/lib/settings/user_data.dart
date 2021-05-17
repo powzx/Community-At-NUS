@@ -59,14 +59,13 @@ class DownloadImage {
 
   DownloadImage({this.uid});
 
-  Future<String> download() async {
+  Future download() async {
     String downloadURL;
     try {
       downloadURL = await storage.ref('profile_pictures/$uid').getDownloadURL();
-      return downloadURL;
     } on firebase_storage.FirebaseException catch (e) {
-      downloadURL = await storage.ref('profile_pictures/default.png').getDownloadURL();
-      return downloadURL;
+      //downloadURL = await storage.ref('profile_pictures/default.png').getDownloadURL();
     }
+    return downloadURL;
   }
 }

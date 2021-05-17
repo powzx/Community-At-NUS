@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 class Profile extends StatefulWidget {
   final DocumentSnapshot document;
   final String uid;
+
   Profile({this.document, this.uid});
 
   @override
@@ -20,6 +21,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final DocumentSnapshot document;
   final String uid;
+
   _ProfileState({this.document, this.uid});
 
   @override
@@ -33,15 +35,30 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: ClipOval(
-                    child: Image.asset("images/default.png",
-                      fit: BoxFit.cover,
-                      width: 80.0,
-                      height: 80.0,
-                    ),
-                  ),
-                ),
+                    padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: FutureBuilder(
+                        future: DownloadImage(uid: uid).download(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return ClipOval(
+                              child: Image.network(
+                                snapshot.data,
+                                fit: BoxFit.cover,
+                                width: 80.0,
+                                height: 80.0,
+                              ),
+                            );
+                          }
+                            return ClipOval(
+                              child: Image.asset(
+                                "images/default.png",
+                                fit: BoxFit.cover,
+                                width: 80.0,
+                                height: 80.0,
+                              ),
+                            );
+                        })),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,22 +148,22 @@ class _ProfileState extends State<Profile> {
                   Icons.edit,
                   size: 20.0,
                 ),
-                onPressed: () async { // edit button only edits profile picture for now -- will be modified
+                onPressed: () async {
+                  // edit button only edits profile picture for now -- will be modified
                   File _image;
 
-                  Future _imgFromCamera() async { // camera is not working -- will be fixed
-                    PickedFile image = await ImagePicker().getImage(
-                        source: ImageSource.camera, imageQuality: 50
-                    );
+                  Future _imgFromCamera() async {
+                    // camera is not working -- will be fixed
+                    PickedFile image = await ImagePicker()
+                        .getImage(source: ImageSource.camera, imageQuality: 50);
                     setState(() {
                       _image = File(image.path);
                     });
                   }
 
                   Future _imgFromGallery() async {
-                    PickedFile image = await  ImagePicker().getImage(
-                        source: ImageSource.gallery, imageQuality: 50
-                    );
+                    PickedFile image = await ImagePicker().getImage(
+                        source: ImageSource.gallery, imageQuality: 50);
 
                     setState(() {
                       _image = File(image.path);
@@ -166,7 +183,8 @@ class _ProfileState extends State<Profile> {
                                     onTap: () async {
                                       await _imgFromGallery();
                                       Navigator.of(context).pop();
-                                      await UploadImage(img: _image, uid: uid).upload();
+                                      await UploadImage(img: _image, uid: uid)
+                                          .upload();
                                     }),
                                 new ListTile(
                                   leading: new Icon(Icons.photo_camera),
@@ -174,15 +192,15 @@ class _ProfileState extends State<Profile> {
                                   onTap: () async {
                                     await _imgFromCamera();
                                     Navigator.of(context).pop();
-                                    await UploadImage(img: _image, uid: uid).upload();
+                                    await UploadImage(img: _image, uid: uid)
+                                        .upload();
                                   },
                                 ),
                               ],
                             ),
                           ),
                         );
-                      }
-                  );
+                      });
                 },
                 tooltip: "Edit",
               ),
