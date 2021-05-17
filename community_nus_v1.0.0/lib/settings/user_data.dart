@@ -39,15 +39,34 @@ class RetrieveUserInfo {
 class UploadImage {
   firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   File img;
+  final String uid;
 
-  UploadImage({this.img});
+  UploadImage({this.img, this.uid});
 
   Future upload() async {
-    String fileName = basename(img.path);
+    // String fileName = basename(img.path);
     try {
-      await storage.ref().child('uploads/$fileName').putFile(img);
+      await storage.ref().child('profile_pictures/$uid').putFile(img);
     } on firebase_storage.FirebaseException catch (e) {
       // will create an alertDialog for error management
+    }
+  }
+}
+
+class DownloadImage {
+  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+  final String uid;
+
+  DownloadImage({this.uid});
+
+  Future<String> download() async {
+    String downloadURL;
+    try {
+      downloadURL = await storage.ref('profile_pictures/$uid').getDownloadURL();
+      return downloadURL;
+    } on firebase_storage.FirebaseException catch (e) {
+      downloadURL = await storage.ref('profile_pictures/default.png').getDownloadURL();
+      return downloadURL;
     }
   }
 }

@@ -10,15 +10,17 @@ import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   final DocumentSnapshot document;
-  Profile({this.document});
+  final String uid;
+  Profile({this.document, this.uid});
 
   @override
-  _ProfileState createState() => _ProfileState(document: document);
+  _ProfileState createState() => _ProfileState(document: document, uid: uid);
 }
 
 class _ProfileState extends State<Profile> {
   final DocumentSnapshot document;
-  _ProfileState({this.document});
+  final String uid;
+  _ProfileState({this.document, this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +35,7 @@ class _ProfileState extends State<Profile> {
                 Padding(
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   child: ClipOval(
-                    child: Image.asset(
-                      "images/default.png",
+                    child: Image.asset("images/default.png",
                       fit: BoxFit.cover,
                       width: 80.0,
                       height: 80.0,
@@ -165,7 +166,7 @@ class _ProfileState extends State<Profile> {
                                     onTap: () async {
                                       await _imgFromGallery();
                                       Navigator.of(context).pop();
-                                      await UploadImage(img: _image).upload();
+                                      await UploadImage(img: _image, uid: uid).upload();
                                     }),
                                 new ListTile(
                                   leading: new Icon(Icons.photo_camera),
@@ -173,7 +174,7 @@ class _ProfileState extends State<Profile> {
                                   onTap: () async {
                                     await _imgFromCamera();
                                     Navigator.of(context).pop();
-                                    await UploadImage(img: _image).upload();
+                                    await UploadImage(img: _image, uid: uid).upload();
                                   },
                                 ),
                               ],

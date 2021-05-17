@@ -12,17 +12,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
   final DocumentSnapshot document;
-  MainScreen({this.document});
+  final String uid;
+  MainScreen({this.document, this.uid});
 
   @override
-  _MainScreenState createState() => _MainScreenState(document: document);
+  _MainScreenState createState() => _MainScreenState(document: document, uid: uid);
 }
 
 class _MainScreenState extends State<MainScreen> {
   PageController _pageController;
   int _page = 0;
   final DocumentSnapshot document;
-  _MainScreenState({this.document});
+  final String uid;
+  _MainScreenState({this.document, this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
             Home(),
             SearchScreen(),
             StudyLobby(),
-            Profile(document: document),
+            Profile(document: document, uid: uid),
           ],
         ),
         bottomNavigationBar: BottomAppBar(

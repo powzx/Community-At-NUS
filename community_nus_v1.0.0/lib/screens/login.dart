@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return MainScreen(document: document);
+                        return MainScreen(document: document, uid: userCredential.user.uid);
                       },
                     ),
                   );
