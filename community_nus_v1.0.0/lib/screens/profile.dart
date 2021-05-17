@@ -4,13 +4,20 @@ import 'package:community_nus/screens/startAppLoadingScreen.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/app_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_nus/settings/user_data.dart';
 
 class Profile extends StatefulWidget {
+  final DocumentSnapshot document;
+  Profile({this.document});
+
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileState createState() => _ProfileState(document: document);
 }
 
 class _ProfileState extends State<Profile> {
+  final DocumentSnapshot document;
+  _ProfileState({this.document});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +47,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "Chang Jian Xiang",
+                            document.data()["name"],
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -53,7 +60,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "E0540308@u.nus.edu",
+                            document.data()["email"],
                             style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.bold,
@@ -114,7 +121,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               subtitle: Text(
-                "Chang Jian Xiang",
+                document.data()["name"],
               ),
               trailing: IconButton(
                 icon: Icon(
@@ -134,7 +141,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               subtitle: Text(
-                "E0540308@u.nus.edu",
+                document.data()["email"],
               ),
             ),
             ListTile(
@@ -146,7 +153,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               subtitle: Text(
-                "+65 85088226",
+                document.data()["phone"],
               ),
             ),
             ListTile(
@@ -158,7 +165,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               subtitle: Text(
-                "School Of Computing",
+                document.data()["faculty"],
               ),
             ),
             ListTile(
@@ -170,7 +177,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               subtitle: Text(
-                "Information Systems",
+                document.data()["course"],
               ),
             ),
             MediaQuery.of(context).platformBrightness == Brightness.dark

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_nus/screens/baseScreenForAllPages.dart';
@@ -5,6 +6,7 @@ import 'package:community_nus/screens/login.dart';
 import 'package:community_nus/screens/register.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:community_nus/settings/user_data.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -162,17 +164,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onPressed: () async {
                 bool ok = true;
+                UserCredential userCredential;
                 try {
-                  await auth.signInWithEmailAndPassword(
+                  userCredential = await auth.signInWithEmailAndPassword(
                       email: _email, password: _password);
                 } on FirebaseAuthException catch (e) {
                     ok = false;
                 }
                 if (ok) {
+                  RetrieveUserInfo userInfo = RetrieveUserInfo(uid: userCredential.user.uid);
+                  DocumentSnapshot document = await userInfo.startRetrieve();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return MainScreen();
+                        return MainScreen(document: document);
                       },
                     ),
                   );

@@ -17,3 +17,15 @@ class DatabaseService {
     });
   }
 }
+
+class RetrieveUserInfo {
+
+  final String uid;
+  RetrieveUserInfo({this.uid});
+
+  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  Future startRetrieve() async {
+    return await users.doc(uid).get();
+  }
+}

@@ -7,15 +7,22 @@ import 'package:community_nus/screens/profile.dart';
 import 'package:community_nus/screens/discussionForum.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/badge.dart';
+import 'package:community_nus/settings/user_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
+  final DocumentSnapshot document;
+  MainScreen({this.document});
+
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenState createState() => _MainScreenState(document: document);
 }
 
 class _MainScreenState extends State<MainScreen> {
   PageController _pageController;
   int _page = 0;
+  final DocumentSnapshot document;
+  _MainScreenState({this.document});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
             Home(),
             SearchScreen(),
             StudyLobby(),
-            Profile(),
+            Profile(document: document),
           ],
         ),
         bottomNavigationBar: BottomAppBar(
