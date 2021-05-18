@@ -11,20 +11,20 @@ import 'package:community_nus/settings/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainScreen extends StatefulWidget {
-  final DocumentSnapshot document;
+  //final DocumentSnapshot document;
   final String uid;
-  MainScreen({this.document, this.uid});
+  MainScreen({this.uid});
 
   @override
-  _MainScreenState createState() => _MainScreenState(document: document, uid: uid);
+  _MainScreenState createState() => _MainScreenState(uid: uid);
 }
 
 class _MainScreenState extends State<MainScreen> {
   PageController _pageController;
   int _page = 0;
-  final DocumentSnapshot document;
+  //final DocumentSnapshot document;
   final String uid;
-  _MainScreenState({this.document, this.uid});
+  _MainScreenState({this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
             Home(),
             SearchScreen(),
             StudyLobby(),
-            Profile(document: document, uid: uid),
+            Profile(uid: uid),
           ],
         ),
         bottomNavigationBar: BottomAppBar(

@@ -172,12 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ok = false;
                 }
                 if (ok) {
-                  RetrieveUserInfo userInfo = RetrieveUserInfo(uid: userCredential.user.uid);
-                  DocumentSnapshot document = await userInfo.startRetrieve();
+                  //RetrieveUserInfo userInfo = RetrieveUserInfo(uid: userCredential.user.uid);
+                  //DocumentSnapshot document = await userInfo.startRetrieve();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return MainScreen(document: document, uid: userCredential.user.uid);
+                        return MainScreen(uid: userCredential.user.uid);
                       },
                     ),
                   );
