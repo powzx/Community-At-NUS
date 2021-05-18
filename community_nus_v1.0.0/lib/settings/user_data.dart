@@ -22,6 +22,15 @@ class DatabaseService {
       'course': _course,
     });
   }
+
+  Future editUserData(String _name, String _phone, String _faculty, String _course) async {
+    return await users.doc(uid).update({
+      'name': _name,
+      'phone': _phone,
+      'faculty': _faculty,
+      'course': _course,
+    });
+  }
 }
 
 class RetrieveUserInfo {

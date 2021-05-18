@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:community_nus/screens/editProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:community_nus/screens/startAppLoadingScreen.dart';
@@ -158,62 +159,14 @@ class _ProfileState extends State<Profile> {
                           Icons.edit,
                           size: 20.0,
                         ),
-                        onPressed: () async {
-                          // edit button only edits profile picture for now -- will be modified
-                          File _image;
-
-                          Future _imgFromCamera() async {
-                            // camera is not working -- will be fixed
-                            PickedFile image = await ImagePicker().getImage(
-                                source: ImageSource.camera, imageQuality: 50);
-                            setState(() {
-                              _image = File(image.path);
-                            });
-                          }
-
-                          Future _imgFromGallery() async {
-                            PickedFile image = await ImagePicker().getImage(
-                                source: ImageSource.gallery, imageQuality: 50);
-
-                            setState(() {
-                              _image = File(image.path);
-                            });
-                          }
-
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext bc) {
-                                return SafeArea(
-                                  child: Container(
-                                    child: new Wrap(
-                                      children: <Widget>[
-                                        new ListTile(
-                                            leading:
-                                                new Icon(Icons.photo_library),
-                                            title: new Text('Gallery'),
-                                            onTap: () async {
-                                              await _imgFromGallery();
-                                              Navigator.of(context).pop();
-                                              await UploadImage(
-                                                      img: _image, uid: uid)
-                                                  .upload();
-                                            }),
-                                        new ListTile(
-                                          leading: new Icon(Icons.photo_camera),
-                                          title: new Text('Camera'),
-                                          onTap: () async {
-                                            await _imgFromCamera();
-                                            Navigator.of(context).pop();
-                                            await UploadImage(
-                                                    img: _image, uid: uid)
-                                                .upload();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              });
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return EditProfile(uid: uid, originalName: user.data.data()["name"], originalPhone: user.data.data()["phone"], originalFaculty: user.data.data()["faculty"], originalCourse: user.data.data()["course"]);
+                              },
+                            ),
+                          );
                         },
                         tooltip: "Edit",
                       ),
