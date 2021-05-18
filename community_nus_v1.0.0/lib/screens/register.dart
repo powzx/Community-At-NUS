@@ -6,6 +6,10 @@ import 'package:community_nus/screens/baseScreenForAllPages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:community_nus/settings/user_data.dart';
 
+/* bugs:
+* need to have error management for registration.
+* */
+
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();

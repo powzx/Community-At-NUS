@@ -9,6 +9,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:image_picker/image_picker.dart';
 
+/* bugs:
+* uploading profile pic only works with gallery, not camera.
+* have to refresh the page to view profile changes after editing profile.
+* */
+
 class Profile extends StatefulWidget {
   //final DocumentSnapshot document;
   final String uid;

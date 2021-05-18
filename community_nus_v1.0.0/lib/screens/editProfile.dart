@@ -6,6 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:community_nus/screens/profile.dart';
 import 'package:community_nus/screens/baseScreenForAllPages.dart';
 
+/* UI needs to be improved.
+* */
+
 class EditProfile extends StatefulWidget {
   final String uid;
   final String originalName;

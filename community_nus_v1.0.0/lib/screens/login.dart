@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:community_nus/settings/user_data.dart';
 
+/* forget password not implemented yet.
+* */
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
