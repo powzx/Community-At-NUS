@@ -22,10 +22,10 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: RetrieveUserInfo(uid: groupDetails.data()["host_uid"])
-            .startRetrieve(),
-        builder: (BuildContext context, AsyncSnapshot host) {
-          if (host.hasData) {
+        future: RetrieveUserInfo(uid: uid)
+            .retrieveInBulk(List.from(groupDetails.data()['members'])),
+        builder: (BuildContext context, AsyncSnapshot names) {
+          if (names.hasData) {
             return Scaffold(
               body: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
@@ -53,7 +53,7 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            "Created By: ${host.data.data()["name"]}",
+                            "Created By: ${names.data[0]}",
                             style: TextStyle(fontSize: 24),
                           ),
                           Text(
@@ -68,11 +68,70 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                             "Telegram Group Link: ${groupDetails.data()["telegram_group"]}",
                             style: TextStyle(fontSize: 24),
                           ),
+                          Text("Members: ",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold))
                         ],
                       ),
-                    )
+                    ),
+                    ListView.builder(
+                      itemCount: names.data.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 16),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: FutureBuilder(
+                                    future: DownloadImage(
+                                            uid: List.from(groupDetails
+                                                .data()['members'])[index])
+                                        .download(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData) {
+                                        return ClipOval(
+                                          child: Image.network(
+                                            snapshot.data,
+                                            fit: BoxFit.cover,
+                                            width: 60.0,
+                                            height: 60.0,
+                                          ),
+                                        );
+                                      }
+                                      return ClipOval(
+                                        child: Image.asset(
+                                          "images/default.png",
+                                          fit: BoxFit.cover,
+                                          width: 60.0,
+                                          height: 60.0,
+                                        ),
+                                      );
+                                    }),
+                                title: Text(
+                                  '${names.data[index]}',
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                subtitle: Text((index == 0) ? "Creator" : ""),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  await StudyLobbyDatabase(uid: uid).addMember(groupDetails.id);
+                  Navigator.of(context).pop();
+                },
+                tooltip: "Join Group",
+                child: Icon(Icons.group_add),
               ),
             );
           }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -43,6 +43,19 @@ class RetrieveUserInfo {
   Future startRetrieve() async {
     return await users.doc(uid).get();
   }
+
+  Future retrieveInBulk(List<String> members) async {
+    int length = members.length;
+    List<String> names = [];
+    DocumentSnapshot usrDetails;
+
+    for (int i = 0; i < length; i++) {
+      usrDetails = await users.doc(members[i]).get();
+      names.add(usrDetails.data()["name"]);
+    }
+
+    return names;
+  }
 }
 
 class StudyLobbyDatabase {
@@ -58,6 +71,7 @@ class StudyLobbyDatabase {
       'description': _description,
       'modules': _modules,
       'telegram_group': _telegram,
+      'members': FieldValue.arrayUnion([uid]),
     });
   }
 
@@ -66,6 +80,12 @@ class StudyLobbyDatabase {
     final allData = query.docs;
 
     return allData;
+  }
+
+  Future addMember(String groupID) async {
+    return await lobby.doc(groupID).update({
+      'members': FieldValue.arrayUnion([uid]),
+    });
   }
 }
 

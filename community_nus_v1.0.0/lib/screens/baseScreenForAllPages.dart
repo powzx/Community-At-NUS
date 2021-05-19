@@ -13,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MainScreen extends StatefulWidget {
   //final DocumentSnapshot document;
   final String uid;
+
   MainScreen({this.uid});
 
   @override
@@ -22,8 +23,10 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   PageController _pageController;
   int _page = 0;
+
   //final DocumentSnapshot document;
   final String uid;
+
   _MainScreenState({this.uid});
 
   @override
@@ -95,8 +98,8 @@ class _MainScreenState extends State<MainScreen> {
                 onPressed: () => _pageController.jumpToPage(1),
               ),
               IconButton(
-                icon: IconBadge(
-                  icon: Icons.chat_bubble,
+                icon: Icon(
+                  Icons.group,
                   size: 24.0,
                 ),
                 color: _page == 2
