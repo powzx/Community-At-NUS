@@ -9,7 +9,8 @@ class StudyLobbyDetails extends StatefulWidget {
   StudyLobbyDetails({this.uid, this.groupDetails});
 
   @override
-  _StudyLobbyDetails createState() => _StudyLobbyDetails(uid: uid, groupDetails: groupDetails);
+  _StudyLobbyDetails createState() =>
+      _StudyLobbyDetails(uid: uid, groupDetails: groupDetails);
 }
 
 class _StudyLobbyDetails extends State<StudyLobbyDetails> {
@@ -20,41 +21,62 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return FutureBuilder(
+        future: RetrieveUserInfo(uid: groupDetails.data()["host_uid"])
+            .startRetrieve(),
+        builder: (BuildContext context, AsyncSnapshot host) {
+          if (host.hasData) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "${groupDetails.data()["group_name"]}",
-                      style: TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),
+                    SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "${groupDetails.data()["group_name"]}",
+                              style: TextStyle(
+                                  fontSize: 32, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
+                    Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "Created By: ${host.data.data()["name"]}",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Text(
+                            "Description: ${groupDetails.data()["description"]}",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Text(
+                            "Modules: ${groupDetails.data()["modules"]}",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Text(
+                            "Telegram Group Link: ${groupDetails.data()["telegram_group"]}",
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-            Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text("Created By: ${groupDetails.data()["host_uid"]}"),
-                  Text("Description: ${groupDetails.data()["description"]}"),
-                  Text("Modules: ${groupDetails.data()["modules"]}"),
-                  Text("Telegram Group Link: ${groupDetails.data()["telegram_group"]}"),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+            );
+          }
+          return CircularProgressIndicator();
+        });
   }
 }
