@@ -3,6 +3,7 @@ import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/ChatUsers.dart';
 import 'package:community_nus/screens/createStudyLobby.dart';
+import 'package:community_nus/screens/studyLobbyDetails.dart';
 
 class StudyLobby extends StatefulWidget {
   final String uid;
@@ -106,7 +107,13 @@ class _StudyLobbyState extends State<StudyLobby> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (BuildContext context) {
+                                            return StudyLobbyDetails(uid: uid, groupDetails: lobby.data[index]);
+                                          },),
+                                        );
+                                      },
                                       child: Text('VIEW DETAILS')),
                                   SizedBox(
                                     width: 8,
