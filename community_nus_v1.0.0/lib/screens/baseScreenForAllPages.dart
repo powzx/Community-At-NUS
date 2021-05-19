@@ -64,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             Home(),
             SearchScreen(),
-            StudyLobby(),
+            StudyLobby(uid: uid),
             Profile(uid: uid),
           ],
         ),

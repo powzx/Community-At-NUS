@@ -45,6 +45,30 @@ class RetrieveUserInfo {
   }
 }
 
+class StudyLobbyDatabase {
+  final String uid;
+  StudyLobbyDatabase({this.uid});
+
+  final CollectionReference lobby = FirebaseFirestore.instance.collection('lobby');
+
+  Future create(String _groupName, String _description, String _modules, String _telegram) async {
+    return await lobby.doc().set({
+      'host_uid': uid,
+      'group_name': _groupName,
+      'description': _description,
+      'modules': _modules,
+      'telegram_group': _telegram,
+    });
+  }
+
+  Future retrieveAll() async {
+    QuerySnapshot query = await lobby.get();
+    final allData = query.docs;
+
+    return allData;
+  }
+}
+
 class UploadImage {
   firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   File img;

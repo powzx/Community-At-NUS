@@ -1,83 +1,72 @@
 import 'package:community_nus/settings/conversationList.dart';
+import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/ChatUsers.dart';
+import 'package:community_nus/screens/createStudyLobby.dart';
 
 class StudyLobby extends StatefulWidget {
+  final String uid;
+
+  StudyLobby({this.uid});
+
   @override
-  _StudyLobbyState createState() => _StudyLobbyState();
+  _StudyLobbyState createState() => _StudyLobbyState(uid: uid);
 }
 
 class _StudyLobbyState extends State<StudyLobby> {
+  final String uid;
+
+  _StudyLobbyState({this.uid});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return FutureBuilder(
+        future: StudyLobbyDatabase(uid: uid).retrieveAll(),
+        builder: (BuildContext context, AsyncSnapshot lobby) {
+          if (lobby.hasData) {
+            return Scaffold(
+              body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "Study Lobby",
-                      style:
-                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.pink[50],
+                    SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Study Lobby",
+                              style: TextStyle(
+                                  fontSize: 32, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Colors.pink,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search a study group...",
+                          hintStyle: TextStyle(color: Colors.grey.shade600),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey.shade600,
                             size: 20,
                           ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            "Add New",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: EdgeInsets.all(8),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade100)),
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16, left: 16, right: 16),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search...",
-                  hintStyle: TextStyle(color: Colors.grey.shade600),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.grey.shade600,
-                    size: 20,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: EdgeInsets.all(8),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: Colors.grey.shade100)),
-                ),
-              ),
-            ),
-            ListView.builder(
+                    ),
+                    /*ListView.builder(
               itemCount: chatUsers.length,
               shrinkWrap: true,
               padding: EdgeInsets.only(top: 16),
@@ -91,14 +80,41 @@ class _StudyLobbyState extends State<StudyLobby> {
                   isMessageRead: (index == 0 || index == 3) ? true : false,
                 );
               },
-            ),
-          ],
-        ),
-      ),
-    );
+            ),*/
+                    ListView.builder(
+                      itemCount: lobby.data.length,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 16),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text('${lobby.data[index].data()["group_name"]}'),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return CreateStudyLobby(uid: uid);
+                      },
+                    ),
+                  );
+                },
+                tooltip: "Create A Study Group",
+                child: const Icon(Icons.add),
+              ),
+            );
+          }
+          return CircularProgressIndicator();
+        });
   }
 
-  List<ChatUsers> chatUsers = [
+/*List<ChatUsers> chatUsers = [
     ChatUsers(
         name: "Instagram Group",
         messageText: "Awesome Setup",
@@ -114,5 +130,5 @@ class _StudyLobbyState extends State<StudyLobby> {
         messageText: "Hey where are you?",
         imageURL: "images/facebook.png",
         time: "31 Mar"),
-  ];
+  ];*/
 }
