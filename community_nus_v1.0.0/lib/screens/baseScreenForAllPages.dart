@@ -43,6 +43,11 @@ class _MainScreenState extends State<MainScreen> {
           elevation: 0.0,
           actions: <Widget>[
             IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {},
+              tooltip: "Refresh",
+            ),
+            IconButton(
               icon: IconBadge(
                 icon: Icons.notifications,
                 size: 22.0,
