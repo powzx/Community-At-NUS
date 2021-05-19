@@ -87,8 +87,34 @@ class _StudyLobbyState extends State<StudyLobby> {
                       padding: EdgeInsets.only(top: 16),
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text('${lobby.data[index].data()["group_name"]}'),
+                        return Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Icon(Icons.group),
+                                title: Text(
+                                  '${lobby.data[index].data()["group_name"]}',
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                subtitle: Text(
+                                  '${lobby.data[index].data()["modules"]}',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  TextButton(
+                                      onPressed: () {},
+                                      child: Text('VIEW DETAILS')),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         );
                       },
                     )
