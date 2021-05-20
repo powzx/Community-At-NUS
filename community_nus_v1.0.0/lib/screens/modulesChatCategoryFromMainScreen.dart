@@ -65,7 +65,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   Map cat = categories[index];
                   return Modules(
-                    icon: cat['icon'],
+                    //icon: cat['icon'],
                     title: cat['name'],
                     isHome: false,
                     tap: () {

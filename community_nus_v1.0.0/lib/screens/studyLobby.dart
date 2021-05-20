@@ -5,6 +5,12 @@ import 'package:community_nus/settings/ChatUsers.dart';
 import 'package:community_nus/screens/createStudyLobby.dart';
 import 'package:community_nus/screens/studyLobbyDetails.dart';
 
+/* Users need to reload this page to re-fetch data after joining a study group
+* to view changes to the members list.
+* UI needs to be improved.
+* Any other additional functionalities of study lobby??
+* */
+
 class StudyLobby extends StatefulWidget {
   final String uid;
 

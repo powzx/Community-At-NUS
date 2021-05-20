@@ -9,8 +9,8 @@ class Modules extends StatefulWidget {
 
   Modules(
       {Key key,
-      @required this.icon,
-      @required this.title,
+      this.icon,
+      this.title,
       this.tap,
       this.isHome})
       : super(key: key);
@@ -42,14 +42,14 @@ class _ModulesState extends State<Modules> {
           padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
           child: Row(
             children: <Widget>[
-              Padding(
+              /*Padding(
                 padding: EdgeInsets.only(left: 0.0, right: 10.0),
                 child: Icon(
                   widget.icon,
                   color: Theme.of(context).accentColor,
                 ),
               ),
-              SizedBox(width: 5),
+              SizedBox(width: 5),*/
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

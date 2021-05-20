@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
           controller: _pageController,
           onPageChanged: onPageChanged,
           children: <Widget>[
-            Home(),
+            Home(uid: uid),
             SearchScreen(),
             StudyLobby(uid: uid),
             Profile(uid: uid),

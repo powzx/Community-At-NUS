@@ -2,12 +2,14 @@ import 'package:community_nus/modulesSelectionPages/bizModules.dart';
 import 'package:community_nus/modulesSelectionPages/socModules.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/screens/modulesChatCategoryFromMainScreen.dart';
+import 'package:community_nus/modulesSelectionPages/viewModules.dart';
 
 class Faculties extends StatefulWidget {
   final String name;
   final String img;
+  final String uid;
 
-  Faculties({Key key, @required this.name, @required this.img})
+  Faculties({Key key, @required this.name, @required this.img, this.uid})
       : super(key: key);
 
   @override
@@ -22,7 +24,8 @@ class _FacultiesState extends State<Faculties> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context){
-              return BizModules();
+              //return ViewModules(fac: "computing", img: "${widget.img}"); // for testing purposes only
+              return ViewModules(fac: "${widget.name}", img: "${widget.img}", uid: "${widget.uid}");
             },
           ),
         );

@@ -20,6 +20,7 @@ class DatabaseService {
       'phone': _phone,
       'faculty': _faculty,
       'course': _course,
+      'modules': FieldValue.arrayUnion(['nil'])
     });
   }
 
@@ -29,6 +30,21 @@ class DatabaseService {
       'phone': _phone,
       'faculty': _faculty,
       'course': _course,
+    });
+  }
+  
+  Future addModules(String _module) async {
+    DocumentSnapshot current = await users.doc(uid).get();
+    if (List.from(current.data()["modules"])[0] == "nil") {
+      await users.doc(uid).update({
+        'modules': FieldValue.arrayUnion([_module])
+      });
+      return await users.doc(uid).update({
+        'modules': FieldValue.arrayRemove(["nil"])
+      });
+    }
+    return await users.doc(uid).update({
+      'modules': FieldValue.arrayUnion([_module])
     });
   }
 }
@@ -120,5 +136,17 @@ class DownloadImage {
       //downloadURL = await storage.ref('profile_pictures/default.png').getDownloadURL();
     }
     return downloadURL;
+  }
+}
+
+class FacultyDatabase {
+  final String fac;
+
+  FacultyDatabase({this.fac});
+
+  final CollectionReference faculties = FirebaseFirestore.instance.collection('faculties');
+
+  Future viewModules() async {
+    return await faculties.doc(fac).get();
   }
 }
