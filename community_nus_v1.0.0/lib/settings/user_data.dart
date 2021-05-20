@@ -20,7 +20,8 @@ class DatabaseService {
       'phone': _phone,
       'faculty': _faculty,
       'course': _course,
-      'modules': FieldValue.arrayUnion(['nil'])
+      'modules': FieldValue.arrayUnion(['nil']),
+      'rep': 0
     });
   }
 

@@ -90,14 +90,20 @@ class _ProfileState extends State<Profile> {
                               SizedBox(height: 5.0),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    user.data.data()["email"],
+                                    "Reputation: ",
                                     //document.data()["email"],
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    user.data.data()["rep"].toString(),
+                                    style: TextStyle(
+                                      fontSize: 14.0
                                     ),
                                   ),
                                 ],
