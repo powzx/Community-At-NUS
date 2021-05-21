@@ -94,9 +94,11 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                 ),
                                 title: Text(
                                   '${usrDetails.data[index].data()["name"]}',
-                                  style: TextStyle(fontSize: 24),
+                                  style: TextStyle(fontSize: 20),
                                 ),
-                                subtitle: Text((index == 0) ? "Creator" : ""),
+                                subtitle: Text(
+                                    '${usrDetails.data[index].data()["faculty"]}'),
+                                trailing: Text((index == 0) ? "Creator" : ""),
                               ),
                             ],
                           ),
