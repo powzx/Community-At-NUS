@@ -62,16 +62,17 @@ class RetrieveUserInfo {
   }
 
   Future retrieveInBulk(List<String> members) async {
+    // this function gets document snapshots of every single UID in the list of members given
     int length = members.length;
-    List<String> names = [];
-    DocumentSnapshot usrDetails;
+    List<DocumentSnapshot> usrDetails = [];
+    DocumentSnapshot data;
 
     for (int i = 0; i < length; i++) {
-      usrDetails = await users.doc(members[i]).get();
-      names.add(usrDetails.data()["name"]);
+      data = await users.doc(members[i]).get();
+      usrDetails.add(data);
     }
 
-    return names;
+    return usrDetails;
   }
 }
 

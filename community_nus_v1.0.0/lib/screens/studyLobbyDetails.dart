@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_nus/settings/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/user_data.dart';
 
@@ -24,8 +25,8 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
     return FutureBuilder(
         future: RetrieveUserInfo(uid: uid)
             .retrieveInBulk(List.from(groupDetails.data()['members'])),
-        builder: (BuildContext context, AsyncSnapshot names) {
-          if (names.hasData) {
+        builder: (BuildContext context, AsyncSnapshot usrDetails) {
+          if (usrDetails.hasData) {
             return Scaffold(
               body: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
@@ -53,7 +54,7 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            "Created By: ${names.data[0]}",
+                            "Created By: ${usrDetails.data[0].data()["name"]}",
                             style: TextStyle(fontSize: 24),
                           ),
                           Text(
@@ -75,7 +76,7 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                       ),
                     ),
                     ListView.builder(
-                      itemCount: names.data.length,
+                      itemCount: usrDetails.data.length,
                       shrinkWrap: true,
                       padding: EdgeInsets.only(top: 16),
                       physics: NeverScrollableScrollPhysics(),
@@ -85,34 +86,14 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: FutureBuilder(
-                                    future: DownloadImage(
-                                            uid: List.from(groupDetails
-                                                .data()['members'])[index])
-                                        .download(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.hasData) {
-                                        return ClipOval(
-                                          child: Image.network(
-                                            snapshot.data,
-                                            fit: BoxFit.cover,
-                                            width: 60.0,
-                                            height: 60.0,
-                                          ),
-                                        );
-                                      }
-                                      return ClipOval(
-                                        child: Image.asset(
-                                          "images/default.png",
-                                          fit: BoxFit.cover,
-                                          width: 60.0,
-                                          height: 60.0,
-                                        ),
-                                      );
-                                    }),
+                                leading: ProfilePic(
+                                  uid: List.from(
+                                      groupDetails.data()['members'])[index],
+                                  upSize: false,
+                                  rep: usrDetails.data[index].data()["rep"],
+                                ),
                                 title: Text(
-                                  '${names.data[index]}',
+                                  '${usrDetails.data[index].data()["name"]}',
                                   style: TextStyle(fontSize: 24),
                                 ),
                                 subtitle: Text((index == 0) ? "Creator" : ""),

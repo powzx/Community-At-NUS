@@ -8,6 +8,7 @@ import 'package:community_nus/settings/app_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:community_nus/settings/profile_pic.dart';
 
 /* bugs:
 * uploading profile pic only works with gallery, not camera.
@@ -46,29 +47,8 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Padding(
                             padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: FutureBuilder(
-                                future: DownloadImage(uid: uid).download(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ClipOval(
-                                      child: Image.network(
-                                        snapshot.data,
-                                        fit: BoxFit.cover,
-                                        width: 80.0,
-                                        height: 80.0,
-                                      ),
-                                    );
-                                  }
-                                  return ClipOval(
-                                    child: Image.asset(
-                                      "images/default.png",
-                                      fit: BoxFit.cover,
-                                      width: 80.0,
-                                      height: 80.0,
-                                    ),
-                                  );
-                                })),
+                            child: ProfilePic(uid: uid, upSize: true, rep: user.data.data()["rep"]),
+                        ),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
