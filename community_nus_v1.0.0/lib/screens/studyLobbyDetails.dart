@@ -28,51 +28,84 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
         builder: (BuildContext context, AsyncSnapshot usrDetails) {
           if (usrDetails.hasData) {
             return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  icon: Icon(Icons.keyboard_backspace),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                centerTitle: true,
+                title: Text("${groupDetails.data()["group_name"]}"),
+                elevation: 0.0,
+              ),
               body: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SafeArea(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "${groupDetails.data()["group_name"]}",
-                              style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                    ListTile(
+                      title: Text(
+                        "Creator",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
+                      subtitle: Text(
+                        usrDetails.data[0].data()["name"],
+                        style: TextStyle(fontSize: 17),
+                      ),
                     ),
-                    Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            "Created By: ${usrDetails.data[0].data()["name"]}",
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          Text(
-                            "Description: ${groupDetails.data()["description"]}",
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          Text(
-                            "Modules: ${groupDetails.data()["modules"]}",
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          Text(
-                            "Telegram Group Link: ${groupDetails.data()["telegram_group"]}",
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          Text("Members: ",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold))
-                        ],
+                    ListTile(
+                      title: Text(
+                        "Description",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: Text(
+                        groupDetails.data()["description"],
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Modules",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: Text(
+                        groupDetails.data()["modules"],
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Telegram Invite Link",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: Text(
+                        groupDetails.data()["telegram_group"],
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                    Container(height: 10.0),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(15.0, 0, 0, 0),
+                      child: Text(
+                        "Members".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     ListView.builder(

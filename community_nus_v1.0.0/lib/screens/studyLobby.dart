@@ -99,7 +99,13 @@ class _StudyLobbyState extends State<StudyLobby> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: Icon(Icons.group),
+                                leading: Column(
+                                  children: <Widget>[
+                                    Icon(Icons.group),
+                                    Text(
+                                        '${lobby.data[index].data()["members"].length.toString()}/20'),
+                                  ],
+                                ),
                                 title: Text(
                                   '${lobby.data[index].data()["group_name"]}',
                                   style: TextStyle(fontSize: 24),
@@ -115,9 +121,14 @@ class _StudyLobbyState extends State<StudyLobby> {
                                   TextButton(
                                       onPressed: () {
                                         Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (BuildContext context) {
-                                            return StudyLobbyDetails(uid: uid, groupDetails: lobby.data[index]);
-                                          },),
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                              return StudyLobbyDetails(
+                                                  uid: uid,
+                                                  groupDetails:
+                                                      lobby.data[index]);
+                                            },
+                                          ),
                                         );
                                       },
                                       child: Text('VIEW DETAILS')),
