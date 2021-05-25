@@ -1,5 +1,3 @@
-import 'package:community_nus/modulesSelectionPages/bizModules.dart';
-import 'package:community_nus/modulesSelectionPages/socModules.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/screens/modulesChatCategoryFromMainScreen.dart';
 import 'package:community_nus/modulesSelectionPages/viewModules.dart';

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:community_nus/modulesSelectionPages/socModules.dart';
-import 'package:community_nus/modulesSelectionPages/bizModules.dart';
-
 List<Map> faculties = [
   {
     "img": "images/nusbiz.png",
