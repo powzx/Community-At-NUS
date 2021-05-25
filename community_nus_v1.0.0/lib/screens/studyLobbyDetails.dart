@@ -20,6 +20,8 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
 
   _StudyLobbyDetails({this.uid, this.groupDetails});
 
+  bool joined = false;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -27,6 +29,10 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
             .retrieveInBulk(List.from(groupDetails.data()['members'])),
         builder: (BuildContext context, AsyncSnapshot usrDetails) {
           if (usrDetails.hasData) {
+            for (int i = 0; i < usrDetails.data.length; i++) {
+              if (List.from(groupDetails.data()['members'])[i] == uid)
+                joined = true;
+            } 
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -93,8 +99,12 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                         ),
                       ),
                       subtitle: Text(
-                        groupDetails.data()["telegram_group"],
-                        style: TextStyle(fontSize: 17),
+                        joined
+                            ? groupDetails.data()["telegram_group"]
+                            : "Join to view",
+                        style: joined
+                            ? TextStyle(fontSize: 17)
+                            : TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
                       ),
                     ),
                     Container(height: 10.0),
