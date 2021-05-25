@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/discussionForumItems.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -107,21 +108,6 @@ class _SearchScreenState extends State<SearchScreen>
                         ),
                       ]),
                 ),
-
-                // subtitle: Row(
-                //   children: <Widget>[
-                //     Flexible(
-                //       child: Text(
-                //         "${thread['threads']}",
-                //         style: TextStyle(
-                //           fontSize: 13,
-                //           fontWeight: FontWeight.w300,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-
                 subtitle: Row(
                   children: <Widget>[
                     Flexible(
@@ -149,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen>
                               ),
                             ),
                             Text(
-                              "5",
+                              "${thread['upvote']}",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontStyle: FontStyle.italic,
@@ -175,21 +161,13 @@ class _SearchScreenState extends State<SearchScreen>
                               ),
                             ),
                             Text(
-                              "50",
+                              "${thread['downvote']}",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Icon(
-                                Icons.chat_bubble,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            )
                           ]),
                     )
                   ],

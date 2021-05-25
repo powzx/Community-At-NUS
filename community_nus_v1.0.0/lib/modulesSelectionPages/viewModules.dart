@@ -108,7 +108,7 @@ class _ViewModulesState extends State<ViewModules> {
                         ),
                         maxLines: 2,
                       ),
-                      SizedBox(width: 200.0,),
+                      SizedBox(width: 170.0,),
                       Text("(Click to add)",
                           style: TextStyle(
                             fontSize: 14,
