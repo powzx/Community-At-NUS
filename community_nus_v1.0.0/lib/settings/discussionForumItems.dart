@@ -7,16 +7,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
-
 class DiscussionForumDatabase {
-  final String uid;
-  DiscussionForumDatabase({this.uid});
+  final String forumID;
+  DiscussionForumDatabase({this.forumID});
 
-  final CollectionReference lobby = FirebaseFirestore.instance.collection('forum');
+  final CollectionReference forum =
+      FirebaseFirestore.instance.collection('forum');
 
   Future create(String title, String threads, int upvote, int downvote) async {
-    return await lobby.doc().set({
-      'host_uid': uid,
+    return await forum.doc(forumID).set({
+      'host_forumID': forumID,
       'title': title,
       'threads': threads,
       'upvote': upvote,
@@ -25,21 +25,22 @@ class DiscussionForumDatabase {
   }
 
   Future retrieveAll() async {
-    QuerySnapshot query = await lobby.get();
+    QuerySnapshot query = await forum.get();
     final allData = query.docs;
 
     return allData;
   }
 
-//   Future addThread(String groupID) async {
-//     return await lobby.doc(groupID).update({
-//       'members': FieldValue.arrayUnion([uid]),
-//     });
-//   }
+  Future updateUpvote(
+      String title, String threads, int upvote, int downvote) async {
+    return await forum.doc(forumID).update({
+      'title': title,
+      'threads': threads,
+      'upvote': upvote + 1,
+      'downvote': downvote,
+    });
+  }
 }
-
-
-
 
 // List<Map> disussionForum = [
 //   {
