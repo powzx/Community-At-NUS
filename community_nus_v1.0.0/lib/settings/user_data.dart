@@ -7,13 +7,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class DatabaseService {
-
   final String uid;
+
   DatabaseService({this.uid});
 
-  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
 
-  Future updateUserData(String _name, String _email, String _phone, String _faculty, String _course) async {
+  Future updateUserData(String _name, String _email, String _phone,
+      String _faculty, String _course) async {
     return await users.doc(uid).set({
       'name': _name,
       'email': _email,
@@ -25,7 +27,8 @@ class DatabaseService {
     });
   }
 
-  Future editUserData(String _name, String _phone, String _faculty, String _course) async {
+  Future editUserData(
+      String _name, String _phone, String _faculty, String _course) async {
     return await users.doc(uid).update({
       'name': _name,
       'phone': _phone,
@@ -33,7 +36,7 @@ class DatabaseService {
       'course': _course,
     });
   }
-  
+
   Future addModules(String _module) async {
     DocumentSnapshot current = await users.doc(uid).get();
     if (List.from(current.data()["modules"])[0] == "nil") {
@@ -51,11 +54,12 @@ class DatabaseService {
 }
 
 class RetrieveUserInfo {
-
   final String uid;
+
   RetrieveUserInfo({this.uid});
 
-  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
 
   Future startRetrieve() async {
     return await users.doc(uid).get();
@@ -78,16 +82,23 @@ class RetrieveUserInfo {
 
 class StudyLobbyDatabase {
   final String uid;
+
   StudyLobbyDatabase({this.uid});
 
-  final CollectionReference lobby = FirebaseFirestore.instance.collection('lobby');
+  final CollectionReference lobby =
+      FirebaseFirestore.instance.collection('lobby');
 
-  Future create(String _groupName, String _description, String _modules, String _telegram) async {
-    return await lobby.doc().set({
+  Future create(String _groupName, String _description, String _modules,
+      String _telegram) async {
+    final DocumentReference group = lobby.doc();
+    await group.set({
       'host_uid': uid,
       'group_name': _groupName,
-      'description': _description,
       'modules': _modules,
+      'strength': 1,
+    });
+    return await group.collection('details').doc('details').set({
+      'description': _description,
       'telegram_group': _telegram,
       'members': FieldValue.arrayUnion([uid]),
     });
@@ -100,15 +111,30 @@ class StudyLobbyDatabase {
     return allData;
   }
 
-  Future addMember(String groupID) async {
-    return await lobby.doc(groupID).update({
+  Future addMember(DocumentSnapshot group) async {
+    int initial = group.data()['strength'];
+    await lobby.doc(group.id).update({
+      'strength': initial + 1,
+    });
+    return await lobby
+        .doc(group.id)
+        .collection('details')
+        .doc('details')
+        .update({
       'members': FieldValue.arrayUnion([uid]),
     });
+  }
+
+  Future retrieveDetailsForGroup(DocumentSnapshot group) async {
+    DocumentSnapshot details =
+        await lobby.doc(group.id).collection('details').doc('details').get();
+    return details;
   }
 }
 
 class UploadImage {
-  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   File img;
   final String uid;
 
@@ -125,7 +151,8 @@ class UploadImage {
 }
 
 class DownloadImage {
-  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   final String uid;
 
   DownloadImage({this.uid});
@@ -146,7 +173,8 @@ class FacultyDatabase {
 
   FacultyDatabase({this.fac});
 
-  final CollectionReference faculties = FirebaseFirestore.instance.collection('faculties');
+  final CollectionReference faculties =
+      FirebaseFirestore.instance.collection('faculties');
 
   Future viewModules() async {
     return await faculties.doc(fac).get();

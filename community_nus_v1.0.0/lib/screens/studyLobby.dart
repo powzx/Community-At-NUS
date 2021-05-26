@@ -103,7 +103,7 @@ class _StudyLobbyState extends State<StudyLobby> {
                                   children: <Widget>[
                                     Icon(Icons.group),
                                     Text(
-                                        '${lobby.data[index].data()["members"].length.toString()}/20'),
+                                        '${lobby.data[index].data()["strength"].toString()}/20'),
                                   ],
                                 ),
                                 title: Text(
