@@ -44,7 +44,9 @@ class _MainScreenState extends State<MainScreen> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.refresh),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {});
+              },
               tooltip: "Refresh",
             ),
             IconButton(

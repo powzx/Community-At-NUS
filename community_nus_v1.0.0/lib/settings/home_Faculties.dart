@@ -18,12 +18,15 @@ class _FacultiesState extends State<Faculties> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (BuildContext context){
+            builder: (BuildContext context) {
               //return ViewModules(fac: "computing", img: "${widget.img}"); // for testing purposes only
-              return ViewModules(fac: "${widget.name}", img: "${widget.img}", uid: "${widget.uid}");
+              return ViewModules(
+                  fac: "${widget.name}",
+                  img: "${widget.img}",
+                  uid: "${widget.uid}");
             },
           ),
         );
@@ -47,7 +50,6 @@ class _FacultiesState extends State<Faculties> {
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 12,
-                      
                     ),
                   ),
                   Container(

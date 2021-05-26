@@ -46,8 +46,11 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: ProfilePic(uid: uid, upSize: true, rep: user.data.data()["rep"]),
+                          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: ProfilePic(
+                              uid: uid,
+                              upSize: true,
+                              rep: user.data.data()["rep"]),
                         ),
                         Expanded(
                           child: Column(
@@ -69,8 +72,7 @@ class _ProfileState extends State<Profile> {
                               ),
                               SizedBox(height: 5.0),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
                                     "Reputation: ",
@@ -82,9 +84,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   Text(
                                     user.data.data()["rep"].toString(),
-                                    style: TextStyle(
-                                      fontSize: 14.0
-                                    ),
+                                    style: TextStyle(fontSize: 14.0),
                                   ),
                                 ],
                               ),
@@ -154,10 +154,18 @@ class _ProfileState extends State<Profile> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return EditProfile(uid: uid, originalName: user.data.data()["name"], originalPhone: user.data.data()["phone"], originalFaculty: user.data.data()["faculty"], originalCourse: user.data.data()["course"]);
+                                return EditProfile(
+                                    uid: uid,
+                                    originalName: user.data.data()["name"],
+                                    originalPhone: user.data.data()["phone"],
+                                    originalFaculty:
+                                        user.data.data()["faculty"],
+                                    originalCourse: user.data.data()["course"]);
                               },
                             ),
-                          );
+                          ).then((value) {
+                            setState(() {});
+                          });
                         },
                         tooltip: "Edit",
                       ),

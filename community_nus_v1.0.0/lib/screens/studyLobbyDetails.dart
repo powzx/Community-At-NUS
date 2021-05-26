@@ -32,7 +32,7 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
             for (int i = 0; i < usrDetails.data.length; i++) {
               if (List.from(groupDetails.data()['members'])[i] == uid)
                 joined = true;
-            } 
+            }
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -104,7 +104,8 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                             : "Join to view",
                         style: joined
                             ? TextStyle(fontSize: 17)
-                            : TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
+                            : TextStyle(
+                                fontSize: 17, fontStyle: FontStyle.italic),
                       ),
                     ),
                     Container(height: 10.0),
@@ -155,6 +156,7 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                 onPressed: () async {
                   await StudyLobbyDatabase(uid: uid).addMember(groupDetails.id);
                   Navigator.of(context).pop();
+                  //setState(() {});
                 },
                 tooltip: "Join Group",
                 child: Icon(Icons.group_add),

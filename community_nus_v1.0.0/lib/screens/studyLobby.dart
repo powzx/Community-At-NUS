@@ -129,7 +129,9 @@ class _StudyLobbyState extends State<StudyLobby> {
                                                       lobby.data[index]);
                                             },
                                           ),
-                                        );
+                                        ).then((value) {
+                                          setState(() {});
+                                        });
                                       },
                                       child: Text('VIEW DETAILS')),
                                   SizedBox(
@@ -153,7 +155,9 @@ class _StudyLobbyState extends State<StudyLobby> {
                         return CreateStudyLobby(uid: uid);
                       },
                     ),
-                  );
+                  ).then((value) {
+                    setState(() {});
+                  });
                 },
                 tooltip: "Create A Study Group",
                 child: const Icon(Icons.add),

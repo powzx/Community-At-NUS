@@ -1,3 +1,4 @@
+import 'package:community_nus/screens/baseScreenForAllPages.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/screens/notifications.dart';
@@ -17,7 +18,8 @@ class ViewModules extends StatefulWidget {
   ViewModules({this.fac, this.img, this.uid});
 
   @override
-  _ViewModulesState createState() => _ViewModulesState(fac: fac, img: img, uid: uid);
+  _ViewModulesState createState() =>
+      _ViewModulesState(fac: fac, img: img, uid: uid);
 }
 
 class _ViewModulesState extends State<ViewModules> {
@@ -108,7 +110,9 @@ class _ViewModulesState extends State<ViewModules> {
                         ),
                         maxLines: 2,
                       ),
-                      SizedBox(width: 170.0,),
+                      SizedBox(
+                        width: 170.0,
+                      ),
                       Text("(Click to add)",
                           style: TextStyle(
                             fontSize: 14,
@@ -137,8 +141,13 @@ class _ViewModulesState extends State<ViewModules> {
                             title: modules[index],
                             isHome: false,
                             tap: () async {
-                              await DatabaseService(uid: uid).addModules(modules[index]);
+                              await DatabaseService(uid: uid)
+                                  .addModules(modules[index]);
                               Navigator.of(context).pop();
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                return MainScreen(uid: uid);
+                              }));
                             },
                           );
                         },
