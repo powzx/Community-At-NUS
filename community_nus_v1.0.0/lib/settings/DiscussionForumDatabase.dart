@@ -35,7 +35,7 @@ class DiscussionForumDatabase {
     });
   }
 
-  Future updateDownvotevote(String title,int downvote) async {
+  Future updateDownvote(String title,int downvote) async {
     return await forum.doc(title).update({
       'downvote': downvote + 1,
     });

@@ -178,7 +178,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                           "${forum.data[index].data()["title"].toString()}",
                                                           int.parse(
                                                               "${forum.data[index].data()["upvote"].toString()}"));
-                                                  Navigator.of(context).pop();
+                                                  // Navigator.of(context).pop();
                                                 },
                                               ),
                                             ),
@@ -210,11 +210,11 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                 onTap: () async {
                                                   await DiscussionForumDatabase(
                                                           threadID: threadID)
-                                                      .updateUpvote(
+                                                      .updateDownvote(
                                                           "${forum.data[index].data()["title"].toString()}",
                                                           int.parse(
                                                               "${forum.data[index].data()["downvote"].toString()}"));
-                                                  Navigator.of(context).pop();
+                                                  // Navigator.of(context).pop();
                                                 },
                                               ),
                                             ),
