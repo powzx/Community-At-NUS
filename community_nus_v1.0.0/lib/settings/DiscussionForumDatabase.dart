@@ -8,15 +8,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class DiscussionForumDatabase {
-  final String forumID;
-  DiscussionForumDatabase({this.forumID});
+  final String threadID;
+  DiscussionForumDatabase({this.threadID});
 
   final CollectionReference forum =
       FirebaseFirestore.instance.collection('forum');
 
   Future create(String title, String threads, int upvote, int downvote) async {
-    return await forum.doc(forumID).set({
-      'host_forumID': forumID,
+    return await forum.doc(title).set({
       'title': title,
       'threads': threads,
       'upvote': upvote,
@@ -27,19 +26,21 @@ class DiscussionForumDatabase {
   Future retrieveAll() async {
     QuerySnapshot query = await forum.get();
     final allData = query.docs;
-
     return allData;
   }
 
-  Future updateUpvote(
-      String title, String threads, int upvote, int downvote) async {
-    return await forum.doc(forumID).update({
-      'title': title,
-      'threads': threads,
+  Future updateUpvote(String title,int upvote) async {
+    return await forum.doc(title).update({
       'upvote': upvote + 1,
-      'downvote': downvote,
     });
   }
+
+  Future updateDownvotevote(String title,int downvote) async {
+    return await forum.doc(title).update({
+      'downvote': downvote + 1,
+    });
+  }
+
 }
 
 // List<Map> disussionForum = [

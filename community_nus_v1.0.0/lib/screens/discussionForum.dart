@@ -1,7 +1,7 @@
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
-import 'package:community_nus/settings/discussionForumItems.dart';
+import 'package:community_nus/settings/DiscussionForumDatabase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
 
@@ -15,24 +15,24 @@ import 'package:community_nus/settings/user_data.dart';
 //   final TextEditingController _searchControl = new TextEditingController();
 
 class DiscussionForum extends StatefulWidget {
-  final String forumID;
+  final String threadID;
 
-  DiscussionForum({this.forumID});
+  DiscussionForum({this.threadID});
 
   @override
   _DiscussionForumState createState() =>
-      _DiscussionForumState(forumID: forumID);
+      _DiscussionForumState(threadID: threadID);
 }
 
 class _DiscussionForumState extends State<DiscussionForum> {
-  final String forumID;
+  final String threadID;
 
-  _DiscussionForumState({this.forumID});
+  _DiscussionForumState({this.threadID});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(forumID: forumID).retrieveAll(),
+        future: DiscussionForumDatabase(threadID: threadID).retrieveAll(),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return Scaffold(
@@ -41,7 +41,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return CreateDiscussionThread(forumID: forumID);
+                          return CreateDiscussionThread(threadID: threadID);
                         },
                       ),
                     );
@@ -133,7 +133,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                   text:
                                       "${forum.data[index].data()["title"].toString()}",
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black),
                                   children: <TextSpan>[
@@ -141,7 +141,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       text:
                                           "\n\n${forum.data[index].data()["threads"].toString()}\n",
                                       style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w300,
                                           color: Colors.black),
                                     ),
@@ -171,16 +171,14 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                   size: 18,
                                                 ),
                                               ),
-                                              onTap: () {
-                                                DiscussionForumDatabase(
-                                                        forumID: forumID)
+                                              onTap: () async {
+                                                await DiscussionForumDatabase(
+                                                        threadID: threadID)
                                                     .updateUpvote(
                                                         "${forum.data[index].data()["title"].toString()}",
-                                                        "${forum.data[index].data()["threads"].toString()}",
                                                         int.parse(
-                                                            "${forum.data[index].data()["upvote"].toString()}"),
-                                                        int.parse(
-                                                            "${forum.data[index].data()["downvote"].toString()}"));
+                                                            "${forum.data[index].data()["upvote"].toString()}"));
+                                                Navigator.of(context).pop();
                                               },
                                             ),
                                           ),
@@ -225,7 +223,14 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                 )
                               ],
                             ),
-                            onTap: () {},
+                            onTap: () async {
+                              await DiscussionForumDatabase(threadID: threadID)
+                                  .updateUpvote(
+                                      "${forum.data[index].data()["title"].toString()}",
+                                      int.parse(
+                                          "${forum.data[index].data()["downvote"].toString()}"));
+                              Navigator.of(context).pop();
+                            },
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>

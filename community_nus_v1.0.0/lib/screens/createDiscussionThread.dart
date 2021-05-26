@@ -1,25 +1,25 @@
-import 'package:community_nus/settings/discussionForumItems.dart';
+import 'package:community_nus/settings/DiscussionForumDatabase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:community_nus/screens/discussionForum.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 
 class CreateDiscussionThread extends StatefulWidget {
-  final String forumID;
+  final String threadID;
 
-  CreateDiscussionThread({this.forumID});
+  CreateDiscussionThread({this.threadID});
 
   @override
-  _CreateDiscussionThread createState() => _CreateDiscussionThread(forumID: forumID);
+  _CreateDiscussionThread createState() => _CreateDiscussionThread(threadID: threadID);
 }
 
 class _CreateDiscussionThread extends State<CreateDiscussionThread> {
-  final String forumID;
+  final String threadID;
 
   String title;
   String threads;
 
-  _CreateDiscussionThread({this.forumID});
+  _CreateDiscussionThread({this.threadID});
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +135,7 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
                 ),
               ),
               onPressed: () async {
-                await DiscussionForumDatabase(forumID: forumID)
+                await DiscussionForumDatabase(threadID: threadID)
                     .create(title, threads, 0, 0);
                 Navigator.of(context).pop();
                 // to be improved -- need to refresh to view changes
