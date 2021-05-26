@@ -15,39 +15,40 @@ import 'package:community_nus/settings/user_data.dart';
 //   final TextEditingController _searchControl = new TextEditingController();
 
 class DiscussionForum extends StatefulWidget {
-  final String uid;
+  final String forumID;
 
-  DiscussionForum({this.uid});
+  DiscussionForum({this.forumID});
 
   @override
-  _DiscussionForumState createState() => _DiscussionForumState(uid: uid);
+  _DiscussionForumState createState() =>
+      _DiscussionForumState(forumID: forumID);
 }
 
 class _DiscussionForumState extends State<DiscussionForum> {
-  final String uid;
+  final String forumID;
 
-  _DiscussionForumState({this.uid});
+  _DiscussionForumState({this.forumID});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(uid: uid).retrieveAll(),
+        future: DiscussionForumDatabase(forumID: forumID).retrieveAll(),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return Scaffold(
                 floatingActionButton: FloatingActionButton(
-                onPressed: () async {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return CreateDiscussionThread(uid: uid);
-                      },
-                    ),
-                  );
-                },
-                tooltip: "Start a new Thread",
-                child: const Icon(Icons.add),
-              ),
+                  onPressed: () async {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return CreateDiscussionThread(forumID: forumID);
+                        },
+                      ),
+                    );
+                  },
+                  tooltip: "Start a new Thread",
+                  child: const Icon(Icons.add),
+                ),
                 body: Padding(
                   padding: EdgeInsets.fromLTRB(5, 0, 5.0, 10),
                   child: ListView(
@@ -170,7 +171,17 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                   size: 18,
                                                 ),
                                               ),
-                                              onTap: () {},
+                                              onTap: () {
+                                                DiscussionForumDatabase(
+                                                        forumID: forumID)
+                                                    .updateUpvote(
+                                                        "${forum.data[index].data()["title"].toString()}",
+                                                        "${forum.data[index].data()["threads"].toString()}",
+                                                        int.parse(
+                                                            "${forum.data[index].data()["upvote"].toString()}"),
+                                                        int.parse(
+                                                            "${forum.data[index].data()["downvote"].toString()}"));
+                                              },
                                             ),
                                           ),
                                         ),

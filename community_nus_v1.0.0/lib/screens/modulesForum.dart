@@ -10,23 +10,23 @@ import 'package:community_nus/screens/discussionForum.dart';
 import 'package:community_nus/settings/discussionForumItems.dart';
 
 class DiscussionForum extends StatefulWidget {
-  final String uid;
+  final String forumID;
 
-  DiscussionForum({this.uid});
+  DiscussionForum({this.forumID});
 
   @override
-  _DiscussionForumState createState() => _DiscussionForumState(uid: uid);
+  _DiscussionForumState createState() => _DiscussionForumState(forumID: forumID);
 }
 
 class _DiscussionForumState extends State<DiscussionForum> {
-  final String uid;
+  final String forumID;
 
-  _DiscussionForumState({this.uid});
+  _DiscussionForumState({this.forumID});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(uid: uid).retrieveAll(),
+        future: DiscussionForumDatabase(forumID: forumID).retrieveAll(),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return Scaffold(
@@ -35,7 +35,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return CreateDiscussionThread(uid: uid);
+                          return CreateDiscussionThread(forumID: forumID);
                         },
                       ),
                     );
