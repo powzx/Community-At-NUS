@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
           onPageChanged: onPageChanged,
           children: <Widget>[
             Home(uid: uid),
-            SearchScreen(),
+            DiscussionForum(),
             StudyLobby(uid: uid),
             Profile(uid: uid),
           ],

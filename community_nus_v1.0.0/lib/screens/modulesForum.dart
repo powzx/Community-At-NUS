@@ -1,18 +1,13 @@
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:flutter/material.dart';
-import 'package:community_nus/settings/const.dart';
+import 'package:community_nus/screens/notifications.dart';
+import 'package:community_nus/settings/my_modules.dart';
+import 'package:community_nus/settings/faculties.dart';
+import 'package:community_nus/settings/badge.dart';
+import 'package:community_nus/settings/home_Faculties.dart';
+import 'package:community_nus/settings/home.Module.dart';
+import 'package:community_nus/screens/discussionForum.dart';
 import 'package:community_nus/settings/discussionForumItems.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:community_nus/settings/user_data.dart';
-
-// class SearchScreen extends StatefulWidget {
-//   @override
-//   _SearchScreenState createState() => _SearchScreenState();
-// }
-
-// class _SearchScreenState extends State<SearchScreen>
-//     with AutomaticKeepAliveClientMixin<SearchScreen> {
-//   final TextEditingController _searchControl = new TextEditingController();
 
 class DiscussionForum extends StatefulWidget {
   final String uid;
@@ -36,18 +31,18 @@ class _DiscussionForumState extends State<DiscussionForum> {
           if (forum.hasData) {
             return Scaffold(
                 floatingActionButton: FloatingActionButton(
-                onPressed: () async {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return CreateDiscussionThread(uid: uid);
-                      },
-                    ),
-                  );
-                },
-                tooltip: "Start a new Thread",
-                child: const Icon(Icons.add),
-              ),
+                  onPressed: () async {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return CreateDiscussionThread(uid: uid);
+                        },
+                      ),
+                    );
+                  },
+                  tooltip: "Start a new Thread",
+                  child: const Icon(Icons.add),
+                ),
                 body: Padding(
                   padding: EdgeInsets.fromLTRB(5, 0, 5.0, 10),
                   child: ListView(
@@ -56,7 +51,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          "Discussion Forum",
+                          "CSxxxxx",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w900,
