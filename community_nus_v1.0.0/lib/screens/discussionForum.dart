@@ -121,16 +121,82 @@ class _DiscussionForumState extends State<DiscussionForum> {
                         //   Map thread = disussionForum[index];
                         itemBuilder: (context, index) {
                           return ListTile(
-                              // title: Text(
-                              //   "${thread['title']}" + "\n\n${thread['threads']}\n",
-                              //   style: TextStyle(
-                              //     fontSize: 17,
-                              //     fontWeight: FontWeight.w500,
-                              //   ),
-                              // ),
+                              leading: Wrap(
+                                  direction: Axis.vertical,
+                                  alignment: WrapAlignment.center,
+                                  children: <Widget>[
+                                    ClipOval(
+                                      child: Material(
+                                        color: Colors.white, // button color
+                                        child: InkWell(
+                                          splashColor:
+                                              Colors.green, // inkwell color
+                                          child: SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: Icon(
+                                              Icons.arrow_upward,
+                                              color: Colors.green,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          onTap: () async {
+                                            await DiscussionForumDatabase(
+                                                    threadID: threadID)
+                                                .updateUpvote(
+                                                    "${forum.data[index].data()["title"].toString()}",
+                                                    int.parse(
+                                                        "${forum.data[index].data()["upvote"].toString()}"));
+                                            // Navigator.of(context).pop();
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      (int.parse("${forum.data[index].data()["upvote"].toString()}") -
+                                              int.parse(
+                                                  "${forum.data[index].data()["downvote"].toString()}"))
+                                          .toString(),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    ClipOval(
+                                      child: Material(
+                                        color: Colors.white, // button color
+                                        child: InkWell(
+                                          splashColor:
+                                              Colors.red, // inkwell color
+                                          child: SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: Icon(
+                                              Icons.arrow_downward,
+                                              color: Colors.red,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          onTap: () async {
+                                            await DiscussionForumDatabase(
+                                                    threadID: threadID)
+                                                .updateDownvote(
+                                                    "${forum.data[index].data()["title"].toString()}",
+                                                    int.parse(
+                                                        "${forum.data[index].data()["downvote"].toString()}"));
+                                            // Navigator.of(context).pop();
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
                               title: RichText(
                                 text: TextSpan(
-                                    text:
+                                    text: "${forum.data[index].data()["moduleCode"].toString()}" +
+                                        " " +
                                         "${forum.data[index].data()["title"].toString()}",
                                     style: TextStyle(
                                         fontSize: 19,
@@ -139,96 +205,24 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                     children: <TextSpan>[
                                       TextSpan(
                                         text:
-                                            "\n\n${forum.data[index].data()["threads"].toString()}\n",
+                                            "\n${forum.data[index].data()["threads"].toString()}",
                                         style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w300,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
                                             color: Colors.black),
                                       ),
                                     ]),
                               ),
                               subtitle: Row(
-                                children: <Widget>[
-                                  Flexible(
-                                    child: Wrap(
-                                        spacing: 5,
-                                        direction: Axis.horizontal,
-                                        verticalDirection: VerticalDirection.up,
-                                        children: <Widget>[
-                                          ClipOval(
-                                            child: Material(
-                                              color: Colors.grey
-                                                  .shade200, // button color
-                                              child: InkWell(
-                                                splashColor: Colors
-                                                    .green, // inkwell color
-                                                child: SizedBox(
-                                                  width: 25,
-                                                  height: 25,
-                                                  child: Icon(
-                                                    Icons.arrow_upward,
-                                                    color: Colors.green,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                                onTap: () async {
-                                                  await DiscussionForumDatabase(
-                                                          threadID: threadID)
-                                                      .updateUpvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
-                                                          int.parse(
-                                                              "${forum.data[index].data()["upvote"].toString()}"));
-                                                  // Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            "${forum.data[index].data()["upvote"].toString()}",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontStyle: FontStyle.italic,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                          ClipOval(
-                                            child: Material(
-                                              color: Colors.grey
-                                                  .shade200, // button color
-                                              child: InkWell(
-                                                splashColor:
-                                                    Colors.red, // inkwell color
-                                                child: SizedBox(
-                                                  width: 25,
-                                                  height: 25,
-                                                  child: Icon(
-                                                    Icons.arrow_downward,
-                                                    color: Colors.red,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                                onTap: () async {
-                                                  await DiscussionForumDatabase(
-                                                          threadID: threadID)
-                                                      .updateDownvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
-                                                          int.parse(
-                                                              "${forum.data[index].data()["downvote"].toString()}"));
-                                                  // Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            "${forum.data[index].data()["downvote"].toString()}",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontStyle: FontStyle.italic,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                        ]),
-                                  )
+                                children: [
+                                  Text(
+                                      "\nPosted by Zhi Xiang, 06/05/2021, 2250H",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
                                 ],
                               ),
                               onTap: () {});

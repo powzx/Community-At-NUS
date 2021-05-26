@@ -14,12 +14,13 @@ class DiscussionForumDatabase {
   final CollectionReference forum =
       FirebaseFirestore.instance.collection('forum');
 
-  Future create(String title, String threads, int upvote, int downvote) async {
+  Future create(String title, String threads, String moduleCode, int upvote, int downvote) async {
     return await forum.doc(title).set({
       'title': title,
       'threads': threads,
       'upvote': upvote,
       'downvote': downvote,
+      'moduleCode': moduleCode
     });
   }
 

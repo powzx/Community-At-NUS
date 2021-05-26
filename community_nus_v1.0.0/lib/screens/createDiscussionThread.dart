@@ -10,7 +10,8 @@ class CreateDiscussionThread extends StatefulWidget {
   CreateDiscussionThread({this.threadID});
 
   @override
-  _CreateDiscussionThread createState() => _CreateDiscussionThread(threadID: threadID);
+  _CreateDiscussionThread createState() =>
+      _CreateDiscussionThread(threadID: threadID);
 }
 
 class _CreateDiscussionThread extends State<CreateDiscussionThread> {
@@ -18,6 +19,7 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
 
   String title;
   String threads;
+  String moduleCode;
 
   _CreateDiscussionThread({this.threadID});
 
@@ -124,6 +126,54 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
               ),
             ),
           ),
+
+          Card(
+            elevation: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  hintText: "Module Code",
+                  prefixIcon: Icon(
+                    Icons.description_outlined,
+                    color: Colors.black,
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                  ),
+                ),
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    moduleCode = value.trim();
+                  });
+                },
+              ),
+            ),
+          ),
           SizedBox(height: 40.0),
           Container(
             height: 50.0,
@@ -136,7 +186,7 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
               ),
               onPressed: () async {
                 await DiscussionForumDatabase(threadID: threadID)
-                    .create(title, threads, 0, 0);
+                    .create(title, threads, moduleCode, 0, 0);
                 Navigator.of(context).pop();
                 // to be improved -- need to refresh to view changes
               },
