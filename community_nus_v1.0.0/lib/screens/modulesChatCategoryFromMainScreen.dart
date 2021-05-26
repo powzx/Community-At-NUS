@@ -133,132 +133,115 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
           SizedBox(height: 10),
 
+
+//Will Add this BACK!!!!
           //The list below
-          ListView.separated(
-            shrinkWrap: true,
-            primary: false,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: disussionForum == null ? 0 : disussionForum.length,
-            itemBuilder: (BuildContext context, int index) {
-              Map thread = disussionForum[index];
-              return ListTile(
-                // title: Text(
-                //   "${thread['title']}" + "\n\n${thread['threads']}\n",
-                //   style: TextStyle(
-                //     fontSize: 17,
-                //     fontWeight: FontWeight.w500,
-                //   ),
-                // ),
-                title: RichText(
-                  text: TextSpan(
-                      text: "${thread['title']}",
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "\n\n${thread['threads']}",
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.black),
-                        ),
-                      ]),
-                ),
+          // ListView.separated(
+          //   shrinkWrap: true,
+          //   primary: false,
+          //   physics: NeverScrollableScrollPhysics(),
+          //   itemCount: disussionForum == null ? 0 : disussionForum.length,
+          //   itemBuilder: (BuildContext context, int index) {
+          //     Map thread = disussionForum[index];
+          //     return ListTile(
+        
+          //       title: RichText(
+          //         text: TextSpan(
+          //             text: "${thread['title']}",
+          //             style: TextStyle(
+          //                 fontSize: 17,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black),
+          //             children: <TextSpan>[
+          //               TextSpan(
+          //                 text: "\n\n${thread['threads']}",
+          //                 style: TextStyle(
+          //                     fontSize: 13,
+          //                     fontWeight: FontWeight.w300,
+          //                     color: Colors.black),
+          //               ),
+          //             ]),
+          //       ),
 
-                // subtitle: Row(
-                //   children: <Widget>[
-                //     Flexible(
-                //       child: Text(
-                //         "${thread['threads']}",
-                //         style: TextStyle(
-                //           fontSize: 13,
-                //           fontWeight: FontWeight.w300,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
 
-                subtitle: Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Wrap(
-                          spacing: 5,
-                          direction: Axis.horizontal,
-                          verticalDirection: VerticalDirection.up,
-                          children: <Widget>[
-                            ClipOval(
-                              child: Material(
-                                color: Colors.grey.shade300, // button color
-                                child: InkWell(
-                                  splashColor: Colors.green, // inkwell color
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: Icon(
-                                      Icons.arrow_upward,
-                                      color: Colors.green,
-                                      size: 22,
-                                    ),
-                                  ),
-                                  onTap: () {},
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "5",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            ClipOval(
-                              child: Material(
-                                color: Colors.grey.shade300, // button color
-                                child: InkWell(
-                                  splashColor: Colors.red, // inkwell color
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: Icon(
-                                      Icons.arrow_downward,
-                                      color: Colors.red,
-                                      size: 22,
-                                    ),
-                                  ),
-                                  onTap: () {},
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "50",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Icon(
-                                Icons.chat_bubble,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            )
-                          ]),
-                    )
-                  ],
-                ),
-                onTap: () {},
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          ),
+          //       subtitle: Row(
+          //         children: <Widget>[
+          //           Flexible(
+          //             child: Wrap(
+          //                 spacing: 5,
+          //                 direction: Axis.horizontal,
+          //                 verticalDirection: VerticalDirection.up,
+          //                 children: <Widget>[
+          //                   ClipOval(
+          //                     child: Material(
+          //                       color: Colors.grey.shade300, // button color
+          //                       child: InkWell(
+          //                         splashColor: Colors.green, // inkwell color
+          //                         child: SizedBox(
+          //                           width: 30,
+          //                           height: 30,
+          //                           child: Icon(
+          //                             Icons.arrow_upward,
+          //                             color: Colors.green,
+          //                             size: 22,
+          //                           ),
+          //                         ),
+          //                         onTap: () {},
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Text(
+          //                     "5",
+          //                     style: TextStyle(
+          //                       fontSize: 15,
+          //                       fontStyle: FontStyle.italic,
+          //                       fontWeight: FontWeight.w800,
+          //                     ),
+          //                   ),
+          //                   ClipOval(
+          //                     child: Material(
+          //                       color: Colors.grey.shade300, // button color
+          //                       child: InkWell(
+          //                         splashColor: Colors.red, // inkwell color
+          //                         child: SizedBox(
+          //                           width: 30,
+          //                           height: 30,
+          //                           child: Icon(
+          //                             Icons.arrow_downward,
+          //                             color: Colors.red,
+          //                             size: 22,
+          //                           ),
+          //                         ),
+          //                         onTap: () {},
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   Text(
+          //                     "50",
+          //                     style: TextStyle(
+          //                       fontSize: 15,
+          //                       fontStyle: FontStyle.italic,
+          //                       fontWeight: FontWeight.w800,
+          //                     ),
+          //                   ),
+          //                   Align(
+          //                     alignment: Alignment.bottomRight,
+          //                     child: Icon(
+          //                       Icons.chat_bubble,
+          //                       color: Colors.grey,
+          //                       size: 30.0,
+          //                     ),
+          //                   )
+          //                 ]),
+          //           )
+          //         ],
+          //       ),
+          //       onTap: () {},
+          //     );
+          //   },
+          //   separatorBuilder: (BuildContext context, int index) =>
+          //       const Divider(),
+          // ),
           SizedBox(height: 30),
           ],
         ),
