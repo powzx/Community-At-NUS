@@ -51,7 +51,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                       Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          "CSxxxxx",
+                          "This page is still not functioning! will update in near future",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w900,
