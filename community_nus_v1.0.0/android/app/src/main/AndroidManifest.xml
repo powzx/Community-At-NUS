@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.community_nus">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="community_nus"
         android:icon="@mipmap/ic_launcher">

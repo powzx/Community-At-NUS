@@ -5,6 +5,7 @@ import 'package:community_nus/settings/faculties.dart';
 import 'package:community_nus/settings/my_modules.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_nus/settings/user_data.dart';
+import 'package:community_nus/settings/home_special.dart';
 
 class Home extends StatefulWidget {
   final String uid;
@@ -118,7 +119,21 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         );
                       },
                     ),
-
+                    SizedBox(height: 20.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Top Headlines",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
+                    Special(),
                     // SizedBox(height: 30),
                   ],
                 ),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
 
 class DatabaseService {
   final String uid;
@@ -106,8 +108,13 @@ class StudyLobbyDatabase {
     });
   }
 
-  Future edit(String groupID, String _description, String _telegram, String _announcement, String _hideout) async {
-    return await lobby.doc(groupID).collection('details').doc('details').update({
+  Future edit(String groupID, String _description, String _telegram,
+      String _announcement, String _hideout) async {
+    return await lobby
+        .doc(groupID)
+        .collection('details')
+        .doc('details')
+        .update({
       'description': _description,
       'telegram_group': _telegram,
       'announcement': _announcement,
@@ -191,5 +198,59 @@ class FacultyDatabase {
 
   Future viewModules() async {
     return await faculties.doc(fac).get();
+  }
+}
+
+class Article {
+  String title;
+  String author;
+  String description;
+  String urlToImage;
+  String publishedAt;
+  String content;
+  String articleUrl;
+
+  Article(
+      {this.title,
+      this.description,
+      this.author,
+      this.content,
+      this.publishedAt,
+      this.urlToImage,
+      this.articleUrl});
+
+  factory Article.fromJson(Map<String, dynamic> json) {
+    return Article(
+      title: json['title'] as String,
+      description: json['description'] as String,
+      author: json['author'] as String,
+      content: json['content'] as String,
+      publishedAt: json['publishedAt'] as String,
+      urlToImage: json['urlToImage'] as String,
+      articleUrl: json['url'] as String,
+    );
+  }
+}
+
+class HTTP {
+  Future fetchNews() async {
+    final endPointUrl = 'newsapi.org';
+    final client = http.Client();
+    List<Article> list = [];
+    final queryParameters = {
+      'country': 'sg',
+      //'category': 'technology',
+      'apiKey': '92b56caf9f6b4044bf672a23b2cec660',
+    };
+    final url = Uri.https(endPointUrl, '/v2/top-headlines', queryParameters);
+    final response = await client.get(url);
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      decodedResponse['articles'].forEach((element) {
+        Article article = Article.fromJson(element);
+        if (article.description != null) list.add(article);
+      });
+    }
+    return list;
   }
 }
