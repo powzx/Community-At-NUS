@@ -175,8 +175,14 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                 ),
                               ),
                               subtitle: Text(
-                                details.data.data()['announcement'],
-                                style: TextStyle(fontSize: 17),
+                                joined
+                                    ? details.data.data()['announcement']
+                                    : "Join to view",
+                                style: joined
+                                    ? TextStyle(fontSize: 17)
+                                    : TextStyle(
+                                        fontSize: 17,
+                                        fontStyle: FontStyle.italic),
                               ),
                             ),
                             ListTile(
@@ -188,8 +194,14 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                 ),
                               ),
                               subtitle: Text(
-                                details.data.data()['hideout'],
-                                style: TextStyle(fontSize: 17),
+                                joined
+                                    ? details.data.data()['hideout']
+                                    : "Join to view",
+                                style: joined
+                                    ? TextStyle(fontSize: 17)
+                                    : TextStyle(
+                                        fontSize: 17,
+                                        fontStyle: FontStyle.italic),
                               ),
                             ),
                             Container(height: 10.0),

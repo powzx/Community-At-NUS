@@ -126,7 +126,7 @@ class StudyLobbyDatabase {
   Future addMember(DocumentSnapshot group) async {
     int initial = group.data()['strength'];
     await lobby.doc(group.id).update({
-      'strength': initial++,
+      'strength': initial + 1,
     });
     return await lobby
         .doc(group.id)
