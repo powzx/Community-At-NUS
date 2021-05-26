@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:community_nus/screens/modulesChatCategoryFromMainScreen.dart';
+import 'package:community_nus/screens/modulesForum.dart';
 
 class Modules extends StatefulWidget {
   final IconData icon;
@@ -28,7 +28,7 @@ class _ModulesState extends State<Modules> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return CategoriesScreen();
+                    return DiscussionForum();
                   },
                 ),
               );

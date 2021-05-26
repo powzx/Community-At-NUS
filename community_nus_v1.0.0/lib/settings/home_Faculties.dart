@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:community_nus/screens/modulesChatCategoryFromMainScreen.dart';
+import 'package:community_nus/screens/modulesForum.dart';
 import 'package:community_nus/modulesSelectionPages/viewModules.dart';
 
 class Faculties extends StatefulWidget {
