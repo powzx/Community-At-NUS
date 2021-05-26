@@ -101,10 +101,22 @@ class StudyLobbyDatabase {
       'description': _description,
       'telegram_group': _telegram,
       'members': FieldValue.arrayUnion([uid]),
+      'announcement': '-',
+      'hideout': '-',
+    });
+  }
+
+  Future edit(String groupID, String _description, String _telegram, String _announcement, String _hideout) async {
+    return await lobby.doc(groupID).collection('details').doc('details').update({
+      'description': _description,
+      'telegram_group': _telegram,
+      'announcement': _announcement,
+      'hideout': _hideout,
     });
   }
 
   Future retrieveAll() async {
+    // to retrieve all basic info about all study groups to display in lobby
     QuerySnapshot query = await lobby.get();
     final allData = query.docs;
 
@@ -114,7 +126,7 @@ class StudyLobbyDatabase {
   Future addMember(DocumentSnapshot group) async {
     int initial = group.data()['strength'];
     await lobby.doc(group.id).update({
-      'strength': initial + 1,
+      'strength': initial++,
     });
     return await lobby
         .doc(group.id)
@@ -126,6 +138,7 @@ class StudyLobbyDatabase {
   }
 
   Future retrieveDetailsForGroup(DocumentSnapshot group) async {
+    // retrieve additional info about a particular group that is clicked by the user
     DocumentSnapshot details =
         await lobby.doc(group.id).collection('details').doc('details').get();
     return details;

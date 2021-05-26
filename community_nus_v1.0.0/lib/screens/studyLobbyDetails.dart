@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/user_data.dart';
+import 'package:community_nus/screens/editStudyLobby.dart';
 
 class StudyLobbyDetails extends StatefulWidget {
   final String uid;
@@ -68,6 +69,57 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                 usrDetails.data[0].data()["name"],
                                 style: TextStyle(fontSize: 17),
                               ),
+                              trailing: (details.data.data()['members'][0] ==
+                                      uid)
+                                  ? IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 20.0,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return EditStudyGroup(
+                                              uid: uid,
+                                              groupID: groupDetails.id,
+                                              originalDesc: details.data
+                                                  .data()['description'],
+                                              originalTele: details.data
+                                                  .data()['telegram_group'],
+                                              originalAnnounce: details.data
+                                                  .data()['announcement'],
+                                              originalHideout: details.data
+                                                  .data()['hideout']);
+                                        })).then((value) {
+                                          setState(() {});
+                                        });
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 20.0,
+                                      ),
+                                      onPressed: () {
+                                        return showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text("Error"),
+                                                content: Text(
+                                                    "You do not have administrative rights to perform this action"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Text('OK'))
+                                                ],
+                                              );
+                                            });
+                                      }),
                             ),
                             ListTile(
                               title: Text(
@@ -112,6 +164,32 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                     : TextStyle(
                                         fontSize: 17,
                                         fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                "Announcement",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              subtitle: Text(
+                                details.data.data()['announcement'],
+                                style: TextStyle(fontSize: 17),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                "Study Hideout",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              subtitle: Text(
+                                details.data.data()['hideout'],
+                                style: TextStyle(fontSize: 17),
                               ),
                             ),
                             Container(height: 10.0),
