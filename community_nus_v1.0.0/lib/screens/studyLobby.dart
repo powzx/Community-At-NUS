@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:community_nus/settings/ChatUsers.dart';
 import 'package:community_nus/screens/createStudyLobby.dart';
 import 'package:community_nus/screens/studyLobbyDetails.dart';
+import 'package:community_nus/settings/search.dart';
 
 /* Users need to reload this page to re-fetch data after joining a study group
 * to view changes to the members list.
@@ -46,13 +47,34 @@ class _StudyLobbyState extends State<StudyLobby> {
                             Text(
                               "Study Lobby",
                               style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
+                                  fontSize: 28, fontWeight: FontWeight.bold),
                             ),
+                            IconButton(
+                                icon: Icon(Icons.search),
+                                tooltip: "Search a module code",
+                                onPressed: () async {
+                                  final result = await showSearch(
+                                      context: context,
+                                      delegate:
+                                          ModuleSearch(lobby: lobby.data));
+                                  if (result != null) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return StudyLobbyDetails(
+                                              uid: uid, groupDetails: result);
+                                        },
+                                      ),
+                                    ).then((value) {
+                                      setState(() {});
+                                    });
+                                  }
+                                }),
                           ],
                         ),
                       ),
                     ),
-                    Padding(
+                    /*Padding(
                       padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                       child: TextField(
                         decoration: InputDecoration(
@@ -72,7 +94,7 @@ class _StudyLobbyState extends State<StudyLobby> {
                                   BorderSide(color: Colors.grey.shade100)),
                         ),
                       ),
-                    ),
+                    ),*/
                     /*ListView.builder(
               itemCount: chatUsers.length,
               shrinkWrap: true,

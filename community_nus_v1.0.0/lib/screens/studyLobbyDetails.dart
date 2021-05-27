@@ -252,10 +252,30 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                       ),
                       floatingActionButton: FloatingActionButton(
                         onPressed: () async {
-                          await StudyLobbyDatabase(uid: uid)
-                              .addMember(groupDetails);
-                          //Navigator.of(context).pop();
-                          setState(() {});
+                          if (!joined) {
+                            await StudyLobbyDatabase(uid: uid)
+                                .addMember(groupDetails);
+                            //Navigator.of(context).pop();
+                            setState(() {});
+                          } else {
+                            return showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(
+                                        "You are already in the group."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop();
+                                          },
+                                          child: Text('OK'))
+                                    ],
+                                  );
+                                });
+                          }
                         },
                         tooltip: "Join Group",
                         child: Icon(Icons.group_add),
