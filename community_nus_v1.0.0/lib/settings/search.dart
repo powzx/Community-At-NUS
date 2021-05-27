@@ -39,6 +39,15 @@ class ModuleSearch extends SearchDelegate {
           .contains(query.toLowerCase());
     });
 
+    if (results.length == 0) {
+      return ListTile(
+        title: Text(
+          "No results found",
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (BuildContext context, int index) {
@@ -71,6 +80,7 @@ class ModuleSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    // suggestions are showing duplicated modules, if cannot solve just don't show as a whole.
     final suggestions = lobby.where((module) {
       return module
           .data()['modules']

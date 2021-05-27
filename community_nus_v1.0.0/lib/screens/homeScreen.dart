@@ -124,7 +124,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Top Headlines",
+                          "Trending News",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

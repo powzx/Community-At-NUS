@@ -248,7 +248,8 @@ class HTTP {
     if (response.statusCode == 200) {
       decodedResponse['articles'].forEach((element) {
         Article article = Article.fromJson(element);
-        if (article.description != null) list.add(article);
+        if (article.description != null && article.urlToImage != null)
+          list.add(article);
       });
     }
     return list;
