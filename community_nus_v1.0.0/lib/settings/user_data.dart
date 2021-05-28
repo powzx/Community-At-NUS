@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class DatabaseService {
   final String uid;
@@ -154,6 +155,7 @@ class StudyLobbyDatabase {
 
 class DiscussionForumDatabase {
   final String uid;
+
   DiscussionForumDatabase({this.uid});
 
   final CollectionReference forum =
@@ -325,11 +327,29 @@ class NotificationsDatabase {
     return await notifications.doc(uid).get();
   }
 
-  Future sendData(int type, String initiator, String location) async {
-    Map data = {'type': type, 'initiator': initiator, 'location': location};
+  Future sendData(
+      int type, String initiator, String location, DateTime datetime) async {
+    String formattedDateTime = DateFormat('yyyy-MM-dd kk:mm').format(datetime);
+    Map data = {
+      'type': type,
+      'initiator': initiator,
+      'location': location,
+      'datetime': formattedDateTime
+    };
     return await notifications.doc(uid).update({
       'notifications': FieldValue.arrayUnion([data]),
       'unread': true,
     });
+  }
+
+  Future clear() async {
+    final result = await notifications.doc(uid).get();
+    List list = List.from(result.data()['notifications']);
+    for (int i = 0; i < list.length; i++) {
+      Map entry = list[i];
+      await notifications.doc(uid).update({
+        'notifications': FieldValue.arrayRemove([entry]),
+      });
+    }
   }
 }

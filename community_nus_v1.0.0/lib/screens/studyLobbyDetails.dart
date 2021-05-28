@@ -261,7 +261,10 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                             await NotificationsDatabase(
                                     uid: groupDetails.data()['host_uid'])
                                 .sendData(
-                                    0, uid, groupDetails.data()['group_name']);
+                                    0,
+                                    uid,
+                                    groupDetails.data()['group_name'],
+                                    DateTime.now());
                             //Navigator.of(context).pop();
                             setState(() {});
                           } else {

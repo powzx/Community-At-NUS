@@ -24,21 +24,23 @@ class NotificationTile extends StatefulWidget {
   final int type;
   final String initiator;
   final String location;
+  final String datetime;
 
-  NotificationTile({this.type, this.initiator, this.location});
+  NotificationTile({this.type, this.initiator, this.location, this.datetime});
 
   @override
-  _NotificationTileState createState() =>
-      _NotificationTileState(
-          type: type, initiator: initiator, location: location);
+  _NotificationTileState createState() => _NotificationTileState(
+      type: type, initiator: initiator, location: location, datetime: datetime);
 }
 
 class _NotificationTileState extends State<NotificationTile> {
   final int type;
   final String initiator;
   final String location;
+  final String datetime;
 
-  _NotificationTileState({this.type, this.initiator, this.location});
+  _NotificationTileState(
+      {this.type, this.initiator, this.location, this.datetime});
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +51,21 @@ class _NotificationTileState extends State<NotificationTile> {
           return Container(
             alignment: Alignment.center,
             child: Card(
-              child: ListTile(
-                leading: ProfilePic(
-                  uid: initiator,
-                  upSize: false,
-                  rep: snapshot.data.data()['rep'],
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                ListTile(
+                  leading: ProfilePic(
+                    uid: initiator,
+                    upSize: false,
+                    rep: snapshot.data.data()['rep'],
+                  ),
+                  title: Text(
+                      "${snapshot.data.data()['name']} ${statement[type]} $location."),
                 ),
-                title: Text(
-                    "${snapshot.data.data()['name']} ${statement[type]} $location."
-                ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[Text(datetime)],
+                )
+              ]),
             ),
           );
         }

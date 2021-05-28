@@ -33,6 +33,16 @@ class _NotificationsState extends State<Notifications> {
           "Notifications",
         ),
         elevation: 0.0,
+        actions: <Widget>[
+          TextButton(
+              onPressed: () async {
+                NotificationsDatabase(uid: uid).clear();
+                setState(() {});
+              },
+              child: Text(
+                "Clear"
+              )),
+        ],
       ),
       body: FutureBuilder(
           future: NotificationsDatabase(uid: uid).getDataAndRead(),
@@ -58,6 +68,7 @@ class _NotificationsState extends State<Notifications> {
                 child: ListView.builder(
                   itemCount: notifMap.length,
                   shrinkWrap: true,
+                  reverse: true,
                   padding: EdgeInsets.only(top: 16),
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -66,6 +77,7 @@ class _NotificationsState extends State<Notifications> {
                       type: tile['type'],
                       initiator: tile['initiator'],
                       location: tile['location'],
+                      datetime: tile['datetime'],
                     );
                   },
                 ),
