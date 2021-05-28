@@ -152,6 +152,47 @@ class StudyLobbyDatabase {
   }
 }
 
+class DiscussionForumDatabase {
+  final String uid;
+  DiscussionForumDatabase({this.uid});
+
+  final CollectionReference forum =
+      FirebaseFirestore.instance.collection('forum');
+
+  Future create(String title, String threads, String moduleCode, int upvote, int downvote) async {
+    return await forum.doc(title).set({
+      'thread_uid': this.uid,
+      'title': title,
+      'threads': threads,
+      'upvote': upvote,
+      'downvote': downvote,
+      'moduleCode': moduleCode
+    });
+  }
+
+  Future retrieveAll() async {
+    QuerySnapshot query = await forum.get();
+    final allData = query.docs;
+    return allData;
+  }
+
+  Future updateUpvote(String title,int upvote) async {
+    return await forum.doc(title).update({
+      'upvote': upvote + 1,
+    });
+  }
+
+  Future updateDownvote(String title,int downvote) async {
+    return await forum.doc(title).update({
+      'downvote': downvote + 1,
+    });
+  }
+
+}
+
+
+
+
 class UploadImage {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
