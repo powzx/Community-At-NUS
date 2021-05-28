@@ -163,14 +163,15 @@ class DiscussionForumDatabase {
       FirebaseFirestore.instance.collection('users');
 
   Future create(String title, String threads, String moduleCode, int upvote,
-      int downvote) async {
+      int downvote, String dateAndTime) async {
     return await forum.doc(title).set({
       'thread_uid': this.uid,
       'title': title,
       'threads': threads,
       'upvote': upvote,
       'downvote': downvote,
-      'moduleCode': moduleCode
+      'moduleCode': moduleCode,
+      'dateAndTime': dateAndTime
     });
   }
 

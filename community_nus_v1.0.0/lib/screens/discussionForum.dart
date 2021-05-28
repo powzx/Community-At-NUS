@@ -215,7 +215,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                               subtitle: Row(
                                 children: [
                                   Text(
-                                      "\nPosted by "+ "${forum.data[index].data()["thread_uid"].toString()}" + "06/05/2021, 2250H",
+                                      "\nPosted by "+ "${forum.data[index].data()["dateAndTime"].toString()}",
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic,

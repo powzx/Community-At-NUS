@@ -185,7 +185,7 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
               ),
               onPressed: () async {
                 await DiscussionForumDatabase(uid: uid)
-                    .create(title, threads, moduleCode, 0, 0);
+                    .create(title, threads, "[" +moduleCode + "]", 0, 0, DateTime.now().toString().substring(0,10));
                 Navigator.of(context).pop();
                 // to be improved -- need to refresh to view changes
               },
