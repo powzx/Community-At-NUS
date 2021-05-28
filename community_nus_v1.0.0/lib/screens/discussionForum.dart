@@ -1,7 +1,6 @@
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
-import 'package:community_nus/settings/DiscussionForumDatabase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
 
@@ -15,24 +14,24 @@ import 'package:community_nus/settings/user_data.dart';
 //   final TextEditingController _searchControl = new TextEditingController();
 
 class DiscussionForum extends StatefulWidget {
-  final String threadID;
+  final String uid;
 
-  DiscussionForum({this.threadID});
+  DiscussionForum({this.uid});
 
   @override
   _DiscussionForumState createState() =>
-      _DiscussionForumState(threadID: threadID);
+      _DiscussionForumState(uid: uid);
 }
 
 class _DiscussionForumState extends State<DiscussionForum> {
-  final String threadID;
+  final String uid;
 
-  _DiscussionForumState({this.threadID});
+  _DiscussionForumState({this.uid});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(threadID: threadID).retrieveAll(),
+        future: DiscussionForumDatabase(uid: uid).retrieveAll(),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return Scaffold(
@@ -41,7 +40,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return CreateDiscussionThread(threadID: threadID);
+                          return CreateDiscussionThread(uid: uid);
                         },
                       ),
                     );
@@ -142,7 +141,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                           ),
                                           onTap: () async {
                                             await DiscussionForumDatabase(
-                                                    threadID: threadID)
+                                                    uid: uid)
                                                 .updateUpvote(
                                                     "${forum.data[index].data()["title"].toString()}",
                                                     int.parse(
@@ -181,7 +180,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                           ),
                                           onTap: () async {
                                             await DiscussionForumDatabase(
-                                                    threadID: threadID)
+                                                    uid: uid)
                                                 .updateDownvote(
                                                     "${forum.data[index].data()["title"].toString()}",
                                                     int.parse(
@@ -216,7 +215,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                               subtitle: Row(
                                 children: [
                                   Text(
-                                      "\nPosted by Zhi Xiang, 06/05/2021, 2250H",
+                                      "\nPosted by "+ "${forum.data[index].data()["dateAndTime"].toString()}",
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontStyle: FontStyle.italic,
