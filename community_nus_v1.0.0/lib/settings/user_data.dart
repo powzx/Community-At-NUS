@@ -177,6 +177,7 @@ class DiscussionForumDatabase {
 
   Future retrieveAll() async {
     QuerySnapshot queryforum = await forum.get();
+    // QuerySnapshot queryUserInfo = await userInfo.get();
     final allData = queryforum.docs;
     return allData;
   }
