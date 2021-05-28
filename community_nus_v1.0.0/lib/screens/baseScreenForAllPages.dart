@@ -4,7 +4,7 @@ import 'package:community_nus/screens/studyLobby.dart';
 import 'package:community_nus/screens/homeScreen.dart';
 import 'package:community_nus/screens/notifications.dart';
 import 'package:community_nus/screens/profile.dart';
-import 'package:community_nus/screens/discussionForum.dart';
+import 'package:community_nus/screens/DiscussionForum.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/badge.dart';
 import 'package:community_nus/settings/user_data.dart';
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
           onPageChanged: onPageChanged,
           children: <Widget>[
             Home(uid: uid),
-            DiscussionForum(),
+            DiscussionForum(uid:uid),
             StudyLobby(uid: uid),
             Profile(uid: uid),
           ],

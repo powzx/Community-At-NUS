@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:community_nus/screens/discussionForum.dart';
+import 'package:community_nus/screens/DiscussionForum.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 
