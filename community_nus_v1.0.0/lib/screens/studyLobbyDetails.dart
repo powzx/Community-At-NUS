@@ -81,16 +81,19 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                             MaterialPageRoute(builder:
                                                 (BuildContext context) {
                                           return EditStudyGroup(
-                                              uid: uid,
-                                              groupID: groupDetails.id,
-                                              originalDesc: details.data
-                                                  .data()['description'],
-                                              originalTele: details.data
-                                                  .data()['telegram_group'],
-                                              originalAnnounce: details.data
-                                                  .data()['announcement'],
-                                              originalHideout: details.data
-                                                  .data()['hideout']);
+                                            uid: uid,
+                                            groupDetails: groupDetails,
+                                            originalDesc: details.data
+                                                .data()['description'],
+                                            originalTele: details.data
+                                                .data()['telegram_group'],
+                                            originalAnnounce: details.data
+                                                .data()['announcement'],
+                                            originalHideout:
+                                                details.data.data()['hideout'],
+                                            members: List.from(
+                                                details.data.data()['members']),
+                                          );
                                         })).then((value) {
                                           setState(() {});
                                         });

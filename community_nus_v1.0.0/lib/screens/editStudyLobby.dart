@@ -1,39 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/user_data.dart';
 
 class EditStudyGroup extends StatefulWidget {
   final String uid;
-  final String groupID;
+  final DocumentSnapshot groupDetails;
   final String originalDesc;
   final String originalTele;
   final String originalAnnounce;
   final String originalHideout;
+  final List members;
 
   EditStudyGroup(
       {this.uid,
-      this.groupID,
+      this.groupDetails,
       this.originalDesc,
       this.originalTele,
       this.originalAnnounce,
-      this.originalHideout});
+      this.originalHideout,
+      this.members});
 
   @override
-  _EditStudyGroupState createState() => _EditStudyGroupState(uid, groupID,
-      originalDesc, originalTele, originalAnnounce, originalHideout);
+  _EditStudyGroupState createState() => _EditStudyGroupState(uid, groupDetails,
+      originalDesc, originalTele, originalAnnounce, originalHideout, members);
 }
 
 class _EditStudyGroupState extends State<EditStudyGroup> {
   String uid;
-  String groupID;
+  DocumentSnapshot groupDetails;
+  List members;
   TextEditingController descCon;
   TextEditingController teleCon;
   TextEditingController announceCon;
   TextEditingController hideoutCon;
 
-  _EditStudyGroupState(String uid, String groupID, String originalDesc,
-      String originalTele, String originalAnnounce, String originalHideout) {
+  _EditStudyGroupState(
+      String uid,
+      DocumentSnapshot groupDetails,
+      String originalDesc,
+      String originalTele,
+      String originalAnnounce,
+      String originalHideout,
+      List members) {
     this.uid = uid;
-    this.groupID = groupID;
+    this.groupDetails = groupDetails;
+    this.members = members;
     descCon = TextEditingController(text: originalDesc);
     teleCon = TextEditingController(text: originalTele);
     announceCon = TextEditingController(text: originalAnnounce);
@@ -238,8 +249,16 @@ class _EditStudyGroupState extends State<EditStudyGroup> {
                 ),
               ),
               onPressed: () async {
-                await StudyLobbyDatabase(uid: uid).edit(groupID, descCon.text,
-                    teleCon.text, announceCon.text, hideoutCon.text);
+                await StudyLobbyDatabase(uid: uid).edit(
+                    groupDetails.id,
+                    descCon.text,
+                    teleCon.text,
+                    announceCon.text,
+                    hideoutCon.text);
+                for (int i = 1; i < members.length; i++) {
+                  await NotificationsDatabase(uid: members[i])
+                      .sendData(1, uid, groupDetails.data()['group_name']);
+                }
                 Navigator.of(context).pop();
               },
               color: Theme.of(context).accentColor,
