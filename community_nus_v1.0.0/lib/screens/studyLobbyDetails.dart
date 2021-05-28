@@ -255,6 +255,10 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                           if (!joined) {
                             await StudyLobbyDatabase(uid: uid)
                                 .addMember(groupDetails);
+                            await NotificationsDatabase(
+                                    uid: groupDetails.data()['host_uid'])
+                                .sendData(
+                                    0, uid, groupDetails.data()['group_name']);
                             //Navigator.of(context).pop();
                             setState(() {});
                           } else {
@@ -263,13 +267,12 @@ class _StudyLobbyDetails extends State<StudyLobbyDetails> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("Error"),
-                                    content: Text(
-                                        "You are already in the group."),
+                                    content:
+                                        Text("You are already in the group."),
                                     actions: <Widget>[
                                       TextButton(
                                           onPressed: () {
-                                            Navigator.of(context)
-                                                .pop();
+                                            Navigator.of(context).pop();
                                           },
                                           child: Text('OK'))
                                     ],

@@ -58,15 +58,18 @@ class _ViewModulesState extends State<ViewModules> {
                     icon: IconBadge(
                       icon: Icons.notifications,
                       size: 22.0,
+                      uid: uid,
                     ),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return Notifications();
+                            return Notifications(uid: uid);
                           },
                         ),
-                      );
+                      ).then((value) {
+                        setState(() {});
+                      });
                     },
                   ),
                 ],

@@ -1,11 +1,22 @@
+import 'package:community_nus/settings/user_data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:community_nus/settings/notificationTile.dart';
 
 class Notifications extends StatefulWidget {
+  final String uid;
+
+  Notifications({this.uid});
+
   @override
-  _NotificationsState createState() => _NotificationsState();
+  _NotificationsState createState() => _NotificationsState(uid: uid);
 }
 
 class _NotificationsState extends State<Notifications> {
+  final String uid;
+
+  _NotificationsState({this.uid});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +26,7 @@ class _NotificationsState extends State<Notifications> {
           icon: Icon(
             Icons.keyboard_backspace,
           ),
-          onPressed: ()=>Navigator.pop(context),
+          onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
         title: Text(
@@ -23,61 +34,45 @@ class _NotificationsState extends State<Notifications> {
         ),
         elevation: 0.0,
       ),
-
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.green,
-                child: Icon(
-                  Icons.alarm,
-                  color: Colors.white,
+      body: FutureBuilder(
+          future: NotificationsDatabase(uid: uid).getDataAndRead(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              List<Map> notifMap =
+                  List.from(snapshot.data.data()['notifications']);
+              if (notifMap.length == 0) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "No notifications",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                );
+              }
+              return Padding(
+                padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                child: ListView.builder(
+                  itemCount: notifMap.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(top: 16),
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    Map tile = notifMap[index];
+                    return NotificationTile(
+                      type: tile['type'],
+                      initiator: tile['initiator'],
+                      location: tile['location'],
+                    );
+                  },
                 ),
-              ),
-              title: Text("LBXX has replied to your MA1521 thread"),
-              onTap: (){},
-            ),
-            Divider(),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.red,
-                child: Icon(
-                  Icons.ondemand_video,
-                  color: Colors.white,
-                ),
-              ),
-              title: Text("LBXX has set up a Zoom Link for Study @ 29/2"),
-              onTap: (){},
-            ),
-            Divider(),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.orange,
-                child: Icon(
-                  Icons.directions_bike,
-                  color: Colors.white,
-                ),
-              ),
-              title: Text("xxxxxxxxxxxxxxxx"),
-              onTap: (){},
-            ),
-            Divider(),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Icon(
-                  Icons.email,
-                  color: Colors.white,
-                ),
-              ),
-              title: Text("xxxxxxxxxxxxxxxxx"),
-              onTap: (){},
-            ),
-          ],
-        ),
-      ),
+              );
+            }
+            return LinearProgressIndicator();
+          }),
     );
   }
 }

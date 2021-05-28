@@ -255,3 +255,38 @@ class HTTP {
     return list;
   }
 }
+
+class NotificationsDatabase {
+  final String uid;
+
+  NotificationsDatabase({this.uid});
+
+  final CollectionReference notifications =
+      FirebaseFirestore.instance.collection('notifications');
+
+  Future createDatabase() async {
+    return await notifications.doc(uid).set({
+      'notifications': [],
+      'unread': false,
+    });
+  }
+
+  Future getData() async {
+    return await notifications.doc(uid).get();
+  }
+
+  Future getDataAndRead() async {
+    await notifications.doc(uid).update({
+      'unread': false,
+    });
+    return await notifications.doc(uid).get();
+  }
+
+  Future sendData(int type, String initiator, String location) async {
+    Map data = {'type': type, 'initiator': initiator, 'location': location};
+    return await notifications.doc(uid).update({
+      'notifications': FieldValue.arrayUnion([data]),
+      'unread': true,
+    });
+  }
+}

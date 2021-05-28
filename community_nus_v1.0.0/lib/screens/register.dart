@@ -343,6 +343,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 UserCredential userCredential = await auth.createUserWithEmailAndPassword(
                     email: _email, password: _password);
                 await DatabaseService(uid: userCredential.user.uid).updateUserData(_name, _email, _phone, _faculty, _course);
+                await NotificationsDatabase(uid: userCredential.user.uid).createDatabase();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
