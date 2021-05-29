@@ -204,6 +204,55 @@ class DiscussionForumDatabase {
   }
 }
 
+class ForumRepliesDataBase {
+  final String uid;
+
+  ForumRepliesDataBase({this.uid});
+
+  final CollectionReference forumReplies =
+      FirebaseFirestore.instance.collection('forumReplies');
+
+  final CollectionReference userInfo =
+      FirebaseFirestore.instance.collection('users');
+
+  Future create(
+      String replies, int upvote, int downvote, String dateAndTime) async {
+    return await forumReplies.doc(replies).set({
+      'thread_uid': this.uid,
+      'replies': replies,
+      'upvote': upvote,
+      'downvote': downvote,
+      'dateAndTime': dateAndTime
+    });
+  }
+
+  Future retrieveForumReplies() async {
+    QuerySnapshot queryforum = await forumReplies.get();
+    // QuerySnapshot queryUserInfo = await userInfo.get();
+    final allData = queryforum.docs;
+    return allData;
+  }
+
+  Future retrieveUser() async {
+    // QuerySnapshot queryforum = await forum.get();
+    QuerySnapshot queryUserInfo = await userInfo.get();
+    final allData = queryUserInfo.docs;
+    return allData;
+  }
+
+  Future updateUpvote(String title, int upvote) async {
+    return await forumReplies.doc(title).update({
+      'upvote': upvote + 1,
+    });
+  }
+
+  Future updateDownvote(String title, int downvote) async {
+    return await forumReplies.doc(title).update({
+      'downvote': downvote + 1,
+    });
+  }
+}
+
 class UploadImage {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;

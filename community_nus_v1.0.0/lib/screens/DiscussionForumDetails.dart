@@ -1,43 +1,35 @@
-import 'package:community_nus/screens/createDiscussionThread.dart';
-import 'package:community_nus/scrcen/DiscussionForumDetails.dart';
-import 'package:flutter/material.dart';
-import 'package:community_nus/settings/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:community_nus/screens/CreateReplyForum.dart';
+import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:community_nus/settings/user_data.dart';
+import 'package:flutter/material.dart';
 
-import 'DiscussionForumDetails.dart';
-
-// class SearchScreen extends StatefulWidget {
-//   @override
-//   _SearchScreenState createState() => _SearchScreenState();
-// }
-
-// class _SearchScreenState extends State<SearchScreen>
-//     with AutomaticKeepAliveClientMixin<SearchScreen> {
-//   final TextEditingController _searchControl = new TextEditingController();
-
-class DiscussionForum extends StatefulWidget {
+class ForumDetails extends StatefulWidget {
   final String uid;
+  final String title;
+  final String moduleCode;
 
-  DiscussionForum({this.uid});
+  ForumDetails({this.uid, this.title, this.moduleCode});
 
   @override
-  _DiscussionForumState createState() => _DiscussionForumState(uid: uid);
+  _ForumDetails createState() =>
+      _ForumDetails(uid: uid, title: title, moduleCode: moduleCode);
 }
 
-class _DiscussionForumState extends State<DiscussionForum> {
+class _ForumDetails extends State<ForumDetails> {
   final String uid;
+  final String title;
+  final String moduleCode;
 
-  _DiscussionForumState({this.uid});
-
+  _ForumDetails({this.uid, this.title, this.moduleCode});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(uid: uid).retrieveForum(),
-        builder: (BuildContext context, AsyncSnapshot forum) {
-          if (forum.hasData) {
+        future: ForumRepliesDataBase(uid: uid).retrieveForumReplies(),
+        builder: (BuildContext context, AsyncSnapshot forumReplies) {
+          if (forumReplies.hasData) {
             return FutureBuilder(
-                future: DiscussionForumDatabase(uid: uid).retrieveUser(),
+                future: ForumRepliesDataBase(uid: uid).retrieveUser(),
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   List<QueryDocumentSnapshot> listData = userDetails.data;
                   int userIdx = 0;
@@ -48,82 +40,45 @@ class _DiscussionForumState extends State<DiscussionForum> {
                   }
 
                   return Scaffold(
+                      appBar: AppBar(
+                        automaticallyImplyLeading: false,
+                        leading: IconButton(
+                          icon: Icon(Icons.keyboard_backspace),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        centerTitle: true,
+                        title: Text(moduleCode + " " + title),
+                        titleTextStyle: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.w900,
+                        ),
+                        elevation: 0.0,
+                      ),
                       floatingActionButton: FloatingActionButton(
                         onPressed: () async {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return CreateDiscussionThread(uid: uid);
+                                //Need change to create reply
+                                return CreateReplyForum(uid: uid);
                               },
                             ),
                           );
                         },
-                        tooltip: "Start a new Thread",
-                        child: const Icon(Icons.add),
+                        tooltip: "Reply",
+                        child: const Icon(Icons.reply),
                       ),
                       body: Padding(
                         padding: EdgeInsets.fromLTRB(5, 0, 5.0, 10),
                         child: ListView(
                           children: <Widget>[
-                            SizedBox(height: 5.0),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text(
-                                "Discussion Forum",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ),
-                            Card(
-                              elevation: 6.0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5.0),
-                                  ),
-                                ),
-                                child: TextField(
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    hintText: "Search..",
-                                    suffixIcon: Icon(
-                                      Icons.search,
-                                      color: Colors.black,
-                                    ),
-                                    hintStyle: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  maxLines: 1,
-                                  // controller: _searchControl,
-                                ),
-                              ),
-                            ),
                             SizedBox(height: 25),
 
                             //The list below
                             ListView.separated(
-                              itemCount: forum.data.length,
+                              itemCount: forumReplies.data.length,
                               shrinkWrap: true,
                               primary: false,
                               physics: NeverScrollableScrollPhysics(),
@@ -156,9 +111,9 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                 await DiscussionForumDatabase(
                                                         uid: uid)
                                                     .updateUpvote(
-                                                        "${forum.data[index].data()["title"].toString()}",
+                                                        "${forumReplies.data[index].data()["replies"].toString()}",
                                                         int.parse(
-                                                            "${forum.data[index].data()["upvote"].toString()}"));
+                                                            "${forumReplies.data[index].data()["upvote"].toString()}"));
                                                 // Navigator.of(context).pop();
                                                 setState(() {});
                                               },
@@ -166,9 +121,9 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                           ),
                                         ),
                                         Text(
-                                          (int.parse("${forum.data[index].data()["upvote"].toString()}") -
+                                          (int.parse("${forumReplies.data[index].data()["upvote"].toString()}") -
                                                   int.parse(
-                                                      "${forum.data[index].data()["downvote"].toString()}"))
+                                                      "${forumReplies.data[index].data()["downvote"].toString()}"))
                                               .toString(),
                                           style: TextStyle(
                                             fontSize: 14,
@@ -195,9 +150,9 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                 await DiscussionForumDatabase(
                                                         uid: uid)
                                                     .updateDownvote(
-                                                        "${forum.data[index].data()["title"].toString()}",
+                                                        "${forumReplies.data[index].data()["replies"].toString()}",
                                                         int.parse(
-                                                            "${forum.data[index].data()["downvote"].toString()}"));
+                                                            "${forumReplies.data[index].data()["downvote"].toString()}"));
                                                 // Navigator.of(context).pop();
                                                 setState(() {});
                                               },
@@ -207,30 +162,20 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       ]),
                                   title: RichText(
                                     text: TextSpan(
-                                        text: "${forum.data[index].data()["moduleCode"].toString()}" +
-                                            " " +
-                                            "${forum.data[index].data()["title"].toString()}",
-                                        style: TextStyle(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text:
-                                                "\n${forum.data[index].data()["threads"].toString()}",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black),
-                                          ),
-                                        ]),
+                                      text:
+                                          "${forumReplies.data[index].data()["replies"].toString()}",
+                                      style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black),
+                                    ),
                                   ),
                                   subtitle: Row(
                                     children: [
                                       Text(
                                         "\nPosted by " +
                                             "${userDetails.data[userIdx].data()["name"].toString()}" +
-                                            " on ${forum.data[index].data()["dateAndTime"].toString()}",
+                                            " on ${forumReplies.data[index].data()["dateAndTime"].toString()}",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontStyle: FontStyle.italic,
@@ -239,22 +184,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       ),
                                     ],
                                   ),
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                          return ForumDetails(
-                                              uid: uid,
-                                              title:
-                                                  "${forum.data[index].data()["title"].toString()}",
-                                              moduleCode:
-                                                  "${forum.data[index].data()["moduleCode"].toString()}");
-                                        },
-                                      ),
-                                    ).then((value) {
-                                      setState(() {});
-                                    });
-                                  },
+                                  onTap: () {},
                                 );
                               },
                               separatorBuilder:
