@@ -175,10 +175,17 @@ class DiscussionForumDatabase {
     });
   }
 
-  Future retrieveAll() async {
+  Future retrieveForum() async {
     QuerySnapshot queryforum = await forum.get();
     // QuerySnapshot queryUserInfo = await userInfo.get();
     final allData = queryforum.docs;
+    return allData;
+  }
+
+  Future retrieveUser() async {
+    // QuerySnapshot queryforum = await forum.get();
+    QuerySnapshot queryUserInfo = await userInfo.get();
+    final allData = queryUserInfo.docs;
     return allData;
   }
 

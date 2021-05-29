@@ -26,7 +26,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(uid: uid).retrieveAll(),
+        future: DiscussionForumDatabase(uid: uid).retrieveForum(),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return Scaffold(
