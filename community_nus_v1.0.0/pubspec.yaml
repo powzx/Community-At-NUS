@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^1.6.28
   http: ^0.12.2
   webview_flutter: ^2.0.7
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

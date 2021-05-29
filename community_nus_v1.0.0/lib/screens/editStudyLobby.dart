@@ -256,8 +256,8 @@ class _EditStudyGroupState extends State<EditStudyGroup> {
                     announceCon.text,
                     hideoutCon.text);
                 for (int i = 1; i < members.length; i++) {
-                  await NotificationsDatabase(uid: members[i])
-                      .sendData(1, uid, groupDetails.data()['group_name']);
+                  await NotificationsDatabase(uid: members[i]).sendData(1, uid,
+                      groupDetails.data()['group_name'], DateTime.now());
                 }
                 Navigator.of(context).pop();
               },
