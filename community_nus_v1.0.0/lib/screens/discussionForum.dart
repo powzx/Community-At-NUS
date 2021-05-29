@@ -38,7 +38,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   List<QueryDocumentSnapshot> listData = userDetails.data;
                   int userIdx = 0;
-                  for (int i = 0; i < userDetails.data.length; i++) {
+                  for (int i = 0; i < listData.length; i++) {
                     if (listData[i].id.toString().compareTo(this.uid) == 0) {
                       userIdx = i;
                     }
