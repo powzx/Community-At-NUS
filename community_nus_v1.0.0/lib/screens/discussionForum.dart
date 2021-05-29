@@ -1,4 +1,5 @@
 import 'package:community_nus/screens/createDiscussionThread.dart';
+import 'package:community_nus/settings/DiscussionForumDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -130,115 +131,128 @@ class _DiscussionForumState extends State<DiscussionForum> {
                               //   Map thread = disussionForum[index];
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                    leading: Wrap(
-                                        direction: Axis.vertical,
-                                        alignment: WrapAlignment.center,
-                                        children: <Widget>[
-                                          ClipOval(
-                                            child: Material(
-                                              color:
-                                                  Colors.white, // button color
-                                              child: InkWell(
-                                                splashColor: Colors
-                                                    .green, // inkwell color
-                                                child: SizedBox(
-                                                  width: 20,
-                                                  height: 20,
-                                                  child: Icon(
-                                                    Icons.arrow_upward,
-                                                    color: Colors.green,
-                                                    size: 20,
-                                                  ),
+                                  leading: Wrap(
+                                      direction: Axis.vertical,
+                                      alignment: WrapAlignment.center,
+                                      children: <Widget>[
+                                        ClipOval(
+                                          child: Material(
+                                            color: Colors.white, // button color
+                                            child: InkWell(
+                                              splashColor:
+                                                  Colors.green, // inkwell color
+                                              child: SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: Icon(
+                                                  Icons.arrow_upward,
+                                                  color: Colors.green,
+                                                  size: 20,
                                                 ),
-                                                onTap: () async {
-                                                  await DiscussionForumDatabase(
-                                                          uid: uid)
-                                                      .updateUpvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
-                                                          int.parse(
-                                                              "${forum.data[index].data()["upvote"].toString()}"));
-                                                  // Navigator.of(context).pop();
-                                                  setState(() {});
-                                                },
                                               ),
+                                              onTap: () async {
+                                                await DiscussionForumDatabase(
+                                                        uid: uid)
+                                                    .updateUpvote(
+                                                        "${forum.data[index].data()["title"].toString()}",
+                                                        int.parse(
+                                                            "${forum.data[index].data()["upvote"].toString()}"));
+                                                // Navigator.of(context).pop();
+                                                setState(() {});
+                                              },
                                             ),
-                                          ),
-                                          Text(
-                                            (int.parse("${forum.data[index].data()["upvote"].toString()}") -
-                                                    int.parse(
-                                                        "${forum.data[index].data()["downvote"].toString()}"))
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontStyle: FontStyle.italic,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                          ClipOval(
-                                            child: Material(
-                                              color:
-                                                  Colors.white, // button color
-                                              child: InkWell(
-                                                splashColor:
-                                                    Colors.red, // inkwell color
-                                                child: SizedBox(
-                                                  width: 20,
-                                                  height: 20,
-                                                  child: Icon(
-                                                    Icons.arrow_downward,
-                                                    color: Colors.red,
-                                                    size: 20,
-                                                  ),
-                                                ),
-                                                onTap: () async {
-                                                  await DiscussionForumDatabase(
-                                                          uid: uid)
-                                                      .updateDownvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
-                                                          int.parse(
-                                                              "${forum.data[index].data()["downvote"].toString()}"));
-                                                  // Navigator.of(context).pop();
-                                                  setState(() {});
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ]),
-                                    title: RichText(
-                                      text: TextSpan(
-                                          text: "${forum.data[index].data()["moduleCode"].toString()}" +
-                                              " " +
-                                              "${forum.data[index].data()["title"].toString()}",
-                                          style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text:
-                                                  "\n${forum.data[index].data()["threads"].toString()}",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black),
-                                            ),
-                                          ]),
-                                    ),
-                                    subtitle: Row(
-                                      children: [
-                                        Text(
-                                          "\nPosted by " +
-                                              "${userDetails.data[userIdx].data()["name"].toString()}" +
-                                              " on ${forum.data[index].data()["dateAndTime"].toString()}",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontStyle: FontStyle.italic,
-                                            fontWeight: FontWeight.w300,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    onTap: () {});
+                                        Text(
+                                          (int.parse("${forum.data[index].data()["upvote"].toString()}") -
+                                                  int.parse(
+                                                      "${forum.data[index].data()["downvote"].toString()}"))
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                        ClipOval(
+                                          child: Material(
+                                            color: Colors.white, // button color
+                                            child: InkWell(
+                                              splashColor:
+                                                  Colors.red, // inkwell color
+                                              child: SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: Icon(
+                                                  Icons.arrow_downward,
+                                                  color: Colors.red,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              onTap: () async {
+                                                await DiscussionForumDatabase(
+                                                        uid: uid)
+                                                    .updateDownvote(
+                                                        "${forum.data[index].data()["title"].toString()}",
+                                                        int.parse(
+                                                            "${forum.data[index].data()["downvote"].toString()}"));
+                                                // Navigator.of(context).pop();
+                                                setState(() {});
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                  title: RichText(
+                                    text: TextSpan(
+                                        text: "${forum.data[index].data()["moduleCode"].toString()}" +
+                                            " " +
+                                            "${forum.data[index].data()["title"].toString()}",
+                                        style: TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text:
+                                                "\n${forum.data[index].data()["threads"].toString()}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black),
+                                          ),
+                                        ]),
+                                  ),
+                                  subtitle: Row(
+                                    children: [
+                                      Text(
+                                        "\nPosted by " +
+                                            "${userDetails.data[userIdx].data()["name"].toString()}" +
+                                            " on ${forum.data[index].data()["dateAndTime"].toString()}",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return ForumDetails(
+                                              uid: uid,
+                                              threadDetails: forum.data[index],
+                                              userDetails:
+                                                  userDetails.data[userIdx]);
+                                        },
+                                      ),
+                                    ).then((value) {
+                                      setState(() {});
+                                    });
+                                  },
+                                );
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) =>
