@@ -215,11 +215,12 @@ class ForumRepliesDataBase {
   final CollectionReference userInfo =
       FirebaseFirestore.instance.collection('users');
 
-  Future create(
-      String replies, int upvote, int downvote, String dateAndTime) async {
+  Future create(String replies, String title, int upvote, int downvote,
+      String dateAndTime) async {
     return await forumReplies.doc(replies).set({
       'thread_uid': this.uid,
       'replies': replies,
+      'title': title,
       'upvote': upvote,
       'downvote': downvote,
       'dateAndTime': dateAndTime

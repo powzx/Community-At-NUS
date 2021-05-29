@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 
 class CreateReplyForum extends StatefulWidget {
   final String uid;
-
-  CreateReplyForum({this.uid});
+  String title;
+  String moduleCode;
+  CreateReplyForum({this.uid, this.title, this.moduleCode});
 
   @override
-  _CreateReplyForum createState() => _CreateReplyForum(uid: uid);
+  _CreateReplyForum createState() => _CreateReplyForum(
+      uid: uid, title: title, moduleCode: moduleCode);
 }
 
 class _CreateReplyForum extends State<CreateReplyForum> {
@@ -19,7 +21,7 @@ class _CreateReplyForum extends State<CreateReplyForum> {
   String replies;
   String moduleCode;
 
-  _CreateReplyForum({this.uid});
+  _CreateReplyForum({this.uid, this.title,this.moduleCode});
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +89,10 @@ class _CreateReplyForum extends State<CreateReplyForum> {
                 ),
               ),
               onPressed: () async {
-                await ForumRepliesDataBase(uid: uid).create(
-                    replies, 0, 0, DateTime.now().toString().substring(0, 10));
+                await ForumRepliesDataBase(uid: uid).create(replies, title, 0,
+                    0, DateTime.now().toString().substring(0, 10));
                 Navigator.of(context).pop();
+                setState(() {});
                 // to be improved -- need to refresh to view changes
               },
               color: Theme.of(context).accentColor,

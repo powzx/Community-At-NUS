@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/screens/CreateReplyForum.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
+import 'package:community_nus/settings/badge.dart';
+import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
+
+import 'notifications.dart';
 
 class ForumDetails extends StatefulWidget {
   final String uid;
@@ -42,19 +46,46 @@ class _ForumDetails extends State<ForumDetails> {
                   return Scaffold(
                       appBar: AppBar(
                         automaticallyImplyLeading: false,
+                        centerTitle: true,
                         leading: IconButton(
                           icon: Icon(Icons.keyboard_backspace),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
-                        centerTitle: true,
-                        title: Text(moduleCode + " " + title),
-                        titleTextStyle: TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.w900,
+                        title: Text(
+                          Constants.appName,
                         ),
                         elevation: 0.0,
+                        actions: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.refresh),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            tooltip: "Refresh",
+                          ),
+                          IconButton(
+                            icon: IconBadge(
+                              icon: Icons.notifications,
+                              size: 22.0,
+                              uid: uid,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return Notifications(uid: uid);
+                                  },
+                                ),
+                              ).then((value) {
+                                setState(() {});
+                              });
+                            },
+                            tooltip: "Notifications",
+                          ),
+                          SizedBox(height: 45),
+                        ],
                       ),
                       floatingActionButton: FloatingActionButton(
                         onPressed: () async {
@@ -62,7 +93,10 @@ class _ForumDetails extends State<ForumDetails> {
                             MaterialPageRoute(
                               builder: (BuildContext context) {
                                 //Need change to create reply
-                                return CreateReplyForum(uid: uid);
+                                return CreateReplyForum(
+                                    uid: uid,
+                                    title: title,
+                                    moduleCode: moduleCode);
                               },
                             ),
                           );
@@ -74,6 +108,16 @@ class _ForumDetails extends State<ForumDetails> {
                         padding: EdgeInsets.fromLTRB(5, 0, 5.0, 10),
                         child: ListView(
                           children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text(
+                                moduleCode + " " + title,
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 25),
 
                             //The list below
