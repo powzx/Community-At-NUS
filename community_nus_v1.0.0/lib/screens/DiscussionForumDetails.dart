@@ -36,16 +36,6 @@ class _ForumDetails extends State<ForumDetails> {
                 future: UserDatabase(uid: uid).retrieveUser(),
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   if (userDetails.hasData) {
-                    int userIdx = 0;
-                    for (int i = 0; i < userDetails.data.length; i++) {
-                      if (userDetails.data[i].id
-                              .toString()
-                              .compareTo(this.uid) ==
-                          0) {
-                        userIdx = i;
-                      }
-                    }
-
                     return Scaffold(
                         appBar: AppBar(
                           automaticallyImplyLeading: false,
@@ -219,7 +209,7 @@ class _ForumDetails extends State<ForumDetails> {
                                       children: [
                                         Text(
                                           "\nPosted by " +
-                                              "${userDetails.data[userIdx].data()["name"].toString()}" +
+                                              "${userDetails.data[getUserIdx("${forumReplies.data[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
                                               " on ${forumReplies.data[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,
@@ -247,4 +237,16 @@ class _ForumDetails extends State<ForumDetails> {
           return CircularProgressIndicator();
         });
   }
+}
+
+int getUserIdx(String currPostIDX, AsyncSnapshot userDetails) {
+  int userIdx = 0;
+  if (userDetails.hasData) {
+    for (int i = 0; i < userDetails.data.length; i++) {
+      if (userDetails.data[i].id.toString().compareTo(currPostIDX) == 0) {
+        userIdx = i;
+      }
+    }
+  }
+  return userIdx;
 }

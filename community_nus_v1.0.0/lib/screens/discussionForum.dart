@@ -1,6 +1,5 @@
-import 'package:community_nus/screens/ForumSearch.dart';
+import 'package:community_nus/screens/ForumFilter.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
-import 'package:community_nus/scrcen/DiscussionForumDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,16 +40,15 @@ class _DiscussionForumState extends State<DiscussionForum> {
                 future: UserDatabase(uid: uid).retrieveUser(),
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   if (userDetails.hasData) {
-                    int userIdx = 0;
-                    for (int i = 0; i < userDetails.data.length; i++) {
-                      if (userDetails.data[i].id
-                              .toString()
-                              .compareTo(this.uid) ==
-                          0) {
-                        userIdx = i;
-                      }
-                    }
-
+                    //   int userIdx = 0;
+                    //   for (int i = 0; i < userDetails.data.length; i++) {
+                    //     if (userDetails.data[i].id
+                    //             .toString()
+                    //             .compareTo(this.uid) ==
+                    //         0) {
+                    //       userIdx = i;
+                    //     }
+                    //   }
                     return Scaffold(
                         floatingActionButton: FloatingActionButton(
                           onPressed: () async {
@@ -84,28 +82,9 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       ),
                                     ),
                                     IconButton(
-                                        icon: Icon(Icons.search),
-                                        tooltip: "Search",
-                                        onPressed: () async {
-                                          final result = await showSearch(
-                                              context: context,
-                                              delegate: ForumSearch(
-                                                  forum: forum.data));
-                                          if (result != null) {
-                                            // Navigator.of(context).push(
-                                            // MaterialPageRoute(
-                                            //   builder:
-                                            //       (BuildContext context) {
-                                            //     return DiscussionForum(
-                                            //       uid: uid,
-                                            //     );
-                                            //   },
-                                            // ),
-                                            // ).then((value) {
-                                            setState(() {});
-                                            // });
-                                          }
-                                        }),
+                                        icon: Icon(Icons.filter_list_alt),
+                                        tooltip: "Filter",
+                                        onPressed: () async {}),
                                   ],
                                 ),
                               ),
@@ -122,6 +101,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                 //     disussionForum == null ? 0 : disussionForum.length,
                                 // itemBuilder: (BuildContext context, int index) {
                                 //   Map thread = disussionForum[index];
+
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: Wrap(
@@ -222,7 +202,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       children: [
                                         Text(
                                           "\nPosted by " +
-                                              "${userDetails.data[userIdx].data()["name"].toString()}" +
+                                              "${userDetails.data[getUserIdx("${forum.data[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
                                               " on ${forum.data[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,
@@ -259,10 +239,23 @@ class _DiscussionForumState extends State<DiscussionForum> {
                           ),
                         ));
                   }
+                  // return CircularProgressIndicator();
                   return CircularProgressIndicator();
                 });
           }
           return CircularProgressIndicator();
         });
   }
+}
+
+int getUserIdx(String currPostIDX, AsyncSnapshot userDetails) {
+  int userIdx = 0;
+  if (userDetails.hasData) {
+    for (int i = 0; i < userDetails.data.length; i++) {
+      if (userDetails.data[i].id.toString().compareTo(currPostIDX) == 0) {
+        userIdx = i;
+      }
+    }
+  }
+  return userIdx;
 }

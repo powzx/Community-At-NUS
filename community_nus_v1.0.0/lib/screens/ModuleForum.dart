@@ -5,7 +5,6 @@ import 'package:community_nus/settings/my_modules.dart';
 import 'package:community_nus/settings/faculties.dart';
 import 'package:community_nus/settings/badge.dart';
 import 'package:community_nus/settings/home_Faculties.dart';
-import 'package:community_nus/settings/home.Module.dart';
 import 'package:community_nus/screens/DiscussionForum.dart';
 import 'package:community_nus/settings/user_data.dart';
 

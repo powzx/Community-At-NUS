@@ -6,7 +6,7 @@ import 'package:community_nus/settings/comments.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/faculties.dart';
 import 'package:community_nus/settings/badge.dart';
-import 'package:community_nus/settings/home.Module.dart';
+import 'package:community_nus/settings/Home_ModulesSelector.dart';
 import 'package:community_nus/settings/soc_modules.dart';
 import 'package:community_nus/settings/user_data.dart';
 
@@ -141,7 +141,7 @@ class _ViewModulesState extends State<ViewModules> {
                           //Map cat = categories[index];
                           return Modules(
                             //icon: cat['icon'],
-                            title: modules[index],
+                            moduleCode: modules[index],
                             isHome: false,
                             tap: () async {
                               await DatabaseService(uid: uid)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/home_Faculties.dart';
-import 'package:community_nus/settings/home.Module.dart';
+import 'package:community_nus/settings/Home_ModulesSelector.dart';
 import 'package:community_nus/settings/faculties.dart';
 import 'package:community_nus/settings/my_modules.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -77,7 +77,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               itemBuilder: (context, index) {
                                 //Map cat = categories[index];
                                 return Modules(
-                                  title: moduleList[index],
+                                  moduleCode: moduleList[index],
                                   isHome: true,
                                 );
                               },
