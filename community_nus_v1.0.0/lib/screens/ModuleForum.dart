@@ -1,3 +1,4 @@
+import 'package:community_nus/screens/CreateThreadatModulePage.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:community_nus/settings/badge.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _ModuleForumState extends State<ModuleForum> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return CreateDiscussionThread(uid: uid);
+                                  return CreateThreadModulePage(uid: uid, moduleCode: moduleCode);
                                 },
                               ),
                             );
