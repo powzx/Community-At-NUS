@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/screens/CreateReplyForum.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
+import 'package:community_nus/screens/notifications.dart';
 import 'package:community_nus/settings/badge.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 
-import 'notifications.dart';
 
 class ForumDetails extends StatefulWidget {
   final String uid;

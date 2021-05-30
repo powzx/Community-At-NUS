@@ -8,14 +8,19 @@ class Modules extends StatefulWidget {
   final Function tap;
   final bool isHome;
 
-  Modules({Key key,this.uid, this.icon, this.moduleCode, this.tap, this.isHome})
+  Modules(
+      {Key key, this.uid, this.icon, this.moduleCode, this.tap, this.isHome})
       : super(key: key);
 
   @override
-  _ModulesState createState() => _ModulesState();
+  _ModulesState createState() => _ModulesState(uid: uid, moduleCode: moduleCode);
 }
 
 class _ModulesState extends State<Modules> {
+  final String uid;
+  final String moduleCode;
+
+  _ModulesState({this.uid, this.moduleCode});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,7 +29,7 @@ class _ModulesState extends State<Modules> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return DiscussionForum();
+                    return ModuleForum(this.uid,this.moduleCode);
                   },
                 ),
               );

@@ -1,4 +1,3 @@
-import 'package:community_nus/screens/ForumFilter.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
@@ -82,8 +81,8 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       ),
                                     ),
                                     IconButton(
-                                        icon: Icon(Icons.filter_list_alt),
-                                        tooltip: "Filter",
+                                        icon: Icon(Icons.search),
+                                        tooltip: "Search",
                                         onPressed: () async {}),
                                   ],
                                 ),

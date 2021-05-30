@@ -174,6 +174,14 @@ class DiscussionForumDatabase {
     });
   }
 
+  Future retrieveModulesForum(String moduleCode) async {
+    moduleCode = "[" + moduleCode + "]";
+    QuerySnapshot queryforum =
+        await forum.where('moduleCode', isEqualTo: moduleCode).get();
+    final allData = queryforum.docs;
+    return allData;
+  }
+
   Future retrieveForum() async {
     QuerySnapshot queryforum = await forum.get();
     final allData = queryforum.docs;
