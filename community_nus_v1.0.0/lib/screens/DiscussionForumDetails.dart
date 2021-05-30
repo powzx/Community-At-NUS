@@ -29,7 +29,7 @@ class _ForumDetails extends State<ForumDetails> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ForumRepliesDataBase(uid: uid).retrieveForumReplies(),
+        future: ForumRepliesDataBase(uid: uid).retrieveForumReplies(title),
         builder: (BuildContext context, AsyncSnapshot forumReplies) {
           if (forumReplies.hasData) {
             return FutureBuilder(
@@ -37,14 +37,13 @@ class _ForumDetails extends State<ForumDetails> {
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   if (userDetails.hasData) {
                     int userIdx = 0;
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < userDetails.data.length; i++) {
                       if (userDetails.data[i].id
                               .toString()
                               .compareTo(this.uid) ==
                           0) {
                         userIdx = i;
                       }
-                      break;
                     }
 
                     return Scaffold(
@@ -153,7 +152,7 @@ class _ForumDetails extends State<ForumDetails> {
                                                   ),
                                                 ),
                                                 onTap: () async {
-                                                  await DiscussionForumDatabase(
+                                                  await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateUpvote(
                                                           "${forumReplies.data[index].data()["replies"].toString()}",
@@ -193,7 +192,7 @@ class _ForumDetails extends State<ForumDetails> {
                                                   ),
                                                 ),
                                                 onTap: () async {
-                                                  await DiscussionForumDatabase(
+                                                  await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateDownvote(
                                                           "${forumReplies.data[index].data()["replies"].toString()}",

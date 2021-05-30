@@ -213,11 +213,13 @@ class ForumRepliesDataBase {
 
   ForumRepliesDataBase({this.uid});
 
-  final CollectionReference forumReplies =
-      FirebaseFirestore.instance.collection('forumReplies');
+  // final CollectionReference forumReplies =
+  //     FirebaseFirestore.instance.collection('forumReplies');
 
   Future create(String replies, String title, int upvote, int downvote,
       String dateAndTime) async {
+    CollectionReference forumReplies =
+        FirebaseFirestore.instance.collection('forumReplies');
     return await forumReplies.doc(replies).set({
       'thread_uid': this.uid,
       'replies': replies,
@@ -228,20 +230,26 @@ class ForumRepliesDataBase {
     });
   }
 
-  Future retrieveForumReplies() async {
+  Future retrieveForumReplies(String input) async {
+    CollectionReference forumReplies =
+        FirebaseFirestore.instance.collection('forumReplies');
     QuerySnapshot queryforum = await forumReplies.get();
     final allData = queryforum.docs;
     return allData;
   }
 
-  Future updateUpvote(String title, int upvote) async {
-    return await forumReplies.doc(title).update({
+  Future updateUpvote(String replies, int upvote) async {
+    CollectionReference forumReplies =
+        FirebaseFirestore.instance.collection('forumReplies');
+    return await forumReplies.doc(replies).update({
       'upvote': upvote + 1,
     });
   }
 
-  Future updateDownvote(String title, int downvote) async {
-    return await forumReplies.doc(title).update({
+  Future updateDownvote(String replies, int downvote) async {
+    CollectionReference forumReplies =
+        FirebaseFirestore.instance.collection('forumReplies');
+    return await forumReplies.doc(replies).update({
       'downvote': downvote + 1,
     });
   }

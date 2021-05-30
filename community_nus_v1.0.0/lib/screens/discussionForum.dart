@@ -41,14 +41,13 @@ class _DiscussionForumState extends State<DiscussionForum> {
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   if (userDetails.hasData) {
                     int userIdx = 0;
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < userDetails.data.length; i++) {
                       if (userDetails.data[i].id
                               .toString()
                               .compareTo(this.uid) ==
                           0) {
                         userIdx = i;
                       }
-                      break;
                     }
 
                   return Scaffold(

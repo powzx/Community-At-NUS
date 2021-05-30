@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class CreateReplyForum extends StatefulWidget {
   final String uid;
-  String title;
-  String moduleCode;
+  final String title;
+  final String moduleCode;
   CreateReplyForum({this.uid, this.title, this.moduleCode});
 
   @override
@@ -17,7 +17,7 @@ class CreateReplyForum extends StatefulWidget {
 class _CreateReplyForum extends State<CreateReplyForum> {
   final String uid;
 
-  String title;
+  final String title;
   String replies;
   String moduleCode;
 
