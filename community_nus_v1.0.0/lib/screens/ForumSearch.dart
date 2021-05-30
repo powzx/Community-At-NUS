@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/user_data.dart';
 
-class ModuleSearch extends SearchDelegate {
-  final List<DocumentSnapshot> lobby;
+class ForumSearch extends SearchDelegate {
+  final List<DocumentSnapshot> forum;
   DocumentSnapshot result;
 
-  ModuleSearch({this.lobby});
+  ForumSearch({this.forum});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -32,11 +32,8 @@ class ModuleSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final results = lobby.where((module) {
-      return module
-          .data()['modules']
-          .toLowerCase()
-          .contains(query.toLowerCase());
+    final results = forum.where((thread) {
+      return thread.data()['title'].toLowerCase().contains(query.toLowerCase());
     });
 
     if (results.length == 0) {
@@ -53,19 +50,12 @@ class ModuleSearch extends SearchDelegate {
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: ListTile(
-            leading: Column(
-              children: <Widget>[
-                Icon(Icons.group),
-                Text(
-                    '${results.elementAt(index).data()["strength"].toString()}/20'),
-              ],
-            ),
             title: Text(
-              '${results.elementAt(index).data()["group_name"]}',
+              '${results.elementAt(index).data()["title"]}',
               style: TextStyle(fontSize: 24),
             ),
             subtitle: Text(
-              '${results.elementAt(index).data()["modules"]}',
+              '${results.elementAt(index).data()["threads"]}',
               style: TextStyle(fontSize: 20),
             ),
             onTap: () {
@@ -80,10 +70,10 @@ class ModuleSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // suggestions are showing duplicated modules, if cannot solve just don't show as a whole.
-    final suggestions = lobby.where((module) {
-      return module
-          .data()['modules']
+    // suggestions are showing duplicated threads, if cannot solve just don't show as a whole.
+    final suggestions = forum.where((thread) {
+      return thread
+          .data()['threads']
           .toLowerCase()
           .contains(query.toLowerCase());
     });
@@ -92,9 +82,9 @@ class ModuleSearch extends SearchDelegate {
       itemCount: suggestions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(suggestions.elementAt(index).data()['modules']),
+          title: Text(suggestions.elementAt(index).data()['title']),
           onTap: () {
-            query = suggestions.elementAt(index).data()['modules'];
+            query = suggestions.elementAt(index).data()['title'];
           },
         );
       },

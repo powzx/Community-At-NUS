@@ -229,7 +229,8 @@ class ForumRepliesDataBase {
   }
 
   Future retrieveForumReplies(String input) async {
-    QuerySnapshot queryforum = await forumReplies.get();
+    QuerySnapshot queryforum =
+        await forumReplies.where('title', isEqualTo: input).get();
     final allData = queryforum.docs;
     return allData;
   }
