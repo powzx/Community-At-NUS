@@ -37,14 +37,19 @@ class _DiscussionForumState extends State<DiscussionForum> {
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return FutureBuilder(
-                future: DiscussionForumDatabase(uid: uid).retrieveUser(),
+                future: UserDatabase(uid: uid).retrieveUser(),
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
-                  int userIdx = 0;
-                  for (int i = 0; i < userDetails.data.length; i++) {
-                    if (userDetails.data[i].id.toString().compareTo(this.uid) == 0) {
-                      userIdx = i;
+                  if (userDetails.hasData) {
+                    int userIdx = 0;
+                    for (int i = 0; i < 10; i++) {
+                      if (userDetails.data[i].id
+                              .toString()
+                              .compareTo(this.uid) ==
+                          0) {
+                        userIdx = i;
+                      }
+                      break;
                     }
-                  }
 
                   return Scaffold(
                       floatingActionButton: FloatingActionButton(
@@ -261,12 +266,16 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                       const Divider(),
                             ),
                             SizedBox(height: 30),
-                          ],
-                        ),
-                      ));
+                            ],
+                          ),
+                        ));
+                  }
+                  return CircularProgressIndicator();
                 });
           }
           return CircularProgressIndicator();
         });
   }
 }
+
+

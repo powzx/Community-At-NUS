@@ -161,9 +161,6 @@ class DiscussionForumDatabase {
   final CollectionReference forum =
       FirebaseFirestore.instance.collection('forum');
 
-  final CollectionReference userInfo =
-      FirebaseFirestore.instance.collection('users');
-
   Future create(String title, String threads, String moduleCode, int upvote,
       int downvote, String dateAndTime) async {
     return await forum.doc(title).set({
@@ -179,15 +176,7 @@ class DiscussionForumDatabase {
 
   Future retrieveForum() async {
     QuerySnapshot queryforum = await forum.get();
-    // QuerySnapshot queryUserInfo = await userInfo.get();
     final allData = queryforum.docs;
-    return allData;
-  }
-
-  Future retrieveUser() async {
-    // QuerySnapshot queryforum = await forum.get();
-    QuerySnapshot queryUserInfo = await userInfo.get();
-    final allData = queryUserInfo.docs;
     return allData;
   }
 
@@ -204,6 +193,21 @@ class DiscussionForumDatabase {
   }
 }
 
+class UserDatabase {
+  final String uid;
+
+  UserDatabase({this.uid});
+
+  final CollectionReference userInfo =
+      FirebaseFirestore.instance.collection('users');
+
+  Future retrieveUser() async {
+    QuerySnapshot queryUserInfo = await userInfo.get();
+    final allData = queryUserInfo.docs;
+    return allData;
+  }
+}
+
 class ForumRepliesDataBase {
   final String uid;
 
@@ -211,9 +215,6 @@ class ForumRepliesDataBase {
 
   final CollectionReference forumReplies =
       FirebaseFirestore.instance.collection('forumReplies');
-
-  final CollectionReference userInfo =
-      FirebaseFirestore.instance.collection('users');
 
   Future create(String replies, String title, int upvote, int downvote,
       String dateAndTime) async {
@@ -229,15 +230,7 @@ class ForumRepliesDataBase {
 
   Future retrieveForumReplies() async {
     QuerySnapshot queryforum = await forumReplies.get();
-    // QuerySnapshot queryUserInfo = await userInfo.get();
     final allData = queryforum.docs;
-    return allData;
-  }
-
-  Future retrieveUser() async {
-    // QuerySnapshot queryforum = await forum.get();
-    QuerySnapshot queryUserInfo = await userInfo.get();
-    final allData = queryUserInfo.docs;
     return allData;
   }
 
