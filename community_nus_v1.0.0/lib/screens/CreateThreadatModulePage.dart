@@ -1,6 +1,3 @@
-// UID still not being captured
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:community_nus/screens/DiscussionForum.dart';
 import 'package:community_nus/settings/user_data.dart';

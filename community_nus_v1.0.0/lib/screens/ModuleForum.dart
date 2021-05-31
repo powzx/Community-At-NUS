@@ -58,7 +58,7 @@ class _ModuleForumState extends State<ModuleForum> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return CreateThreadModulePage(uid: uid, moduleCode: moduleCode);
+                                  return CreateThreadModulePage(uid: this.uid, moduleCode: this.moduleCode);
                                 },
                               ),
                             );

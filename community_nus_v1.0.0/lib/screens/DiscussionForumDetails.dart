@@ -112,6 +112,7 @@ class _ForumDetails extends State<ForumDetails> {
                                 ),
                               ),
                               SizedBox(height: 25),
+                              
 
                               //The list below
                               ListView.separated(

@@ -77,6 +77,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               itemBuilder: (context, index) {
                                 //Map cat = categories[index];
                                 return Modules(
+                                  uid: this.uid,
                                   moduleCode: moduleList[index],
                                   isHome: true,
                                 );
