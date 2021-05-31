@@ -303,6 +303,18 @@ class FacultyDatabase {
   Future viewModules() async {
     return await faculties.doc(fac).get();
   }
+
+  Future retrieveAllModules() async {
+    QuerySnapshot query = await faculties.get();
+    final allDocs = query.docs;
+    List allModules = [];
+
+    for (int i = 0; i < allDocs.length; i++) {
+      final modules = allDocs[i].data()['modules'];
+      allModules += modules;
+    }
+    return allModules;
+  }
 }
 
 class Article {

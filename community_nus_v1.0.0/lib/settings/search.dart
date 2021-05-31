@@ -80,24 +80,30 @@ class ModuleSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // suggestions are showing duplicated modules, if cannot solve just don't show as a whole.
-    final suggestions = lobby.where((module) {
-      return module
-          .data()['modules']
-          .toLowerCase()
-          .contains(query.toLowerCase());
-    });
-
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(suggestions.elementAt(index).data()['modules']),
-          onTap: () {
-            query = suggestions.elementAt(index).data()['modules'];
-          },
-        );
-      },
-    );
+    // suggestions now based on the faculties collection of our database.
+    // module codes that do not exist in the database and yet have study groups are NOT being suggested, but results will still show.
+    // efficiency may be lower when the database of faculties becomes larger.
+    return FutureBuilder(
+        future: FacultyDatabase().retrieveAllModules(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            List modules = snapshot.data;
+            final suggestions = modules.where((module) {
+              return module.toLowerCase().contains(query.toLowerCase());
+            });
+            return ListView.builder(
+              itemCount: suggestions.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(suggestions.elementAt(index)),
+                  onTap: () {
+                    query = suggestions.elementAt(index);
+                  },
+                );
+              },
+            );
+          }
+          return LinearProgressIndicator();
+        });
   }
 }
