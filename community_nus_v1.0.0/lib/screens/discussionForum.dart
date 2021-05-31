@@ -220,7 +220,8 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                 title:
                                                     "${forum.data[index].data()["title"].toString()}",
                                                 moduleCode:
-                                                    "${forum.data[index].data()["moduleCode"].toString()}");
+                                                    "${forum.data[index].data()["moduleCode"].toString()}",
+                                                threads:"${forum.data[index].data()["threads"].toString()}");
                                           },
                                         ),
                                       ).then((value) {

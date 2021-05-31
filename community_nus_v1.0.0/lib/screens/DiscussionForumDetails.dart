@@ -7,25 +7,26 @@ import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
 
-
 class ForumDetails extends StatefulWidget {
   final String uid;
   final String title;
   final String moduleCode;
+  final String threads;
 
-  ForumDetails({this.uid, this.title, this.moduleCode});
+  ForumDetails({this.uid, this.title, this.moduleCode, this.threads});
 
   @override
-  _ForumDetails createState() =>
-      _ForumDetails(uid: uid, title: title, moduleCode: moduleCode);
+  _ForumDetails createState() => _ForumDetails(
+      uid: uid, title: title, moduleCode: moduleCode, threads: threads);
 }
 
 class _ForumDetails extends State<ForumDetails> {
   final String uid;
   final String title;
   final String moduleCode;
+  final String threads;
 
-  _ForumDetails({this.uid, this.title, this.moduleCode});
+  _ForumDetails({this.uid, this.title, this.moduleCode, this.threads});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -98,11 +99,11 @@ class _ForumDetails extends State<ForumDetails> {
                           child: const Icon(Icons.reply),
                         ),
                         body: Padding(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5.0, 10),
+                          padding: EdgeInsets.fromLTRB(5, 0, 5.0, 5),
                           child: ListView(
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: EdgeInsets.fromLTRB(6, 6, 6.0, 2),
                                 child: Text(
                                   moduleCode + " " + title,
                                   style: TextStyle(
@@ -111,8 +112,19 @@ class _ForumDetails extends State<ForumDetails> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 5),
+
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(6, 0, 10.0, 6),
+                                child: Text(
+                                  threads,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 25),
-                              
 
                               //The list below
                               ListView.separated(

@@ -7,7 +7,6 @@ import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/faculties.dart';
 import 'package:community_nus/settings/badge.dart';
 import 'package:community_nus/settings/Home_ModulesSelector.dart';
-import 'package:community_nus/settings/soc_modules.dart';
 import 'package:community_nus/settings/user_data.dart';
 
 class ViewModules extends StatefulWidget {

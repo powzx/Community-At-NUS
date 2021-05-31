@@ -3,24 +3,26 @@ import 'package:community_nus/screens/ModuleForum.dart';
 
 class Modules extends StatefulWidget {
   final String uid;
-  final IconData icon;
+  final String threads;
   final String moduleCode;
   final Function tap;
   final bool isHome;
 
   Modules(
-      {Key key, this.uid, this.icon, this.moduleCode, this.tap, this.isHome})
+      {Key key, this.uid, this.threads, this.moduleCode, this.tap, this.isHome})
       : super(key: key);
 
   @override
-  _ModulesState createState() => _ModulesState(uid: uid, moduleCode: moduleCode);
+  _ModulesState createState() =>
+      _ModulesState(uid: uid, threads: threads, moduleCode: moduleCode);
 }
 
 class _ModulesState extends State<Modules> {
   final String uid;
+  final String threads;
   final String moduleCode;
 
-  _ModulesState({this.uid, this.moduleCode});
+  _ModulesState({this.uid, this.threads, this.moduleCode});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,7 +31,7 @@ class _ModulesState extends State<Modules> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return ModuleForum(this.uid,this.moduleCode);
+                    return ModuleForum(this.uid, this.threads, this.moduleCode);
                   },
                 ),
               );

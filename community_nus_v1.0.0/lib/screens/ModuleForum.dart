@@ -21,22 +21,25 @@ import 'notifications.dart';
 class ModuleForum extends StatefulWidget {
   final String uid;
   final String moduleCode;
-  ModuleForum(this.uid, this.moduleCode);
+  final String threads;
+  ModuleForum(this.uid, this.threads, this.moduleCode);
 
   @override
   _ModuleForumState createState() =>
-      _ModuleForumState(uid: uid, moduleCode: moduleCode);
+      _ModuleForumState(uid: uid, threads: threads, moduleCode: moduleCode);
 }
 
 class _ModuleForumState extends State<ModuleForum> {
   final String uid;
   final String moduleCode;
-  _ModuleForumState({this.uid, this.moduleCode});
+  final String threads;
+  _ModuleForumState({this.uid, this.threads, this.moduleCode});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DiscussionForumDatabase(uid: uid).retrieveModulesForum(this.moduleCode),
+        future: DiscussionForumDatabase(uid: uid)
+            .retrieveModulesForum(this.moduleCode),
         builder: (BuildContext context, AsyncSnapshot forum) {
           if (forum.hasData) {
             return FutureBuilder(
@@ -53,12 +56,57 @@ class _ModuleForumState extends State<ModuleForum> {
                     //     }
                     //   }
                     return Scaffold(
+                        appBar: AppBar(
+                          automaticallyImplyLeading: false,
+                          centerTitle: true,
+                          leading: IconButton(
+                            icon: Icon(Icons.keyboard_backspace),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          title: Text(
+                            Constants.appName,
+                          ),
+                          elevation: 0.0,
+                          actions: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.refresh),
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              tooltip: "Refresh",
+                            ),
+                            IconButton(
+                              icon: IconBadge(
+                                icon: Icons.notifications,
+                                size: 22.0,
+                                uid: uid,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return Notifications(uid: uid);
+                                    },
+                                  ),
+                                ).then((value) {
+                                  setState(() {});
+                                });
+                              },
+                              tooltip: "Notifications",
+                            ),
+                            SizedBox(height: 45),
+                          ],
+                        ),
                         floatingActionButton: FloatingActionButton(
                           onPressed: () async {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return CreateThreadModulePage(uid: this.uid, moduleCode: this.moduleCode);
+                                  return CreateThreadModulePage(
+                                      uid: this.uid,
+                                      moduleCode: this.moduleCode);
                                 },
                               ),
                             );
@@ -84,10 +132,6 @@ class _ModuleForumState extends State<ModuleForum> {
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
-                                    IconButton(
-                                        icon: Icon(Icons.search),
-                                        tooltip: "Search",
-                                        onPressed: () async {}),
                                   ],
                                 ),
                               ),
@@ -223,6 +267,8 @@ class _ModuleForumState extends State<ModuleForum> {
                                                 uid: uid,
                                                 title:
                                                     "${forum.data[index].data()["title"].toString()}",
+                                                threads:
+                                                    "${forum.data[index].data()["threads"].toString()}",
                                                 moduleCode:
                                                     "${forum.data[index].data()["moduleCode"].toString()}");
                                           },
