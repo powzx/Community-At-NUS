@@ -222,35 +222,37 @@ class _ProfileState extends State<Profile> {
                         //document.data()["course"],
                       ),
                     ),
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
-                        ? SizedBox()
-                        : ListTile(
-                            title: Text(
-                              "Dark Theme",
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            trailing: Switch(
-                              value: Provider.of<AppProvider>(context).theme ==
-                                      Constants.lightTheme
-                                  ? false
-                                  : true,
-                              onChanged: (v) async {
-                                if (v) {
-                                  Provider.of<AppProvider>(context,
-                                          listen: false)
-                                      .setTheme(Constants.darkTheme, "dark");
-                                } else {
-                                  Provider.of<AppProvider>(context,
-                                          listen: false)
-                                      .setTheme(Constants.lightTheme, "light");
-                                }
-                              },
-                              activeColor: Theme.of(context).accentColor,
-                            ),
-                          ),
+                    //The following code is for the dark theme button! 
+
+                    // MediaQuery.of(context).platformBrightness == Brightness.dark
+                    //     ? SizedBox()
+                    //     : ListTile(
+                    //         title: Text(
+                    //           "Dark Theme",
+                    //           style: TextStyle(
+                    //             fontSize: 17,
+                    //             fontWeight: FontWeight.w700,
+                    //           ),
+                    //         ),
+                    //         trailing: Switch(
+                    //           value: Provider.of<AppProvider>(context).theme ==
+                    //                   Constants.lightTheme
+                    //               ? false
+                    //               : true,
+                    //           onChanged: (v) async {
+                    //             if (v) {
+                    //               Provider.of<AppProvider>(context,
+                    //                       listen: false)
+                    //                   .setTheme(Constants.darkTheme, "dark");
+                    //             } else {
+                    //               Provider.of<AppProvider>(context,
+                    //                       listen: false)
+                    //                   .setTheme(Constants.lightTheme, "light");
+                    //             }
+                    //           },
+                    //           activeColor: Theme.of(context).accentColor,
+                    //         ),
+                    //       ),
                   ],
                 ),
               ),
