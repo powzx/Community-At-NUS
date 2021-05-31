@@ -9,24 +9,33 @@ import 'package:flutter/material.dart';
 
 class ForumDetails extends StatefulWidget {
   final String uid;
+  final String creator_uid;
   final String title;
   final String moduleCode;
   final String threads;
 
-  ForumDetails({this.uid, this.title, this.moduleCode, this.threads});
+  ForumDetails(
+      {this.uid, this.creator_uid, this.title, this.moduleCode, this.threads});
 
   @override
   _ForumDetails createState() => _ForumDetails(
-      uid: uid, title: title, moduleCode: moduleCode, threads: threads);
+      uid: uid,
+      creator_uid: creator_uid,
+      title: title,
+      moduleCode: moduleCode,
+      threads: threads);
 }
 
 class _ForumDetails extends State<ForumDetails> {
   final String uid;
+  final String creator_uid;
   final String title;
   final String moduleCode;
   final String threads;
 
-  _ForumDetails({this.uid, this.title, this.moduleCode, this.threads});
+  _ForumDetails(
+      {this.uid, this.creator_uid, this.title, this.moduleCode, this.threads});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -89,11 +98,14 @@ class _ForumDetails extends State<ForumDetails> {
                                   //Need change to create reply
                                   return CreateReplyForum(
                                       uid: uid,
+                                      creator_uid: creator_uid,
                                       title: title,
                                       moduleCode: moduleCode);
                                 },
                               ),
-                            );
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                           tooltip: "Reply",
                           child: const Icon(Icons.reply),

@@ -58,7 +58,9 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                   return CreateDiscussionThread(uid: uid);
                                 },
                               ),
-                            );
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                           tooltip: "Start a new Thread",
                           child: const Icon(Icons.add),
@@ -239,6 +241,8 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                           builder: (BuildContext context) {
                                             return ForumDetails(
                                                 uid: uid,
+                                                creator_uid:
+                                                    "${forum.data[index].data()['thread_uid'].toString()}",
                                                 title:
                                                     "${forum.data[index].data()["title"].toString()}",
                                                 moduleCode:

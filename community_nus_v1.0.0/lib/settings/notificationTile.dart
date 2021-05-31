@@ -14,10 +14,12 @@ import 'package:community_nus/settings/user_data.dart';
 
 //type 0: (to creator) someone joined your study group
 //type 1: (to members) creator edited the study group
+//type 2: (to OP) someone replied post
 
 List statement = [
   "has joined your study group",
   "has made changes to your study group",
+  "has replied to your post",
 ];
 
 class NotificationTile extends StatefulWidget {
