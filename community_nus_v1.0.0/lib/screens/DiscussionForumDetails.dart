@@ -182,6 +182,12 @@ class _ForumDetails extends State<ForumDetails> {
                                                           "${forumReplies.data[index].data()["replies"].toString()}",
                                                           int.parse(
                                                               "${forumReplies.data[index].data()["upvote"].toString()}"));
+                                                  await UserDatabase(
+                                                          uid: forumReplies
+                                                                  .data[index]
+                                                                  .data()[
+                                                              "thread_uid"])
+                                                      .increaseRep();
                                                   // Navigator.of(context).pop();
                                                   setState(() {});
                                                 },
@@ -222,6 +228,12 @@ class _ForumDetails extends State<ForumDetails> {
                                                           "${forumReplies.data[index].data()["replies"].toString()}",
                                                           int.parse(
                                                               "${forumReplies.data[index].data()["downvote"].toString()}"));
+                                                  await UserDatabase(
+                                                          uid: forumReplies
+                                                                  .data[index]
+                                                                  .data()[
+                                                              "thread_uid"])
+                                                      .decreaseRep();
                                                   // Navigator.of(context).pop();
                                                   setState(() {});
                                                 },

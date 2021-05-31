@@ -214,6 +214,22 @@ class UserDatabase {
     final allData = queryUserInfo.docs;
     return allData;
   }
+
+  Future increaseRep() async {
+    DocumentSnapshot user = await userInfo.doc(uid).get();
+    int initial = user.data()['rep'];
+    return await userInfo.doc(uid).update({
+      'rep': initial + 1,
+    });
+  }
+
+  Future decreaseRep() async {
+    DocumentSnapshot user = await userInfo.doc(uid).get();
+    int initial = user.data()['rep'];
+    return await userInfo.doc(uid).update({
+      'rep': initial - 1,
+    });
+  }
 }
 
 class ForumRepliesDataBase {

@@ -163,6 +163,11 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                           "${forum.data[index].data()["title"].toString()}",
                                                           int.parse(
                                                               "${forum.data[index].data()["upvote"].toString()}"));
+                                                  await UserDatabase(
+                                                          uid: forum.data[index]
+                                                                  .data()[
+                                                              "thread_uid"])
+                                                      .increaseRep();
                                                   // Navigator.of(context).pop();
                                                   setState(() {});
                                                 },
@@ -203,6 +208,11 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                           "${forum.data[index].data()["title"].toString()}",
                                                           int.parse(
                                                               "${forum.data[index].data()["downvote"].toString()}"));
+                                                  await UserDatabase(
+                                                          uid: forum.data[index]
+                                                                  .data()[
+                                                              "thread_uid"])
+                                                      .decreaseRep();
                                                   // Navigator.of(context).pop();
                                                   setState(() {});
                                                 },
