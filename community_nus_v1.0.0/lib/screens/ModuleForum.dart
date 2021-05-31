@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
-
+import 'package:community_nus/settings/profile_pic.dart';
 import 'DiscussionForumDetails.dart';
 import 'notifications.dart';
 
@@ -22,6 +22,7 @@ class ModuleForum extends StatefulWidget {
   final String uid;
   final String moduleCode;
   final String threads;
+
   ModuleForum(this.uid, this.threads, this.moduleCode);
 
   @override
@@ -33,6 +34,7 @@ class _ModuleForumState extends State<ModuleForum> {
   final String uid;
   final String moduleCode;
   final String threads;
+
   _ModuleForumState({this.uid, this.threads, this.moduleCode});
 
   @override
@@ -151,7 +153,15 @@ class _ModuleForumState extends State<ModuleForum> {
 
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: Wrap(
+                                    leading: ProfilePic(
+                                        uid: forum.data[index]
+                                            .data()["thread_uid"],
+                                        upSize: false,
+                                        rep: userDetails.data[getUserIdx(
+                                                "${forum.data[index].data()["thread_uid"].toString()}",
+                                                userDetails)]
+                                            .data()["rep"]),
+                                    trailing: Wrap(
                                         direction: Axis.vertical,
                                         alignment: WrapAlignment.center,
                                         children: <Widget>[
@@ -265,6 +275,8 @@ class _ModuleForumState extends State<ModuleForum> {
                                           builder: (BuildContext context) {
                                             return ForumDetails(
                                                 uid: uid,
+                                                creator_uid:
+                                                    "${forum.data[index].data()["thread_uid"].toString()}",
                                                 title:
                                                     "${forum.data[index].data()["title"].toString()}",
                                                 threads:

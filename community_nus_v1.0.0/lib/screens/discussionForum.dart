@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:community_nus/settings/search.dart';
 import 'DiscussionForumDetails.dart';
+import 'package:community_nus/settings/profile_pic.dart';
 
 // class SearchScreen extends StatefulWidget {
 //   @override
@@ -127,7 +128,15 @@ class _DiscussionForumState extends State<DiscussionForum> {
 
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: Wrap(
+                                    leading: ProfilePic(
+                                        uid: forum.data[index]
+                                            .data()["thread_uid"],
+                                        upSize: false,
+                                        rep: userDetails.data[getUserIdx(
+                                                "${forum.data[index].data()["thread_uid"].toString()}",
+                                                userDetails)]
+                                            .data()["rep"]),
+                                    trailing: Wrap(
                                         direction: Axis.vertical,
                                         alignment: WrapAlignment.center,
                                         children: <Widget>[

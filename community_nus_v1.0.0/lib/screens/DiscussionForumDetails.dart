@@ -6,6 +6,7 @@ import 'package:community_nus/settings/badge.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:community_nus/settings/profile_pic.dart';
 
 class ForumDetails extends StatefulWidget {
   final String uid;
@@ -146,7 +147,15 @@ class _ForumDetails extends State<ForumDetails> {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return ListTile(
-                                    leading: Wrap(
+                                    leading: ProfilePic(
+                                        uid: forumReplies.data[index]
+                                            .data()["thread_uid"],
+                                        upSize: false,
+                                        rep: userDetails.data[getUserIdx(
+                                                "${forumReplies.data[index].data()["thread_uid"].toString()}",
+                                                userDetails)]
+                                            .data()["rep"]),
+                                    trailing: Wrap(
                                         direction: Axis.vertical,
                                         alignment: WrapAlignment.center,
                                         children: <Widget>[
