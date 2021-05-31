@@ -1,7 +1,11 @@
+import 'package:community_nus/settings/badge.dart';
+import 'package:community_nus/settings/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:community_nus/screens/DiscussionForum.dart';
 import 'package:community_nus/settings/user_data.dart';
 import 'package:flutter/material.dart';
+
+import 'notifications.dart';
 
 class CreateReplyForum extends StatefulWidget {
   final String uid;
@@ -25,12 +29,65 @@ class _CreateReplyForum extends State<CreateReplyForum> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_backspace),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          Constants.appName,
+        ),
+        elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {});
+            },
+            tooltip: "Refresh",
+          ),
+          IconButton(
+            icon: IconBadge(
+              icon: Icons.notifications,
+              size: 22.0,
+              uid: uid,
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return Notifications(uid: uid);
+                  },
+                ),
+              ).then((value) {
+                setState(() {});
+              });
+            },
+            tooltip: "Notifications",
+          ),
+          SizedBox(height: 45),
+        ],
+      ),
+      body:Padding(
       padding: EdgeInsets.fromLTRB(20.0, 0, 20, 0),
       child: ListView(
         shrinkWrap: true,
-        children: <Widget>[
-          SizedBox(height: 150.0),
+        children: <Widget>[Padding(
+              padding: EdgeInsets.fromLTRB(6, 6, 6.0, 2),
+              child: Text(
+                "New Reply:",
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          SizedBox(height: 40.0),
           Card(
             elevation: 3.0,
             child: Container(
@@ -103,7 +160,8 @@ class _CreateReplyForum extends State<CreateReplyForum> {
             color: Theme.of(context).accentColor,
           ),
           SizedBox(height: 10.0),
-        ],
+         ],
+        ),
       ),
     );
   }
