@@ -47,7 +47,7 @@ class _StudyLobbyState extends State<StudyLobby> {
                             Text(
                               "Study Lobby",
                               style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
+                                  fontSize: 22, fontWeight: FontWeight.w900),
                             ),
                             IconButton(
                                 icon: Icon(Icons.search),

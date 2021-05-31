@@ -1,9 +1,10 @@
+import 'package:community_nus/screens/ModuleForum.dart';
 import 'package:community_nus/screens/createDiscussionThread.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/settings/user_data.dart';
-
+import 'package:community_nus/settings/search.dart';
 import 'DiscussionForumDetails.dart';
 
 // class SearchScreen extends StatefulWidget {
@@ -83,7 +84,28 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                     IconButton(
                                         icon: Icon(Icons.search),
                                         tooltip: "Search",
-                                        onPressed: () async {}),
+                                        onPressed: () async {
+                                          final moduleList =
+                                              await FacultyDatabase()
+                                                  .retrieveAllModules();
+
+                                          final result = await showSearch(
+                                              context: context,
+                                              delegate: ForumSearch(
+                                                  moduleList: moduleList +
+                                                      ['General']));
+
+                                          if (result != null) {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(builder:
+                                                    (BuildContext context) {
+                                              return ModuleForum(uid, '',
+                                                  result); // KIV for the empty string
+                                            })).then((value) {
+                                              setState(() {});
+                                            });
+                                          }
+                                        }),
                                   ],
                                 ),
                               ),
@@ -221,7 +243,8 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                     "${forum.data[index].data()["title"].toString()}",
                                                 moduleCode:
                                                     "${forum.data[index].data()["moduleCode"].toString()}",
-                                                threads:"${forum.data[index].data()["threads"].toString()}");
+                                                threads:
+                                                    "${forum.data[index].data()["threads"].toString()}");
                                           },
                                         ),
                                       ).then((value) {

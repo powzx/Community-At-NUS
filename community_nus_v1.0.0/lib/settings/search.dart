@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:community_nus/settings/user_data.dart';
 
@@ -105,5 +106,82 @@ class ModuleSearch extends SearchDelegate {
           }
           return LinearProgressIndicator();
         });
+  }
+}
+
+class ForumSearch extends SearchDelegate {
+  final List moduleList;
+  String result;
+
+  ForumSearch({this.moduleList});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final results = moduleList.where((module) {
+      return module.toLowerCase().contains(query.toLowerCase());
+    });
+
+    if (results.length == 0) {
+      return ListTile(
+        title: Text(
+          "No results found",
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(results.elementAt(index)),
+          onTap: () {
+            result = results.elementAt(index);
+            close(context, result);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = moduleList.where((module) {
+      return module.toLowerCase().contains(query.toLowerCase());
+    });
+
+    return ListView.builder(
+      itemCount: suggestions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(suggestions.elementAt(index)),
+          onTap: () {
+            query = suggestions.elementAt(index);
+          },
+        );
+      },
+    );
   }
 }
