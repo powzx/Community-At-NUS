@@ -340,17 +340,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               onPressed: () async {
-                UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-                    email: _email, password: _password);
-                await DatabaseService(uid: userCredential.user.uid).updateUserData(_name, _email, _phone, _faculty, _course);
-                await NotificationsDatabase(uid: userCredential.user.uid).createDatabase();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return JoinApp();
-                    },
-                  ),
-                );
+                bool ok = true;
+                String error;
+                UserCredential userCredential;
+
+                try {
+                  userCredential = await auth.createUserWithEmailAndPassword(
+                      email: _email, password: _password);
+                } on FirebaseAuthException catch (e) {
+                  ok = false;
+                  if (e.code == "email-already-in-use") {
+                    error = "Email address is already in use.";
+                  } else if (e.code == "invalid-email") {
+                    error = "Email address is not valid.";
+                  } else if (e.code == "weak-password") {
+                    error = "Password is too short.";
+                  } else {
+                    error = "Unknown error. Please contact the administrator.";
+                  }
+                }
+
+                if (ok) {
+                  await DatabaseService(uid: userCredential.user.uid)
+                      .updateUserData(_name, _email, _phone, _faculty, _course);
+                  await NotificationsDatabase(uid: userCredential.user.uid)
+                      .createDatabase();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return JoinApp();
+                      },
+                    ),
+                  );
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text(error),
+                          actions: [
+                            TextButton(
+                              child: Text("Ok"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      }
+                  );
+                }
               },
               color: Theme.of(context).accentColor,
             ),

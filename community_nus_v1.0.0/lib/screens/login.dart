@@ -167,12 +167,24 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onPressed: () async {
                 bool ok = true;
+                String error;
                 UserCredential userCredential;
                 try {
                   userCredential = await auth.signInWithEmailAndPassword(
                       email: _email, password: _password);
                 } on FirebaseAuthException catch (e) {
                     ok = false;
+                    if (e.code == "invalid-email") {
+                      error = "Email address is not valid.";
+                    } else if (e.code == "user-disabled") {
+                      error = "The user associated to this email address has been disabled. Please contact the administrator.";
+                    } else if (e.code == "user-not-found") {
+                      error = "No user found. Please register an account.";
+                    } else if (e.code == "wrong-password") {
+                      error = "Wrong password.";
+                    } else {
+                      error = "Unknown error. Please contact the administrator.";
+                    }
                 }
                 if (ok) {
                   //RetrieveUserInfo userInfo = RetrieveUserInfo(uid: userCredential.user.uid);
@@ -190,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text("Error"),
-                        content: Text("Please check your credentials."),
+                        content: Text(error),
                         actions: [
                           TextButton(
                             child: Text("Ok"),
