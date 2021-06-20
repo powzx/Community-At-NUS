@@ -28,7 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          SizedBox(height: 100.0),
+          // SizedBox(height: 100.0),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(
+              top: 30,
+            ),
+            child: Image.asset('images/applogo.png'),
+            height: 150,
+            width: 150,
+          ),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(
@@ -155,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {},
             ),
           ),
-          SizedBox(height: 30.0),
+          SizedBox(height: 15.0),
           Container(
             height: 50.0,
             child: RaisedButton(
@@ -173,18 +182,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   userCredential = await auth.signInWithEmailAndPassword(
                       email: _email, password: _password);
                 } on FirebaseAuthException catch (e) {
-                    ok = false;
-                    if (e.code == "invalid-email") {
-                      error = "Email address is not valid.";
-                    } else if (e.code == "user-disabled") {
-                      error = "The user associated to this email address has been disabled. Please contact the administrator.";
-                    } else if (e.code == "user-not-found") {
-                      error = "No user found. Please register an account.";
-                    } else if (e.code == "wrong-password") {
-                      error = "Wrong password.";
-                    } else {
-                      error = "Unknown error. Please contact the administrator.";
-                    }
+                  ok = false;
+                  if (e.code == "invalid-email") {
+                    error = "Email address is not valid.";
+                  } else if (e.code == "user-disabled") {
+                    error =
+                        "The user associated to this email address has been disabled. Please contact the administrator.";
+                  } else if (e.code == "user-not-found") {
+                    error = "No user found. Please register an account.";
+                  } else if (e.code == "wrong-password") {
+                    error = "Wrong password.";
+                  } else {
+                    error = "Unknown error. Please contact the administrator.";
+                  }
                 }
                 if (ok) {
                   //RetrieveUserInfo userInfo = RetrieveUserInfo(uid: userCredential.user.uid);
@@ -198,22 +208,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 } else {
                   showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Error"),
-                        content: Text(error),
-                        actions: [
-                          TextButton(
-                            child: Text("Ok"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      );
-                    }
-                  );
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text(error),
+                          actions: [
+                            TextButton(
+                              child: Text("Ok"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      });
                 }
               },
               color: Theme.of(context).accentColor,

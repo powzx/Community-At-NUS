@@ -49,7 +49,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 20.0),
 
                     Text(
                       "Your Modules",
@@ -120,7 +120,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         );
                       },
                     ),
-                    SizedBox(height: 20.0,),
+                    SizedBox(
+                      height: 30.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
