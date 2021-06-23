@@ -3,11 +3,11 @@ import 'package:community_nus/Screens/Base%20Screen_Feature/StartAppLoadingScree
 import 'package:community_nus/Screens/Profile/editProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:community_nus/Settings_BackEndDataBase/const.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:community_nus/Settings_BackEndDataBase/profile_pic.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Profile_pic.dart';
 
 /* bugs:
 * uploading profile pic only works with gallery, not camera.

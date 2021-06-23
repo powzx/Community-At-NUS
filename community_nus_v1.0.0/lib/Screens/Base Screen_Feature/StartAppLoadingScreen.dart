@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:community_nus/Screens/Login_Registration/JoinScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:community_nus/Settings_BackEndDataBase/const.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 

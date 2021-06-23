@@ -1,5 +1,5 @@
-import 'package:community_nus/Settings_BackEndDataBase/badge.dart';
-import 'package:community_nus/Settings_BackEndDataBase/const.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Badge.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/material.dart';

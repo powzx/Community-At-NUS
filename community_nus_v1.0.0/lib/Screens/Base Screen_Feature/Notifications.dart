@@ -1,7 +1,7 @@
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:community_nus/Settings_BackEndDataBase/notificationTile.dart';
+import 'package:community_nus/Settings_BackEndDataBase/NotificationTile.dart';
 
 class Notifications extends StatefulWidget {
   final String uid;

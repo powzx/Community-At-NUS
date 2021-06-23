@@ -1,4 +1,4 @@
-import 'package:community_nus/Settings_BackEndDataBase/profile_pic.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Profile_pic.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/material.dart';
 

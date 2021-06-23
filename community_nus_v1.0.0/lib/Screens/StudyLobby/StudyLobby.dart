@@ -1,10 +1,8 @@
 import 'package:community_nus/Screens/StudyLobby/CreateStudyLobby.dart';
 import 'package:community_nus/Screens/StudyLobby/StudyLobbyDetails.dart';
-import 'package:community_nus/Settings_BackEndDataBase/conversationList.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:community_nus/Settings_BackEndDataBase/ChatUsers.dart';
-import 'package:community_nus/Settings_BackEndDataBase/search.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Search.dart';
 
 /* Users need to reload this page to re-fetch data after joining a study group
 * to view changes to the members list.

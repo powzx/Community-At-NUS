@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:community_nus/Settings_BackEndDataBase/home_Faculties.dart';
-import 'package:community_nus/Settings_BackEndDataBase/Home_ModulesSelector.dart';
-import 'package:community_nus/Settings_BackEndDataBase/faculties.dart';
-import 'package:community_nus/Settings_BackEndDataBase/my_modules.dart';
+import 'package:community_nus/Settings_BackEndDataBase/HomeScreen/Home_Faculties.dart';
+import 'package:community_nus/Settings_BackEndDataBase/HomeScreen/Home_ModulesSelector.dart';
+import 'package:community_nus/Settings_BackEndDataBase/HomeScreen/ListOfFaculties.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
-import 'package:community_nus/Settings_BackEndDataBase/home_special.dart';
+import 'package:community_nus/Settings_BackEndDataBase/HomeScreen/News.dart';
 
 class Home extends StatefulWidget {
   final String uid;

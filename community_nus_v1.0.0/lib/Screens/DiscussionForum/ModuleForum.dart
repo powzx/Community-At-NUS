@@ -1,10 +1,10 @@
 import 'package:community_nus/Screens/DiscussionForum/CreateThreadatModulePage.dart';
-import 'package:community_nus/Settings_BackEndDataBase/badge.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Badge.dart';
 import 'package:flutter/material.dart';
-import 'package:community_nus/Settings_BackEndDataBase/const.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
-import 'package:community_nus/Settings_BackEndDataBase/profile_pic.dart';
+import 'package:community_nus/Settings_BackEndDataBase/Profile_pic.dart';
 import 'DiscussionForumDetails.dart';
 import 'package:community_nus/Screens/Base%20Screen_Feature/Notifications.dart';
 
