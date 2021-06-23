@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:community_nus/Settings_BackEndDataBase/Profile_pic.dart';
 import 'DiscussionForumDetails.dart';
-import 'package:community_nus/Screens/Base%20Screen_Feature/Notifications.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/Notifications.dart';
 
 // class SearchScreen extends StatefulWidget {
 //   @override

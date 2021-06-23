@@ -3,7 +3,7 @@ import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:community_nus/Screens/Base%20Screen_Feature/Notifications.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/Notifications.dart';
 
 class CreateReplyForum extends StatefulWidget {
   final String uid;

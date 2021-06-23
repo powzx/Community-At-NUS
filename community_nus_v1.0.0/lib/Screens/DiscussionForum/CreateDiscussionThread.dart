@@ -1,4 +1,4 @@
-import 'package:community_nus/Screens/Base%20Screen_Feature/Notifications.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/Notifications.dart';
 import 'package:community_nus/Settings_BackEndDataBase/Badge.dart';
 import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:flutter/cupertino.dart';
