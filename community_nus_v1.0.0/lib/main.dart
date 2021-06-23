@@ -1,9 +1,8 @@
+import 'package:community_nus/Screens/Base%20Screen_Feature/StartAppLoadingScreen.dart';
+import 'package:community_nus/Settings_BackEndDataBase/app_provider.dart';
+import 'package:community_nus/Settings_BackEndDataBase/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:community_nus/settings/app_provider.dart';
-import 'package:community_nus/screens/startAppLoadingScreen.dart';
-import 'package:community_nus/settings/const.dart';
-import 'settings/const.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
