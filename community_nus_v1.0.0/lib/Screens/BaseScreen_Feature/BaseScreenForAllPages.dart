@@ -1,4 +1,4 @@
-import 'package:community_nus/Screens/Base%20Screen_Feature/Notifications.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/Notifications.dart';
 import 'package:community_nus/Screens/DiscussionForum/DiscussionForum.dart';
 import 'package:community_nus/Screens/HomeScreen/HomeScreen.dart';
 import 'package:community_nus/Screens/Profile/profile.dart';

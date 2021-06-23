@@ -1,5 +1,5 @@
-import 'dart:io';
-import 'package:community_nus/Screens/Base%20Screen_Feature/StartAppLoadingScreen.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/BaseScreenForAllPages.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/StartAppLoadingScreen.dart';
 import 'package:community_nus/Screens/Profile/editProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

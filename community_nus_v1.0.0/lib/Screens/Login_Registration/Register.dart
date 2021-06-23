@@ -1,4 +1,4 @@
-import 'package:community_nus/Screens/Base%20Screen_Feature/BaseScreenForAllPages.dart';
+import 'package:community_nus/Screens/BaseScreen_Feature/BaseScreenForAllPages.dart';
 import 'package:community_nus/Screens/Login_Registration/JoinScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
