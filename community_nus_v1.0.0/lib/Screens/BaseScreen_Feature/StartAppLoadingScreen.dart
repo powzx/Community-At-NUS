@@ -50,7 +50,7 @@ class _startAppLoadingScreenState extends State<startAppLoadingScreen> {
                 width: 230.0,
                 height: 250.0,
               ),
-              SizedBox(width: 20.0),
+              /*SizedBox(width: 20.0),
               Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(
@@ -64,7 +64,7 @@ class _startAppLoadingScreenState extends State<startAppLoadingScreen> {
                     color: Theme.of(context).accentColor,
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

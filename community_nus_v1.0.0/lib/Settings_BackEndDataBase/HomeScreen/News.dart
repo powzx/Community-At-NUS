@@ -3,11 +3,19 @@ import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:flutter/material.dart';
 
 class Special extends StatefulWidget {
+  final String uid;
+
+  Special({this.uid});
+
   @override
-  _SpecialState createState() => _SpecialState();
+  _SpecialState createState() => _SpecialState(uid: uid);
 }
 
 class _SpecialState extends State<Special> {
+  final String uid;
+
+  _SpecialState({this.uid});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -26,6 +34,7 @@ class _SpecialState extends State<Special> {
                         MaterialPageRoute(builder: (BuildContext context) {
                       return DisplayArticle(
                         article: news.data[index],
+                        uid: uid,
                       );
                     })).then((value) {
                       setState(() {});

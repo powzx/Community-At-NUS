@@ -102,25 +102,24 @@ class _ViewModulesState extends State<ViewModules> {
                       maxLines: 2,
                     ),
                     SizedBox(height: 20.0),
-                    Row(children: <Widget>[
-                      Text(
-                        "Modules",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
-                        maxLines: 2,
-                      ),
-                      SizedBox(
-                        width: 170.0,
-                      ),
-                      Text("(Click to add)",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.italic,
-                          ))
-                    ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Modules",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                            maxLines: 2,
+                          ),
+                          Text("(Click to add)",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic,
+                              ))
+                        ]),
                     SizedBox(height: 10.0),
                     // Text(
                     //   "xxxxx",

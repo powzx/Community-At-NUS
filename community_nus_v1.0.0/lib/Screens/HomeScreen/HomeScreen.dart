@@ -135,7 +135,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       ],
                     ),
                     SizedBox(height: 5.0),
-                    Special(),
+                    Special(uid: uid,),
                     // SizedBox(height: 30),
                   ],
                 ),
