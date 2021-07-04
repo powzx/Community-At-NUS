@@ -124,13 +124,41 @@ class _ProfileState extends State<Profile> {
                     Container(height: 15.0),
                     Padding(
                       padding: EdgeInsets.all(5.0),
-                      child: Text(
-                        "Account Information".toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Account Information".toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.edit, size: 20.0),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return EditProfile(
+                                          uid: uid,
+                                          originalName:
+                                              user.data.data()["name"],
+                                          originalPhone:
+                                              user.data.data()["phone"],
+                                          originalFaculty:
+                                              user.data.data()["faculty"],
+                                          originalCourse:
+                                              user.data.data()["course"]);
+                                    },
+                                  ),
+                                ).then((value) {
+                                  setState(() {});
+                                });
+                              },
+                              tooltip: "Edit",
+                            )
+                          ]),
                     ),
                     ListTile(
                       title: Text(
@@ -143,30 +171,6 @@ class _ProfileState extends State<Profile> {
                       subtitle: Text(
                         user.data.data()["name"],
                         //document.data()["name"],
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          size: 20.0,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return EditProfile(
-                                    uid: uid,
-                                    originalName: user.data.data()["name"],
-                                    originalPhone: user.data.data()["phone"],
-                                    originalFaculty:
-                                        user.data.data()["faculty"],
-                                    originalCourse: user.data.data()["course"]);
-                              },
-                            ),
-                          ).then((value) {
-                            setState(() {});
-                          });
-                        },
-                        tooltip: "Edit",
                       ),
                     ),
                     ListTile(
@@ -221,7 +225,7 @@ class _ProfileState extends State<Profile> {
                         //document.data()["course"],
                       ),
                     ),
-                    //The following code is for the dark theme button! 
+                    //The following code is for the dark theme button!
 
                     // MediaQuery.of(context).platformBrightness == Brightness.dark
                     //     ? SizedBox()

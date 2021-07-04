@@ -116,7 +116,6 @@ class _EditProfileState extends State<EditProfile> {
                     File _image;
 
                     Future _imgFromCamera() async {
-                      // camera is not working -- will be fixed
                       PickedFile image = await ImagePicker().getImage(
                           source: ImageSource.camera, imageQuality: 50);
                       setState(() {
