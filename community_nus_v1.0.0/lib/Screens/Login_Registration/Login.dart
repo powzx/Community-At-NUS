@@ -159,7 +159,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Theme.of(context).accentColor,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                String reset;
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Password Reset"),
+                        content: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              reset = value.trim();
+                            });
+                          },
+                          decoration: InputDecoration(hintText: "Email"),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text("SEND VERIFICATION EMAIL"),
+                            onPressed: () async {
+                              await auth.sendPasswordResetEmail(email: reset);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
             ),
           ),
           SizedBox(height: 15.0),
