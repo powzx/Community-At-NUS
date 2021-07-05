@@ -353,7 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   } else if (e.code == "invalid-email") {
                     error = "Email address is not valid.";
                   } else if (e.code == "weak-password") {
-                    error = "Password is too short.";
+                    error = "Password should be at least 6 characters.";
                   } else {
                     error = "Unknown error. Please contact the administrator.";
                   }

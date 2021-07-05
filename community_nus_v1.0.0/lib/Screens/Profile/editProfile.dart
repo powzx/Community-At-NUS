@@ -4,9 +4,9 @@ import 'package:community_nus/Settings_BackEndDataBase/Badge.dart';
 import 'package:community_nus/Settings_BackEndDataBase/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:community_nus/Settings_BackEndDataBase/user_data.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 /* UI needs to be improved.
 * */
@@ -36,6 +36,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController phoneController;
   TextEditingController facultyController;
   TextEditingController courseController;
+  final auth = FirebaseAuth.instance;
 
   _EditProfileState(String uid, String originalName, String originalPhone,
       String originalFaculty, String originalCourse) {
@@ -372,8 +373,109 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             SizedBox(height: 10.0),
-            Divider(
-              color: Theme.of(context).accentColor,
+            Container(
+              height: 50.0,
+              child: RaisedButton(
+                child: Text(
+                  "Change Password".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () async {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        String oldPassword;
+                        String newPassword;
+                        return AlertDialog(
+                          title: Text("Change Password"),
+                          content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      oldPassword = value.trim();
+                                    });
+                                  },
+                                  decoration:
+                                      InputDecoration(hintText: "Password"),
+                                  obscureText: true,
+                                ),
+                                TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      newPassword = value.trim();
+                                    });
+                                  },
+                                  decoration:
+                                      InputDecoration(hintText: "New Password"),
+                                  obscureText: true,
+                                )
+                              ]),
+                          actions: [
+                            TextButton(
+                              child: Text("CONFIRM"),
+                              onPressed: () async {
+                                String error = "";
+                                AuthCredential credential =
+                                    EmailAuthProvider.credential(
+                                        email: auth.currentUser.email,
+                                        password: oldPassword);
+
+                                try {
+                                  await auth.currentUser
+                                      .reauthenticateWithCredential(credential);
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == "wrong-password") {
+                                    error = "Wrong password used.";
+                                  } else {
+                                    error =
+                                        "Unknown error. Please contact the administrator.";
+                                  }
+                                }
+
+                                if (error == "") { // password change only if re-authentication is successful
+                                  try {
+                                    await auth.currentUser
+                                        .updatePassword(newPassword);
+                                  } on FirebaseAuthException catch (e) {
+                                    if (e.code == "weak-password") {
+                                      error =
+                                          "Password should be at least 6 characters.";
+                                    } else {
+                                      error =
+                                          "Unknown error. Please contact the administrator.";
+                                    }
+                                  }
+                                }
+
+                                Navigator.of(context).pop();
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Text(error == ""
+                                            ? "Password successfully changed!"
+                                            : error),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text("OK"))
+                                        ],
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                },
+                color: Colors.red,
+              ),
             ),
             SizedBox(height: 10.0),
           ],
