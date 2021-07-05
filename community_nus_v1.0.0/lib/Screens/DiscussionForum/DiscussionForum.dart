@@ -160,7 +160,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                   await DiscussionForumDatabase(
                                                           uid: uid)
                                                       .updateUpvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
+                                                          "${forum.data[index].id}",
                                                           int.parse(
                                                               "${forum.data[index].data()["upvote"].toString()}"));
                                                   await UserDatabase(
@@ -205,7 +205,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                                   await DiscussionForumDatabase(
                                                           uid: uid)
                                                       .updateDownvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
+                                                          "${forum.data[index].id}",
                                                           int.parse(
                                                               "${forum.data[index].data()["downvote"].toString()}"));
                                                   await UserDatabase(

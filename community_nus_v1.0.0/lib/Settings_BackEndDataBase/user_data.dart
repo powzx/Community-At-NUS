@@ -163,7 +163,7 @@ class DiscussionForumDatabase {
 
   Future create(String title, String threads, String moduleCode, int upvote,
       int downvote, String dateAndTime) async {
-    return await forum.doc(title).set({
+    return await forum.doc(DateTime.now().millisecondsSinceEpoch.toString()).set({
       'thread_uid': this.uid,
       'title': title,
       'threads': threads,
@@ -242,7 +242,7 @@ class ForumRepliesDataBase {
 
   Future create(String replies, String title, int upvote, int downvote,
       String dateAndTime) async {
-    return await forumReplies.doc(replies).set({
+    return await forumReplies.doc(DateTime.now().millisecondsSinceEpoch.toString()).set({
       'thread_uid': this.uid,
       'replies': replies,
       'title': title,

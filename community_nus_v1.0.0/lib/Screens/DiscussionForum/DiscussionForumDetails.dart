@@ -178,7 +178,7 @@ class _ForumDetails extends State<ForumDetails> {
                                                   await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateUpvote(
-                                                          "${forumReplies.data[index].data()["replies"].toString()}",
+                                                          "${forumReplies.data[index].id}",
                                                           int.parse(
                                                               "${forumReplies.data[index].data()["upvote"].toString()}"));
                                                   await UserDatabase(
@@ -224,7 +224,7 @@ class _ForumDetails extends State<ForumDetails> {
                                                   await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateDownvote(
-                                                          "${forumReplies.data[index].data()["replies"].toString()}",
+                                                          "${forumReplies.data[index].id}",
                                                           int.parse(
                                                               "${forumReplies.data[index].data()["downvote"].toString()}"));
                                                   await UserDatabase(
