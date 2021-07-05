@@ -120,6 +120,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                 itemCount: forum.data.length,
                                 shrinkWrap: true,
                                 primary: false,
+                                reverse: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 // itemCount:
                                 //     disussionForum == null ? 0 : disussionForum.length,

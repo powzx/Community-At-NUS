@@ -143,6 +143,7 @@ class _ForumDetails extends State<ForumDetails> {
                                 itemCount: forumReplies.data.length,
                                 shrinkWrap: true,
                                 primary: false,
+                                reverse: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return ListTile(
