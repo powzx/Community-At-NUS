@@ -92,7 +92,7 @@ class _DisplayArticleState extends State<DisplayArticle> {
                                 "[General]",
                                 0,
                                 0,
-                                DateTime.now().toString().substring(0, 10));
+                                DateTime.now().toString().substring(0, 16));
                             Navigator.of(context).pop();
                             setState(() {});
                           },

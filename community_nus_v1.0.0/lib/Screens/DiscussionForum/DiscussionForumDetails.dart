@@ -245,8 +245,8 @@ class _ForumDetails extends State<ForumDetails> {
                                         text:
                                             "${forumReplies.data[index].data()["replies"].toString()}",
                                         style: TextStyle(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
                                             color: Colors.black),
                                       ),
                                     ),

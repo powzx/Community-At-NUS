@@ -243,7 +243,7 @@ class _CreateDiscussionThread extends State<CreateDiscussionThread> {
                       "[" + moduleCode + "]",
                       0,
                       0,
-                      DateTime.now().toString().substring(0, 10));
+                      DateTime.now().toString().substring(0, 16));
                   Navigator.of(context).pop();
                   setState(() {});
                   // to be improved -- need to refresh to view changes

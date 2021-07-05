@@ -149,7 +149,7 @@ class _CreateReplyForum extends State<CreateReplyForum> {
                 ),
                 onPressed: () async {
                   await ForumRepliesDataBase(uid: uid).create(replies, title, 0,
-                      0, DateTime.now().toString().substring(0, 10));
+                      0, DateTime.now().toString().substring(0, 16));
                   await NotificationsDatabase(uid: creator_uid)
                       .sendData(2, uid, title, DateTime.now());
                   Navigator.of(context).pop();
