@@ -36,6 +36,8 @@ class _ForumDetails extends State<ForumDetails> {
   _ForumDetails(
       {this.uid, this.creator_uid, this.title, this.moduleCode, this.threads});
 
+  String dropDownValue = "Most Recent";
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -46,6 +48,15 @@ class _ForumDetails extends State<ForumDetails> {
                 future: UserDatabase(uid: uid).retrieveUser(),
                 builder: (BuildContext context, AsyncSnapshot userDetails) {
                   if (userDetails.hasData) {
+                    List<DocumentSnapshot> sortedReplies =
+                        sortByPopularity(forumReplies);
+                    List<DocumentSnapshot> displayReplies;
+                    if (dropDownValue == "Most Recent") {
+                      displayReplies = forumReplies.data;
+                    } else {
+                      displayReplies = sortedReplies;
+                    }
+
                     return Scaffold(
                         appBar: AppBar(
                           automaticallyImplyLeading: false,
@@ -136,11 +147,34 @@ class _ForumDetails extends State<ForumDetails> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 20),
 
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(6, 0, 10.0, 6),
+                                child: DropdownButton(
+                                  value: dropDownValue,
+                                  //style: TextStyle(fontSize: 15),
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      dropDownValue = newValue;
+                                    });
+                                  },
+                                  elevation: 16,
+                                  items: <String>["Most Recent", "Most Popular"]
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              SizedBox(height: 5),
                               //The list below
                               ListView.separated(
-                                itemCount: forumReplies.data.length,
+                                itemCount: displayReplies.length,
                                 shrinkWrap: true,
                                 primary: false,
                                 reverse: true,
@@ -148,11 +182,12 @@ class _ForumDetails extends State<ForumDetails> {
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: ProfilePic(
-                                        uid: forumReplies.data[index]
+                                        key: UniqueKey(),
+                                        uid: displayReplies[index]
                                             .data()["thread_uid"],
                                         upSize: false,
                                         rep: userDetails.data[getUserIdx(
-                                                "${forumReplies.data[index].data()["thread_uid"].toString()}",
+                                                "${displayReplies[index].data()["thread_uid"].toString()}",
                                                 userDetails)]
                                             .data()["rep"]),
                                     trailing: Wrap(
@@ -179,12 +214,12 @@ class _ForumDetails extends State<ForumDetails> {
                                                   await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateUpvote(
-                                                          "${forumReplies.data[index].id}",
+                                                          "${displayReplies[index].id}",
                                                           int.parse(
-                                                              "${forumReplies.data[index].data()["upvote"].toString()}"));
+                                                              "${displayReplies[index].data()["upvote"].toString()}"));
                                                   await UserDatabase(
-                                                          uid: forumReplies
-                                                                  .data[index]
+                                                          uid: displayReplies[
+                                                                      index]
                                                                   .data()[
                                                               "thread_uid"])
                                                       .increaseRep();
@@ -195,9 +230,9 @@ class _ForumDetails extends State<ForumDetails> {
                                             ),
                                           ),
                                           Text(
-                                            (int.parse("${forumReplies.data[index].data()["upvote"].toString()}") -
+                                            (int.parse("${displayReplies[index].data()["upvote"].toString()}") -
                                                     int.parse(
-                                                        "${forumReplies.data[index].data()["downvote"].toString()}"))
+                                                        "${displayReplies[index].data()["downvote"].toString()}"))
                                                 .toString(),
                                             style: TextStyle(
                                               fontSize: 14,
@@ -225,12 +260,12 @@ class _ForumDetails extends State<ForumDetails> {
                                                   await ForumRepliesDataBase(
                                                           uid: uid)
                                                       .updateDownvote(
-                                                          "${forumReplies.data[index].id}",
+                                                          "${displayReplies[index].id}",
                                                           int.parse(
-                                                              "${forumReplies.data[index].data()["downvote"].toString()}"));
+                                                              "${displayReplies[index].data()["downvote"].toString()}"));
                                                   await UserDatabase(
-                                                          uid: forumReplies
-                                                                  .data[index]
+                                                          uid: displayReplies[
+                                                                      index]
                                                                   .data()[
                                                               "thread_uid"])
                                                       .decreaseRep();
@@ -244,7 +279,7 @@ class _ForumDetails extends State<ForumDetails> {
                                     title: RichText(
                                       text: TextSpan(
                                         text:
-                                            "${forumReplies.data[index].data()["replies"].toString()}",
+                                            "${displayReplies[index].data()["replies"].toString()}",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w400,
@@ -255,8 +290,8 @@ class _ForumDetails extends State<ForumDetails> {
                                       children: [
                                         Text(
                                           "\nPosted by " +
-                                              "${userDetails.data[getUserIdx("${forumReplies.data[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
-                                              " on ${forumReplies.data[index].data()["dateAndTime"].toString()}",
+                                              "${userDetails.data[getUserIdx("${displayReplies[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
+                                              " on ${displayReplies[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontStyle: FontStyle.italic,
@@ -286,13 +321,48 @@ class _ForumDetails extends State<ForumDetails> {
 }
 
 int getUserIdx(String currPostIDX, AsyncSnapshot userDetails) {
+  // only suitable for small user base
   int userIdx = 0;
   if (userDetails.hasData) {
     for (int i = 0; i < userDetails.data.length; i++) {
       if (userDetails.data[i].id.toString().compareTo(currPostIDX) == 0) {
         userIdx = i;
+        i = userDetails.data.length; // exit the iteration once found
       }
     }
   }
   return userIdx;
+}
+
+List<DocumentSnapshot> sortByPopularity(AsyncSnapshot forum) {
+  // default unsorted forum retrieved is already sorted by time
+  // sorted forum is sorted by popularity
+  // sorting algorithm is insertion sort
+  // only suitable for small user base
+
+  List<DocumentSnapshot> sortedForum = List.from(forum.data);
+  List<int> votes = []..length = forum.data.length;
+
+  for (int i = 0; i < forum.data.length; i++) {
+    votes[i] =
+        forum.data[i].data()['upvote'] - forum.data[i].data()['downvote'];
+  }
+
+  int votePlaceholder;
+  DocumentSnapshot forumPlaceholder;
+  for (int i = 1; i < forum.data.length; i++) {
+    for (int j = i; j > 0; j--) {
+      if (votes[j] < votes[j - 1]) {
+        votePlaceholder = votes[j];
+        votes[j] = votes[j - 1];
+        votes[j - 1] = votePlaceholder;
+
+        forumPlaceholder = sortedForum[j];
+        sortedForum[j] = sortedForum[j - 1];
+        sortedForum[j - 1] = forumPlaceholder;
+      }
+    }
+  }
+
+  return sortedForum;
 }
