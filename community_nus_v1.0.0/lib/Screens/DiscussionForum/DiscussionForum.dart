@@ -314,15 +314,18 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                         MaterialPageRoute(
                                           builder: (BuildContext context) {
                                             return ForumDetails(
-                                                uid: uid,
-                                                creator_uid:
-                                                    "${displayForum[index].data()['thread_uid'].toString()}",
-                                                title:
-                                                    "${displayForum[index].data()["title"].toString()}",
-                                                moduleCode:
-                                                    "${displayForum[index].data()["moduleCode"].toString()}",
-                                                threads:
-                                                    "${displayForum[index].data()["threads"].toString()}");
+                                              uid: uid,
+                                              creator_uid:
+                                                  "${displayForum[index].data()['thread_uid'].toString()}",
+                                              title:
+                                                  "${displayForum[index].data()["title"].toString()}",
+                                              moduleCode:
+                                                  "${displayForum[index].data()["moduleCode"].toString()}",
+                                              threads:
+                                                  "${displayForum[index].data()["threads"].toString()}",
+                                              dateOfCreation:
+                                                  "${displayForum[index].data()["dateAndTime"].toString()}",
+                                            );
                                           },
                                         ),
                                       ).then((value) {

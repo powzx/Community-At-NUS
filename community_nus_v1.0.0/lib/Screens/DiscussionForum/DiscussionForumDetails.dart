@@ -13,9 +13,15 @@ class ForumDetails extends StatefulWidget {
   final String title;
   final String moduleCode;
   final String threads;
+  final String dateOfCreation;
 
   ForumDetails(
-      {this.uid, this.creator_uid, this.title, this.moduleCode, this.threads});
+      {this.uid,
+      this.creator_uid,
+      this.title,
+      this.moduleCode,
+      this.threads,
+      this.dateOfCreation});
 
   @override
   _ForumDetails createState() => _ForumDetails(
@@ -23,7 +29,8 @@ class ForumDetails extends StatefulWidget {
       creator_uid: creator_uid,
       title: title,
       moduleCode: moduleCode,
-      threads: threads);
+      threads: threads,
+      dateOfCreation: dateOfCreation);
 }
 
 class _ForumDetails extends State<ForumDetails> {
@@ -32,9 +39,15 @@ class _ForumDetails extends State<ForumDetails> {
   final String title;
   final String moduleCode;
   final String threads;
+  final String dateOfCreation;
 
   _ForumDetails(
-      {this.uid, this.creator_uid, this.title, this.moduleCode, this.threads});
+      {this.uid,
+      this.creator_uid,
+      this.title,
+      this.moduleCode,
+      this.threads,
+      this.dateOfCreation});
 
   String dropDownValue = "Most Recent";
 
@@ -144,6 +157,21 @@ class _ForumDetails extends State<ForumDetails> {
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 5),
+
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(6, 0, 10.0, 6),
+                                child: Text(
+                                  "Posted by " +
+                                      "${userDetails.data[getUserIdx(creator_uid, userDetails)].data()["name"].toString()}" +
+                                      " on $dateOfCreation",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w300,
                                   ),
                                 ),
                               ),

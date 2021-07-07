@@ -36,6 +36,8 @@ class _ModuleForumState extends State<ModuleForum> {
 
   _ModuleForumState({this.uid, this.threads, this.moduleCode});
 
+  int flag = 0;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -56,6 +58,16 @@ class _ModuleForumState extends State<ModuleForum> {
                     //       userIdx = i;
                     //     }
                     //   }
+
+                    List<DocumentSnapshot> sortedForum =
+                        sortByPopularity(forum);
+                    List<DocumentSnapshot> displayForum;
+                    if (flag == 0) {
+                      displayForum = forum.data;
+                    } else {
+                      displayForum = sortedForum;
+                    }
+
                     return Scaffold(
                         appBar: AppBar(
                           automaticallyImplyLeading: false,
@@ -110,7 +122,9 @@ class _ModuleForumState extends State<ModuleForum> {
                                       moduleCode: this.moduleCode);
                                 },
                               ),
-                            );
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                           tooltip: "Start a new Thread",
                           child: const Icon(Icons.add),
@@ -133,6 +147,44 @@ class _ModuleForumState extends State<ModuleForum> {
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
+                                    IconButton(
+                                        icon: Icon(Icons.sort),
+                                        tooltip: "Sort",
+                                        onPressed: () async {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return SafeArea(
+                                                  child: Container(
+                                                    child: new Wrap(
+                                                      children: <Widget>[
+                                                        new ListTile(
+                                                            title: new Text(
+                                                                'Most Popular'),
+                                                            onTap: () async {
+                                                              flag = 1;
+                                                              setState(() {});
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            }),
+                                                        new ListTile(
+                                                          title: new Text(
+                                                              'Most Recent'),
+                                                          onTap: () async {
+                                                            flag = 0;
+                                                            setState(() {});
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        })
                                   ],
                                 ),
                               ),
@@ -141,9 +193,10 @@ class _ModuleForumState extends State<ModuleForum> {
 
                               //The list below
                               ListView.separated(
-                                itemCount: forum.data.length,
+                                itemCount: displayForum.length,
                                 shrinkWrap: true,
                                 primary: false,
+                                reverse: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 // itemCount:
                                 //     disussionForum == null ? 0 : disussionForum.length,
@@ -153,11 +206,12 @@ class _ModuleForumState extends State<ModuleForum> {
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     leading: ProfilePic(
-                                        uid: forum.data[index]
+                                        key: UniqueKey(),
+                                        uid: displayForum[index]
                                             .data()["thread_uid"],
                                         upSize: false,
                                         rep: userDetails.data[getUserIdx(
-                                                "${forum.data[index].data()["thread_uid"].toString()}",
+                                                "${displayForum[index].data()["thread_uid"].toString()}",
                                                 userDetails)]
                                             .data()["rep"]),
                                     trailing: Wrap(
@@ -184,11 +238,12 @@ class _ModuleForumState extends State<ModuleForum> {
                                                   await DiscussionForumDatabase(
                                                           uid: uid)
                                                       .updateUpvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
+                                                          "${displayForum[index].id}",
                                                           int.parse(
-                                                              "${forum.data[index].data()["upvote"].toString()}"));
+                                                              "${displayForum[index].data()["upvote"].toString()}"));
                                                   await UserDatabase(
-                                                          uid: forum.data[index]
+                                                          uid: displayForum[
+                                                                      index]
                                                                   .data()[
                                                               "thread_uid"])
                                                       .increaseRep();
@@ -199,9 +254,9 @@ class _ModuleForumState extends State<ModuleForum> {
                                             ),
                                           ),
                                           Text(
-                                            (int.parse("${forum.data[index].data()["upvote"].toString()}") -
+                                            (int.parse("${displayForum[index].data()["upvote"].toString()}") -
                                                     int.parse(
-                                                        "${forum.data[index].data()["downvote"].toString()}"))
+                                                        "${displayForum[index].data()["downvote"].toString()}"))
                                                 .toString(),
                                             style: TextStyle(
                                               fontSize: 14,
@@ -229,11 +284,12 @@ class _ModuleForumState extends State<ModuleForum> {
                                                   await DiscussionForumDatabase(
                                                           uid: uid)
                                                       .updateDownvote(
-                                                          "${forum.data[index].data()["title"].toString()}",
+                                                          "${displayForum[index].id}",
                                                           int.parse(
-                                                              "${forum.data[index].data()["downvote"].toString()}"));
+                                                              "${displayForum[index].data()["downvote"].toString()}"));
                                                   await UserDatabase(
-                                                          uid: forum.data[index]
+                                                          uid: displayForum[
+                                                                      index]
                                                                   .data()[
                                                               "thread_uid"])
                                                       .decreaseRep();
@@ -246,9 +302,9 @@ class _ModuleForumState extends State<ModuleForum> {
                                         ]),
                                     title: RichText(
                                       text: TextSpan(
-                                          text: "${forum.data[index].data()["moduleCode"].toString()}" +
+                                          text: "${displayForum[index].data()["moduleCode"].toString()}" +
                                               " " +
-                                              "${forum.data[index].data()["title"].toString()}",
+                                              "${displayForum[index].data()["title"].toString()}",
                                           style: TextStyle(
                                               fontSize: 19,
                                               fontWeight: FontWeight.w500,
@@ -256,7 +312,7 @@ class _ModuleForumState extends State<ModuleForum> {
                                           children: <TextSpan>[
                                             TextSpan(
                                               text:
-                                                  "\n${forum.data[index].data()["threads"].toString()}",
+                                                  "\n${displayForum[index].data()["threads"].toString()}",
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w400,
@@ -268,8 +324,8 @@ class _ModuleForumState extends State<ModuleForum> {
                                       children: [
                                         Text(
                                           "\nPosted by " +
-                                              "${userDetails.data[getUserIdx("${forum.data[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
-                                              " on ${forum.data[index].data()["dateAndTime"].toString()}",
+                                              "${userDetails.data[getUserIdx("${displayForum[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
+                                              " on ${displayForum[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontStyle: FontStyle.italic,
@@ -283,15 +339,18 @@ class _ModuleForumState extends State<ModuleForum> {
                                         MaterialPageRoute(
                                           builder: (BuildContext context) {
                                             return ForumDetails(
-                                                uid: uid,
-                                                creator_uid:
-                                                    "${forum.data[index].data()["thread_uid"].toString()}",
-                                                title:
-                                                    "${forum.data[index].data()["title"].toString()}",
-                                                threads:
-                                                    "${forum.data[index].data()["threads"].toString()}",
-                                                moduleCode:
-                                                    "${forum.data[index].data()["moduleCode"].toString()}");
+                                              uid: uid,
+                                              creator_uid:
+                                                  "${displayForum[index].data()["thread_uid"].toString()}",
+                                              title:
+                                                  "${displayForum[index].data()["title"].toString()}",
+                                              threads:
+                                                  "${displayForum[index].data()["threads"].toString()}",
+                                              moduleCode:
+                                                  "${displayForum[index].data()["moduleCode"].toString()}",
+                                              dateOfCreation:
+                                                  "${displayForum[index].data()["dateAndTime"].toString()}",
+                                            );
                                           },
                                         ),
                                       ).then((value) {
@@ -319,13 +378,48 @@ class _ModuleForumState extends State<ModuleForum> {
 }
 
 int getUserIdx(String currPostIDX, AsyncSnapshot userDetails) {
+  // only suitable for small user base
   int userIdx = 0;
   if (userDetails.hasData) {
     for (int i = 0; i < userDetails.data.length; i++) {
       if (userDetails.data[i].id.toString().compareTo(currPostIDX) == 0) {
         userIdx = i;
+        i = userDetails.data.length; // exit the iteration once found
       }
     }
   }
   return userIdx;
+}
+
+List<DocumentSnapshot> sortByPopularity(AsyncSnapshot forum) {
+  // default unsorted forum retrieved is already sorted by time
+  // sorted forum is sorted by popularity
+  // sorting algorithm is insertion sort
+  // only suitable for small user base
+
+  List<DocumentSnapshot> sortedForum = List.from(forum.data);
+  List<int> votes = []..length = forum.data.length;
+
+  for (int i = 0; i < forum.data.length; i++) {
+    votes[i] =
+        forum.data[i].data()['upvote'] - forum.data[i].data()['downvote'];
+  }
+
+  int votePlaceholder;
+  DocumentSnapshot forumPlaceholder;
+  for (int i = 1; i < forum.data.length; i++) {
+    for (int j = i; j > 0; j--) {
+      if (votes[j] < votes[j - 1]) {
+        votePlaceholder = votes[j];
+        votes[j] = votes[j - 1];
+        votes[j - 1] = votePlaceholder;
+
+        forumPlaceholder = sortedForum[j];
+        sortedForum[j] = sortedForum[j - 1];
+        sortedForum[j - 1] = forumPlaceholder;
+      }
+    }
+  }
+
+  return sortedForum;
 }
