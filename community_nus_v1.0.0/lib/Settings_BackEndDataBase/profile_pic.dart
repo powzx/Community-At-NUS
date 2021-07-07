@@ -6,7 +6,7 @@ class ProfilePic extends StatefulWidget {
   final bool upSize;
   final int rep;
 
-  ProfilePic({this.uid, this.upSize, this.rep});
+  ProfilePic({Key key, this.uid, this.upSize, this.rep}) : super(key: key);
 
   @override
   _ProfilePicState createState() =>
