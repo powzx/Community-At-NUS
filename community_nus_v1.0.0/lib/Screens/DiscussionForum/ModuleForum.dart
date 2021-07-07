@@ -417,6 +417,8 @@ List<DocumentSnapshot> sortByPopularity(AsyncSnapshot forum) {
         forumPlaceholder = sortedForum[j];
         sortedForum[j] = sortedForum[j - 1];
         sortedForum[j - 1] = forumPlaceholder;
+      } else {
+        j = 0;
       }
     }
   }
