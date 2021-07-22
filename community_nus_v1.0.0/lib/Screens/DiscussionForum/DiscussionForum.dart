@@ -298,8 +298,7 @@ class _DiscussionForumState extends State<DiscussionForum> {
                                     subtitle: Row(
                                       children: [
                                         Text(
-                                          "\nPosted by " +
-                                              "${userDetails.data[getUserIdx("${displayForum[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
+                                          "\n${userDetails.data[getUserIdx("${displayForum[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
                                               " on ${displayForum[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,

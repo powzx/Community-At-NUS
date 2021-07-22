@@ -317,8 +317,7 @@ class _ForumDetails extends State<ForumDetails> {
                                     subtitle: Row(
                                       children: [
                                         Text(
-                                          "\nPosted by " +
-                                              "${userDetails.data[getUserIdx("${displayReplies[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
+                                          "\n${userDetails.data[getUserIdx("${displayReplies[index].data()["thread_uid"].toString()}", userDetails)].data()["name"].toString()}" +
                                               " on ${displayReplies[index].data()["dateAndTime"].toString()}",
                                           style: TextStyle(
                                             fontSize: 12,
